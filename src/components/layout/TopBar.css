@@ -1,0 +1,55 @@
+/* TopBar.css */
+*{
+    color: inherit;
+}
+.welcoming {
+    display: flex;
+}
+.right-side{
+    display: flex;
+    align-items: center;
+}
+.navbar {
+    display: flex;
+    align-items: center;
+    padding-inline: 12px;
+}
+  
+.nav-links {
+    display: flex;
+    align-items: end;
+}
+.nav-links:not(:last-child){
+    margin-right: 12px;
+}
+.nav-links .top-link-wrpr{
+    padding: 6px 8px;
+    border-radius: 4px;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    display: flex;
+    align-items: center;
+}
+
+.nav-links .top-link-wrpr:not(:last-child) {
+    margin-right: 12px;
+}
+.nav-links .top-link-wrpr:hover{
+    background-color: var(--primary-color-l1);
+}
+.nav-links .top-link-wrpr .icon{
+    margin-right: 8px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}  
+
+
+
+
+
+
+
+
+
+  
