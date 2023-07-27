@@ -3,13 +3,16 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useDropzone } from 'react-dropzone';
 import { useParams } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth';
 import {FiTrash2} from 'react-icons/fi'
 import pluralize from 'pluralize';
-import { AiOutlineDelete, AiOutlineArrowUp, AiOutlineArrowDown } from 'react-icons/ai';
+import { AiOutlineDelete, AiOutlineArrowUp, AiOutlineArrowDown, AiOutlineAppstoreAdd, AiOutlineEye } from 'react-icons/ai';
 
 import {AiOutlineDown} from 'react-icons/ai'
-import Nb from '../components/common/Nb';
+import {CiSaveDown2} from 'react-icons/ci'
+import {BsFillPlusCircleFill, } from 'react-icons/bs'
+
+import Nb from '../../components/common/Nb';
 const CreateProduct = () => {
 
   return (
@@ -34,17 +37,29 @@ const CreateProduct = () => {
                         <div className="form-group">
                             <PrdImages />
                         </div>
+                        <Nb message='if the product has different variants (like Colrs, Sizes, Storage... ) please enable this field and add them.' />
                         <div className="form-group">
                             <PrdVariants/>
                         </div>
                     </div>
                     <div className="form-actions">
-                        <div className="form-action">
-                            <button className="btn">
-                                <p>Save</p>
-                            </button>
+                        <div className="action-elem">
+                                <button className="btn gray">
+                                    <div className="icon">
+                                        <AiOutlineEye />
+                                    </div>
+                                    <p>Preview</p>
+                                </button>   
                         </div>
-                    </div>
+                        <div className="action-elem">
+                            <button className="btn">
+                                <div className="icon">
+                                    <CiSaveDown2 />
+                                </div>
+                                <p>Save</p>
+                            </button>   
+                        </div>
+                     </div>
                 </form>
             </div>
         </div>
@@ -95,23 +110,22 @@ const PrdGeneralInfos =(props)=>{
             <div className="form-line">
                 <div className="input-wrapper">
                     <label htmlFor="" className='label'>Product Name :</label>
-                    <input type="text" className='input' placeholder='Ex: iphone 9..' />
+                    <input type="text" className='input' placeholder='Ex: iphone 9..' required/>
                 </div>
                 <div className="input-wrapper">
                     <label htmlFor="" className='label'>slug :</label>
-                    <input type="text" className='input' placeholder='Ex: iphone-9..' />
+                    <input type="text" className='input' placeholder='Ex: iphone-9..' required/>
                 </div>
             </div>
             <div className="form-line">
                 <div className="input-wrapper">
-                    <Nb message='this is just a mini description, so for a good view its must not be more than a 50 character' />
                     <label htmlFor="" className='label'>Brief and catchy description :</label>
                     <textarea className='input' placeholder='Ex: something...'></textarea>
+                    <Nb message='this is just a mini description, so for a good view its must not be more than a 50 character' /> 
                 </div>
             </div>
             <div className="form-line">
                 <div className="input-wrapper">
-                    <Nb message=' Here you can provide all the product details' />
                     <label htmlFor="" className="label">description :</label>
                     <div className="text-editor">
                        <ReactQuill
@@ -120,7 +134,7 @@ const PrdGeneralInfos =(props)=>{
                             modules={modules}
                         /> 
                     </div>
-                    
+                    <Nb message=' Here you can provide all the product details' />   
                 </div>
             </div>
         </>
@@ -128,7 +142,7 @@ const PrdGeneralInfos =(props)=>{
 }
 
 const PrdPrice = ()=>{
-    const [showBody, setShowBody]=useState(false);
+    const [showBody, setShowBody]=useState(true);
     return(
         <>  
             <div className="outer-block">
@@ -144,7 +158,7 @@ const PrdPrice = ()=>{
                     <div className="form-line">
                         <div className="input-wrapper">
                             <label htmlFor="" className='label'>Selling Price :</label>
-                            <input type="number" className='input' placeholder='Ex: iphone 9..' />
+                            <input type="number" className='input' placeholder='Ex: iphone 9..' required/>
                         </div>
                         <div className="input-wrapper">
                             <label htmlFor="" className='label'>Comparing Price :</label>
@@ -163,7 +177,7 @@ const PrdPrice = ()=>{
 }
 
 const PrdImages = ()=>{
-    const [showBody, setShowBody]=useState(false);
+    const [showBody, setShowBody]=useState(true);
     const [images, setImages] = useState([]);
 
     const onDrop = (acceptedFiles) => {
@@ -218,9 +232,10 @@ const PrdImages = ()=>{
                     </div>
                 </div>
                 <div className={showBody ? `outer-block-body active` : `outer-block-body`}>
+                    <Nb message='For best visual appearance, use a product image with a size of 800x800.' />
                     <div className="form-line">
                         <div className="image-dropzone-wrapper">
-                            <div {...getRootProps()} className="dropzone">
+                            <div {...getRootProps()} className="dropzone f-r-c-c">
                                 <input {...getInputProps()} />
                                 <p>Drag and drop images here or click to browse</p>
                             </div>
@@ -246,14 +261,14 @@ const PrdImages = ()=>{
 }
 
 const PrdVariants = ()=>{
-    const [showBody, setShowBody]=useState(false);
+    const [showBody, setShowBody]=useState(true);
 
     const { productId } = useParams();
     const {user} = useAuth();
     const {token} = user;
     const [product , setProduct] = useState({});
 
-    const [hasVariants, setHasVariants] = useState(false);
+    const [hasVariants, setHasVariants] = useState(true);
     const [variants, setVariants] = useState([
         {   name: '', 
             options: [
@@ -331,7 +346,6 @@ const PrdVariants = ()=>{
     return(
         <>  
             <div className="outer-block">
-                <Nb message='if the product has different variants (like Colrs, Sizes, Storage... ) please enable this field and add them.' />
                 <div className="outer-block-header">
                     <div className="body-toggler">
                         <button className={showBody ? `toggler-btn active` : `toggler-btn`} type="button" onClick={()=>setShowBody(!showBody)}> <AiOutlineDown/> </button>
@@ -341,7 +355,7 @@ const PrdVariants = ()=>{
                         <div className='block-actions'>
                             <div className="action">
                                 <label htmlFor="has-variants" className='toggle-switcher'>
-                                    <input type="checkbox" name="has-variants" id="has-variants" onChange={()=>{setHasVariants(!hasVariants)}} />
+                                    <input type="checkbox" name="has-variants" id="has-variants" onChange={(e)=>{setHasVariants(e.target.checked)}} defaultChecked />
                                     <span className='slider round'></span>
                                 </label>
                             </div>
@@ -357,8 +371,7 @@ const PrdVariants = ()=>{
                                         <div key={varIndex} className="variant-wrapper">
                                             <div className='variant-elem variant-name'>
                                                 <div className="input-wrapper">
-                                                    <label htmlFor={`variantName-${varIndex}`} className="label">Variant name :</label>
-                                                    <input type="text" className="input" id={`variantName-${varIndex}`} name={`variantName-${varIndex}`} placeholder='Ex: Colors, Size, Storage...' 
+                                                    <input type="text" className="input" id={`variantName-${varIndex}`} name={`variantName-${varIndex}`} placeholder='Variant Name : (Ex: Colors, Size, Storage...)' 
                                                         onChange={(e)=>{
                                                             const updatedVariants = [...variants];
                                                             updatedVariants[varIndex].name = e.target.value;
@@ -376,8 +389,7 @@ const PrdVariants = ()=>{
                                                             </div>
                                                             <div className="opt opt-body">
                                                                 <div className="input-wrapper">
-                                                                    <label htmlFor={`optVal-${optIndex}`} className="label">value :</label>
-                                                                    <input type="text" id={`optVal-${optIndex}`} name={`optVal-${optIndex}`} className="input" placeholder='Ex: Red'
+                                                                    <input type="text" id={`optVal-${optIndex}`} name={`optVal-${optIndex}`} className="input" placeholder='Value : (Ex: Red)'
                                                                             onChange={(e) =>{
                                                                                 const updatedVariants = [...variants];
                                                                                 updatedVariants[varIndex].options[optIndex].value = e.target.value;
@@ -385,52 +397,45 @@ const PrdVariants = ()=>{
                                                                             }}/> 
                                                                 </div>    
                                                                 <div className="input-wrapper">
-                                                                    <label htmlFor={`optPrice-${optIndex}`} className="label">price :</label>
-                                                                    <input type="number" className="input" placeholder='Ex: +3$' id={`optPrice-${optIndex}`} name={`optPrice-${optIndex}`}
+                                                                    <input type="number" className="input" placeholder='Price (Ex: +3$)' required id={`optPrice-${optIndex}`} name={`optPrice-${optIndex}`}
                                                                             onChange={(e)=>{
                                                                                 const updatedVariants = [...variants];
                                                                                 updatedVariants[varIndex].options[optIndex].price_def = e.target.value;
                                                                                 setVariants(updatedVariants);
                                                                             }} /> 
+
                                                                 </div>    
-                                                                <div className="input-wrapper">
-                                                                    <label htmlFor={`optImg-${optIndex}`} className="label">image:</label>
-                                                                    <input type="file" className="input" id={`optImg-${optIndex}`} name={`optImg-${optIndex}`}
-                                                                            onChange={(e)=>{
-                                                                                const updatedVariants = [...variants];
-                                                                                updatedVariants[varIndex].options[optIndex].image = e.target.value;
-                                                                                setVariants(updatedVariants);
-                                                                            }} /> 
-                                                                </div>
-                                                                <div className="input-wrapper">
-                                                                    <label htmlFor={`available-${optIndex}`} className="label">available in stock?</label>
-                                                                    <select className='input' name={`available-${optIndex}`} id={`available-${optIndex}`} 
-                                                                        onChange={(e)=>{
-                                                                            const updatedVariants = [...variants];
-                                                                            updatedVariants[varIndex].options[optIndex].available = e.target.value;
-                                                                            setVariants(updatedVariants);
-                                                                        }}
-                                                                        >
-                                                                        <option value={true}>Yes</option>
-                                                                        <option value={false}>No</option>
-                                                                    </select>
+                                                                <div className="input-wrapper inline">
+                                                                    <label htmlFor={`available-${optIndex}`} className="label">active :</label>
+                                                                    <label htmlFor={`available-${optIndex}`} className='toggle-switcher'>
+                                                                        <input type="checkbox" name={`available-${optIndex}`} id={`available-${optIndex}`} defaultChecked
+                                                                                onChange={(e)=>{
+                                                                                    const updatedVariants = [...variants];
+                                                                                    updatedVariants[varIndex].options[optIndex].available = e.target.checked;
+                                                                                    setVariants(updatedVariants);
+                                                                                }} />
+                                                                        <span className='slider round'></span>
+                                                                    </label>
                                                                 </div>
                                                                 <div className="option-action">
-                                                                    <button type='button' className='btn delete' onClick={()=>{handleRemoveOption(varIndex,optIndex)}}><FiTrash2 /></button>
+                                                                    <button type='button' className='delete-btn remove-option-btn f-r-c-c' onClick={()=>{handleRemoveOption(varIndex,optIndex)}}><FiTrash2 /></button>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     )
                                                 })
                                             }  
-                                            <button type='button' className='add-option-btn' onClick={()=>handleAddOption(varIndex)}>+ add option</button>
+                                            <button type='button' className='add-option-btn' onClick={()=>handleAddOption(varIndex)}>
+                                                 <div className="icon"><AiOutlineAppstoreAdd/> </div> 
+                                                 <p>add option</p> 
+                                            </button>
                                             </div>
-                                            <button type='button' className='btn remove-variant-btn' onClick={()=>handleRemoveVariant(varIndex)}><div className="icon"><FiTrash2/></div>Remove Variant</button>
+                                            <button type='button' className='delete-btn remove-variant-btn f-r-c-c' onClick={()=>handleRemoveVariant(varIndex)}><div className="icon f-r-c-c"><FiTrash2/></div></button>
                                         </div>
                                     ) 
                                 })
                             }
-                            <button type="button" className='btn add-variant-btn' onClick={()=>{handleAddVariant()}}>Add another variant</button>
+                            <button type="button" className='add-variant-btn' onClick={()=>{handleAddVariant()}}> <div className="icon"><BsFillPlusCircleFill/></div> <p>Add another variant</p></button>
                             </>
                         : null}
                 </div>
@@ -450,18 +455,18 @@ const ImageItem = ({ index, file, removeImage, moveImageUp, moveImageDown }) => 
     reader.readAsDataURL(file);
   
     return (
-      <div className="image-item">
+      <div className="image-item f-r-c-c">
         <div className="image-preview-container">
           <img src={previewURL} alt={`Image ${index + 1}`} className="image-preview-img" />
   
           <div className="image-buttons">
-            <button onClick={(e) => removeImage(e,index)} className="image-button">
+            <button onClick={(e) => removeImage(e,index)} className="image-button f-r-c-c">
               <AiOutlineDelete />
             </button>
-            <button onClick={(e) => moveImageUp(e,index)} className="image-button">
+            <button onClick={(e) => moveImageUp(e,index)} className="image-button f-r-c-c">
               <AiOutlineArrowUp />
             </button>
-            <button onClick={(e) => moveImageDown(e,index)} className="image-button">
+            <button onClick={(e) => moveImageDown(e,index)} className="image-button f-r-c-c">
               <AiOutlineArrowDown />
             </button>
           </div>

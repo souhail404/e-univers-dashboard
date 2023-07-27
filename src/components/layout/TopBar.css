@@ -25,17 +25,12 @@
 .nav-links .top-link-wrpr{
     padding: 6px 8px;
     border-radius: 4px;
-    background-color: var(--primary-color);
-    color: var(--white-color);
     display: flex;
     align-items: center;
 }
 
 .nav-links .top-link-wrpr:not(:last-child) {
     margin-right: 12px;
-}
-.nav-links .top-link-wrpr:hover{
-    background-color: var(--primary-color-l1);
 }
 .nav-links .top-link-wrpr .icon{
     margin-right: 8px;

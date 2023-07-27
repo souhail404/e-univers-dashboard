@@ -39,40 +39,43 @@ const Login = () => {
           <h3>Login please</h3>
         </div>
         <div className="form-body">
-          <div className="form-line">
-            <div className='input-wrapper'>
-              <label className='label' htmlFor="user-ref">Username, Email or Mobile</label>
-              <input 
-                    type="text" 
-                    value={values.user_ref} 
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    id='user_ref' 
-                    name='user_ref' 
-                    className='input' 
-                    placeholder='Your Username, Email or Mobile...' 
-              />
-              {/* <span className="error"></span> */}
+          <div className="form-group">
+            <div className="form-line">
+              <div className='input-wrapper'>
+                <label className='label' htmlFor="user-ref">Username, Email or Mobile</label>
+                <input 
+                      type="text" 
+                      value={values.user_ref} 
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      id='user_ref' 
+                      name='user_ref' 
+                      className='input' 
+                      placeholder='Your Username, Email or Mobile...' 
+                />
+                {/* <span className="error"></span> */}
+              </div>
+            </div>
+            <div className="form-line">
+              <div className='input-wrapper'>
+                <label className='label' label='label' htmlFor="password">Password</label>
+                <input type="text" 
+                      value={values.password} 
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      id='password' 
+                      name='password' 
+                      className='input' 
+                      placeholder='Enter your password'
+                />
+                <span className="error"></span>
+              </div>
             </div>
           </div>
-          <div className="form-line">
-            <div className='input-wrapper'>
-              <label className='label' label='label' htmlFor="password">Password</label>
-              <input type="text" 
-                    value={values.password} 
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    id='password' 
-                    name='password' 
-                    className='input' 
-                    placeholder='Enter your password'
-              />
-              <span className="error"></span>
-            </div>
-          </div>
+          
         </div>
         <div className='form-actions'>
-          <div className="act-el">
+          <div className="action-elem">
             <button className="btn">
               <div className="icon">
                 <BiLogIn />

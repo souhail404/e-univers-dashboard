@@ -13,7 +13,7 @@ const TopBar = () => {
         <div className="right-side">
           <nav className="navbar">
             <div className="nav-links">
-                <Link className='top-link-wrpr' to="/"> 
+                <Link className='btn top-link-wrpr' to="/"> 
                   <div className="icon"><BsEye /></div> 
                   <p>View store</p>
                 </Link>
