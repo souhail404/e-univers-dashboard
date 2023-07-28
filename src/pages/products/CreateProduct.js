@@ -10,7 +10,7 @@ import { AiOutlineDelete, AiOutlineArrowUp, AiOutlineArrowDown, AiOutlineAppstor
 
 import {AiOutlineDown} from 'react-icons/ai'
 import {CiSaveDown2} from 'react-icons/ci'
-import {BsFillPlusCircleFill, } from 'react-icons/bs'
+import {BsFillPlusCircleFill } from 'react-icons/bs'
 
 import Nb from '../../components/common/Nb';
 const CreateProduct = () => {

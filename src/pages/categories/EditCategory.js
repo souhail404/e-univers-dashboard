@@ -1,18 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Nb from '../../components/common/Nb'
 import { useAuth } from '../../hooks/useAuth';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import {CiSaveDown2} from 'react-icons/ci'
 import {AiOutlineDown, AiOutlineAppstoreAdd} from 'react-icons/ai'
 import {FiTrash2} from 'react-icons/fi'
-import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
 
 
-const CreateCategory = () => {
-  const navigate = useNavigate()
 
+const EditCategory = () => {
+  const {categoryId} =useParams();
   const {user} = useAuth();
   const {token} = user;
 
@@ -20,24 +19,41 @@ const CreateCategory = () => {
   myheaders.append('Content-Type', 'application/json');
   myheaders.append('Authorization', `Bearer ${token}`);
 
-  const [category, setCategory] =useState(
-    {
-      title:'',
-      description:''
+  const [category, setCategory] =useState()
+  const [subCategories, setSubCategories]= useState([])
+  
+  useEffect(()=>{
+    const fetchCategory= async()=>{
+        const id = toast.loading('fetching category...')
+        try{
+            const res = await fetch(`http://localhost:4000/api/category/${categoryId}`)
+            const response = await res.json();
+            
+            if(res.ok){
+                const {category, subCategories} = response;
+                setCategory({...category});
+                setSubCategories([...subCategories]);
+                toast.update(id, {render: "Category fetched", type: "success", isLoading: false, autoClose:2000});
+            //   const newCategoryId = response.category._id;
+            //   navigate(`../${newCategoryId}/edit`)
+            }
+            else{
+              toast.update(id, {render: `${response.message}`, type: "error", isLoading: false, autoClose:2000});
+            }
+        }catch(err){
+            console.log(err);
+        } 
     }
-  )
-  const [subCategories, setSubCategories]= useState(
-    [
-      {
-        title:'',
-      }
-    ]
-  )
+    fetchCategory();
+    
+  },[])
+
+  useEffect(()=>{
+    console.log(category, subCategories);
+  },[category])
 
   const handleSubmit =async(e)=>{
     e.preventDefault();
-    const id = toast.loading("Saving new category...");
-
     const data = JSON.stringify({...category, sub_categories:subCategories});
     try{
       const res = await fetch('http://localhost:4000/api/category/add', {
@@ -45,17 +61,11 @@ const CreateCategory = () => {
         headers:myheaders,
         body:data
       })
+
       const response = await res.json();
-      
-      if(res.ok){
-        toast.update(id, {render: "Category Saved Succefully", type: "success", isLoading: false, autoClose:8000});
-        const newCategoryId = response.category._id;
-        navigate(`../${newCategoryId}/edit`)
-      }
-      else{
-        toast.update(id, {render: `${response.message}`, type: "error", isLoading: false, autoClose:8000});
-      }
-    }catch(err){
+      console.log(response);
+    }
+    catch(err){
       console.log(err);
     }
   }
@@ -64,10 +74,11 @@ const CreateCategory = () => {
     <div className='page create-category-page'>
       <div className="page-wrapper">
         <div className="page-header">
-            <h2>Create new category</h2>
+           <h2>edit category</h2>
         </div>
         <div className="page-body">
-            <form className='form create-product-form' action="">
+           {category ? 
+           <form className='form create-product-form' action="">
                 <div className="form-haeder">
                     
                 </div>
@@ -90,7 +101,8 @@ const CreateCategory = () => {
                         </button>   
                     </div>
                 </div>
-            </form>
+           </form>
+           : null}
         </div>
       </div>
     </div>
@@ -106,8 +118,9 @@ const AddCategory= ({category , setCategory})=>{
               <input  type="text" 
                       className='input' 
                       placeholder='Ex: smartphones, laptops..'
+                      value={category.title}
                       onChange={(e)=>{
-                        category.title = e.target.value;
+                        setCategory({...category, title:e.target.value})
                       }}/>
               <Nb message='its better to make a little general'/>
           </div>
@@ -119,8 +132,9 @@ const AddCategory= ({category , setCategory})=>{
                         className='input' 
                         placeholder='Ex: something..' 
                         required
+                        value={category.description}
                         onChange={(e)=>{
-                          category.description = e.target.value;
+                            setCategory({...category, description:e.target.value})
                         }}
               ></textarea>
           </div>
@@ -168,7 +182,7 @@ const AddSubCategories= ({subCategories, setSubCategories})=>{
                             </div>
                             <div className="input-wrapper">
                               <label htmlFor={`subCatTitle-${index}`} className="label">title :</label>
-                              <input type="text" id={`subCatTitle-${index}`} name={`subCatTitle-${index}`} className="input" placeholder='Ex: ...' onChange={(e)=>{handleChange(e,index)}}/>
+                              <input type="text" id={`subCatTitle-${index}`} name={`subCatTitle-${index}`} className="input" placeholder='Ex: ...' value={subCategories[index].title} onChange={(e)=>{handleChange(e,index)}}/>
                             </div>
                             <div className="delete-elem f-r-c-c">
                               <button type="button" className='f-r-c-c' onClick={()=>deleteSubCategory(index)}>
@@ -191,4 +205,4 @@ const AddSubCategories= ({subCategories, setSubCategories})=>{
     </>
   )
 }
-export default CreateCategory
+export default EditCategory

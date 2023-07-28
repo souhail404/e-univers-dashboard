@@ -4,6 +4,7 @@ import TopBar from '../components/layout/TopBar'
 import { Outlet } from 'react-router-dom'
 import Footer from '../components/layout/Footer'
 import { useAuth } from '../hooks/useAuth'
+import { ToastContainer } from 'react-toastify'
 
 const Layout = () => {
   const {user} = useAuth()
@@ -21,7 +22,8 @@ const Layout = () => {
         <div id="app-main">
             {user ? <TopBar /> : null}
             <div id="main">
-               <Outlet /> 
+              <ToastContainer />
+              <Outlet /> 
             </div>
             <Footer />
         </div>

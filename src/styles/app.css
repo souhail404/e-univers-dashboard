@@ -297,6 +297,7 @@ p, a{
     grid-template-rows: auto 1fr auto;
     grid-template-areas: "topbar" "main" "footer";
     overflow-y: scroll;
+    position: relative;
 }
 
 #app-main #topbar{
@@ -942,4 +943,69 @@ p, a{
 }
 .image-dropzone-wrapper .image-buttons button:not(:last-of-type){
     margin-right: var(--p4);
+}
+
+
+/* add category page */
+.add-subcat-wrapper{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 180px);
+    gap: var(--p2);
+}
+.add-subcat-wrapper .elem{
+    width: 100%;
+    border: 1px solid var(--black-50);
+    display: flex;
+    flex-direction: column;
+    padding: var(--p3);
+    position: relative;
+}
+.add-subcat-wrapper .elem.action{
+    padding: 0;
+    border: 1px solid var(--primary-color-2);
+    color: var(--primary-color-2);
+}
+.add-subcat-wrapper .elem.action:hover{
+    border: 2px solid var(--primary-color-2);
+}
+.add-subcat-wrapper .elem.action button{
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.add-subcat-wrapper .elem.action .icon{
+    font-size: 20px;
+}
+.add-subcat-wrapper .elem .elem-head{
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid var(--black-35);
+    margin-bottom: var(--p3);
+}
+.add-subcat-wrapper .elem.subcat-wrapper .delete-elem{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    transform: translate(50%, -50%);
+}
+.add-subcat-wrapper .elem.subcat-wrapper .delete-elem button{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: var(--error-color);
+    border: 1px solid var(--black-50);
+    cursor: pointer;
+}
+.add-subcat-wrapper .elem.subcat-wrapper .input-wrapper{
+    width: 100%;
+    display: flex;
+}
+.add-subcat-wrapper .elem.subcat-wrapper .label{
+    margin-bottom: 0;
+}
+.add-subcat-wrapper .elem.subcat-wrapper .input{
+    height: 30px;
 }
