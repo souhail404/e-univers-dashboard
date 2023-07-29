@@ -8,7 +8,8 @@ import {CiSaveDown2} from 'react-icons/ci'
 import {AiOutlineDown, AiOutlineAppstoreAdd} from 'react-icons/ai'
 import {FiEdit3, FiSave, FiTrash2} from 'react-icons/fi'
 import { toast } from 'react-toastify';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Skeleton } from '@mui/material';
 
 
 
@@ -16,6 +17,8 @@ const EditCategory = () => {
   const {categoryId} =useParams();
   const {user} = useAuth();
   const {token} = user;
+  const navigate = useNavigate();
+
 
   const myheaders = new Headers();
   myheaders.append('Content-Type', 'application/json');
@@ -24,10 +27,12 @@ const EditCategory = () => {
   const [category, setCategory] =useState()
   const [subCategories, setSubCategories]= useState([])
   const [isAddingSub, setIsAddingSub]= useState(false);
+  const [isCategoryFetching, setIsCategoryFetching]= useState(false);
 
   useEffect(()=>{
     const fetchCategory= async()=>{
         try{
+            setIsCategoryFetching(true)
             const res = await fetch(`http://localhost:4000/api/category/${categoryId}`)
             const response = await res.json();
             
@@ -38,6 +43,7 @@ const EditCategory = () => {
             else{
               toast.error(`${response.message}`)
             }
+            setIsCategoryFetching(false)
         }catch(err){
             console.log(err);
         } 
@@ -60,7 +66,8 @@ const EditCategory = () => {
       const response = await res.json();
       
       if(res.ok){
-        toast.update(toastId, {render:'Updating category', type:'success', isLoading:false, autoClose:6000});
+        toast.update(toastId, {render:'Category updated', type:'success', isLoading:false, autoClose:6000});
+        navigate('/categories/')
       }
       else{
         toast.update(toastId, {render:`${response.message}`, type:'error', isLoading:false, autoClose:6000});
@@ -78,40 +85,47 @@ const EditCategory = () => {
     <div className='page edit-category-page'>
       <div className="page-wrapper">
         <div className="page-header">
-           <h2>Category {category? `(${category.title})`: ''} :</h2>
+           <h3>Category {category? `(${category.title})`: ''} :</h3>
         </div>
         <div className="page-body">
-           {category ? 
-           <form className='form create-product-form' action="">
-                <div className="form-haeder">
-                    
-                </div>
-                <div className="form-body">
-                    <div className="form-group">
-                      <EditCategoryInfos category={category} setCategory={setCategory} />
-                    </div>
+           {isCategoryFetching ? 
+            <>
+              <Skeleton height={250} />
+              <Skeleton height={150}/>
+            </>
 
-                    <div className="form-group">
-                      <EditSubCategories categoryId={categoryId}
-                                        subCategories={subCategories} 
-                                        setSubCategories={setSubCategories} 
-                                        isAddingSub={isAddingSub} 
-                                        setIsAddingSub={setIsAddingSub}
-                      />
-                    </div>
-                </div>
-                <div className="form-actions">
-                    <div className="action-elem">
-                        <button className="btn" onClick={(e)=>handleSubmit(e)}>
-                            <div className="icon">
-                                <CiSaveDown2 />
-                            </div>
-                            <p>Save</p>
-                        </button>   
-                    </div>
-                </div>
-           </form>
-           : null}
+            :
+            category ? 
+              <form className='form create-product-form' action="">
+                  <div className="form-haeder">
+                      
+                  </div>
+                  <div className="form-body">
+                      <div className="form-group">
+                        <EditCategoryInfos category={category} setCategory={setCategory} />
+                      </div>
+
+                      <div className="form-group">
+                        <EditSubCategories categoryId={categoryId}
+                                          subCategories={subCategories} 
+                                          setSubCategories={setSubCategories} 
+                                          isAddingSub={isAddingSub} 
+                                          setIsAddingSub={setIsAddingSub}
+                        />
+                      </div>
+                  </div>
+                  <div className="form-actions">
+                      <div className="action-elem">
+                          <button className="btn" onClick={(e)=>handleSubmit(e)}>
+                              <div className="icon">
+                                  <CiSaveDown2 />
+                              </div>
+                              <p>Save</p>
+                          </button>   
+                      </div>
+                  </div>
+              </form>
+            : null}
         </div>
       </div>
     </div>
@@ -156,10 +170,12 @@ const EditCategoryInfos = ({category , setCategory})=>{
 const EditSubCategories= ({categoryId, subCategories, isAddingSub, setIsAddingSub, setSubCategories})=>{
   const [showBody, setShowBody]=useState(true)
   const [isAdded, setIsAdded]= useState(1)
+  const [isSubCatFetching, setIsSubCatFetching]= useState(false)
   
   useEffect(()=>{
       const fetchSubCategory= async()=>{
         try{
+            setIsSubCatFetching(true)
             const res = await fetch(`http://localhost:4000/api/category/${categoryId}`)
             const response = await res.json();
             
@@ -167,6 +183,7 @@ const EditSubCategories= ({categoryId, subCategories, isAddingSub, setIsAddingSu
               const {subCategories} = response;
               setSubCategories([...subCategories]);
             }
+            setIsSubCatFetching(false)
         }catch(err){
             console.log(err);
         } 
@@ -184,7 +201,7 @@ const EditSubCategories= ({categoryId, subCategories, isAddingSub, setIsAddingSu
                         <button className={showBody ? `toggler-btn active` : `toggler-btn`} type="button" onClick={()=>setShowBody(!showBody)}> <AiOutlineDown/> </button>
                     </div>
                     <div className="heading">
-                        <p className='block-header'>Sub Categories</p>
+                        <p className='block-header'>Sub Categories {`(${subCategories.length})`}</p>
                     </div>
                 </div>
                 <div className={showBody ? `outer-block-body active` : `outer-block-body`}>
@@ -193,10 +210,14 @@ const EditSubCategories= ({categoryId, subCategories, isAddingSub, setIsAddingSu
                         subCategories.map((subcat, index)=>{
                           return(
                           <div key={index} className="subcategory-row">
-                            <SubCategoryBox subElem={subcat} subIndex={index} categoryId={categoryId} subCategories={subCategories} setSubCategories={setSubCategories}/>
+                            <SubCategoryBox subElem={subcat} subIndex={index} categoryId={categoryId} subCategories={subCategories} setSubCategories={setSubCategories} />
                           </div>
                           )
                         })
+                      }
+                      {isSubCatFetching?
+                        <Skeleton animation='wave' width={100} height={60}/>
+                        :null
                       }
                       {isAddingSub ? 
                           <div className="subcategory-row">
@@ -211,7 +232,7 @@ const EditSubCategories= ({categoryId, subCategories, isAddingSub, setIsAddingSu
                           <span className="icon f-c-c-c"><AiOutlineAppstoreAdd/></span>
                           <p>Add</p>
                         </button>
-                      </div>
+                      </div> 
                     </div>  
                 </div>
       </div>

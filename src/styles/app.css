@@ -1095,7 +1095,7 @@ p, a{
 .list-wrapper .form-elem input.search{
     width: auto;
 }
-.list-wrapper .form-elem .search-btn{
+.list-wrapper .form-elem .btn{
     box-shadow: none;
     border-radius: 0;
     text-transform: capitalize;
@@ -1107,13 +1107,20 @@ p, a{
     box-shadow: 0px 0px 8px var(--black-10);
 }
 .list-table thead{
-    background-color: var(--primary-color-6);
+    background-color: var(--gray-1);
 }
+.list-table tfoot{
+    background-color: var(--gray-1);
+}
+
 .list-table td, .list-table th{
     padding: var(--p3);
     padding-block: var(--p1);
     display: table-cell;
     text-align: start;
+}
+.list-table th.sort-btn{
+    cursor: pointer;
 }
 .list-table th p{
     font-size: 16px;
@@ -1132,4 +1139,58 @@ p, a{
 .list-table .actions-cell .action{
     width: 30px;
     height: 30px;
+}
+.list-table .list-footer{
+    padding-top: var(--p2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.list-table .empty-result{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--black-25);
+}
+.list-table .empty-result p{
+    font-weight: 500;
+}
+.list-table .empty-result .icon{
+    font-size: 26px;
+    margin-bottom: var(--p3);
+}
+
+
+.pagination .title{
+    margin-right: var(--p2);
+}
+.pagination .title p{
+    font-size: 14px;
+    text-transform: capitalize;
+    font-weight: 500;
+    color: var(--black-50);
+}
+.pagination .page-btns{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.pagination .page-btn{
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    color: var(--primary-color-1);
+    border: 1px solid var(--primary-color-1);
+    cursor: pointer;
+}
+.pagination .page-btn{
+    margin-inline: var(--p4);
+}
+.pagination .separing{
+    color: var(--black-50);
+}
+.pagination .page-btn.active{
+    background-color: var(--primary-color-1);
+    color: var(--primary-color-5);
+    border: 1px solid var(--black-35);
 }

@@ -57,7 +57,7 @@ const CreateCategory = () => {
     <div className='page create-category-page'>
       <div className="page-wrapper">
         <div className="page-header">
-            <h2>Create new category</h2>
+            <h3>Create new category</h3>
         </div>
         <div className="page-body">
             <form className='form create-product-form' action="">
@@ -96,7 +96,7 @@ const AddCategory= ({category , setCategory})=>{
                       className='input' 
                       placeholder='Ex: smartphones, laptops..'
                       onChange={(e)=>{
-                        category.title = e.target.value;
+                        category.title = e.target.value.toLowerCase();
                       }}/>
               <Nb message='its better to make a little general'/>
           </div>
@@ -109,7 +109,7 @@ const AddCategory= ({category , setCategory})=>{
                         placeholder='Ex: something..' 
                         required
                         onChange={(e)=>{
-                          category.description = e.target.value;
+                          category.description = e.target.value.toLowerCase();
                         }}
               ></textarea>
           </div>
