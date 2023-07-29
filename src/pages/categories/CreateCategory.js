@@ -26,19 +26,12 @@ const CreateCategory = () => {
       description:''
     }
   )
-  const [subCategories, setSubCategories]= useState(
-    [
-      {
-        title:'',
-      }
-    ]
-  )
 
   const handleSubmit =async(e)=>{
     e.preventDefault();
     const id = toast.loading("Saving new category...");
 
-    const data = JSON.stringify({...category, sub_categories:subCategories});
+    const data = JSON.stringify({...category});
     try{
       const res = await fetch('http://localhost:4000/api/category/add', {
         method:"POST",
@@ -74,10 +67,6 @@ const CreateCategory = () => {
                 <div className="form-body">
                     <div className="form-group">
                       <AddCategory category={category} setCategory={setCategory} />
-                    </div>
-
-                    <div className="form-group">
-                      <AddSubCategories subCategories={subCategories} setSubCategories={setSubCategories} />
                     </div>
                 </div>
                 <div className="form-actions">
@@ -129,66 +118,5 @@ const AddCategory= ({category , setCategory})=>{
   )
 }
 
-const AddSubCategories= ({subCategories, setSubCategories})=>{
-  const [showBody, setShowBody]=useState(true)
-  
-  const handleChange = (e,index)=>{
-    const updatedSubCats = [...subCategories];
-    updatedSubCats[index].title = e.target.value;
-    setSubCategories(updatedSubCats);
-  }
-  const addNewSubCategory = ()=>{
-    setSubCategories([...subCategories, { title:'' }])
-  }
-  const deleteSubCategory = (index)=>{
-    const updateSubCats = [...subCategories];
-    updateSubCats.splice(index, 1);
-    setSubCategories(updateSubCats);
-  }
 
-  return(
-    <>
-      <div className="outer-block">
-                <div className="outer-block-header">
-                    <div className="body-toggler">
-                        <button className={showBody ? `toggler-btn active` : `toggler-btn`} type="button" onClick={()=>setShowBody(!showBody)}> <AiOutlineDown/> </button>
-                    </div>
-                    <div className="heading">
-                        <p className='block-header'>Sub Categories</p>
-                    </div>
-                </div>
-                <div className={showBody ? `outer-block-body active` : `outer-block-body`}>
-                    <div className="add-subcat-wrapper">
-                      {
-                        subCategories.map((subcat, index)=>{
-                          return(
-                          <div key={index} className="elem subcat-wrapper">
-                            <div className="elem-head">
-                              <p>{index + 1}</p>
-                            </div>
-                            <div className="input-wrapper">
-                              <label htmlFor={`subCatTitle-${index}`} className="label">title :</label>
-                              <input type="text" id={`subCatTitle-${index}`} name={`subCatTitle-${index}`} className="input" placeholder='Ex: ...' onChange={(e)=>{handleChange(e,index)}}/>
-                            </div>
-                            <div className="delete-elem f-r-c-c">
-                              <button type="button" className='f-r-c-c' onClick={()=>deleteSubCategory(index)}>
-                                <span className="icon f-r-c-c"><FiTrash2/></span>
-                              </button>
-                            </div>
-                          </div>
-                          )
-                        })
-                      }
-                      <div className="elem action">
-                        <button type="button" className='f-c-c-c' onClick={()=>addNewSubCategory()}>
-                          <span className="icon f-c-c-c"><AiOutlineAppstoreAdd/></span>
-                          <p>Add sub category</p>
-                        </button>
-                      </div>
-                    </div>  
-                </div>
-      </div>
-    </>
-  )
-}
 export default CreateCategory

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Nb from '../../components/common/Nb'
 import { useAuth } from '../../hooks/useAuth';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 import {CiSaveDown2} from 'react-icons/ci'
 import {AiOutlineDown, AiOutlineAppstoreAdd} from 'react-icons/ai'
-import {FiTrash2} from 'react-icons/fi'
+import {FiEdit3, FiSave, FiTrash2} from 'react-icons/fi'
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 
@@ -21,49 +23,51 @@ const EditCategory = () => {
 
   const [category, setCategory] =useState()
   const [subCategories, setSubCategories]= useState([])
-  
+  const [isAddingSub, setIsAddingSub]= useState(false);
+
   useEffect(()=>{
     const fetchCategory= async()=>{
-        const id = toast.loading('fetching category...')
         try{
             const res = await fetch(`http://localhost:4000/api/category/${categoryId}`)
             const response = await res.json();
             
             if(res.ok){
-                const {category, subCategories} = response;
-                setCategory({...category});
-                setSubCategories([...subCategories]);
-                toast.update(id, {render: "Category fetched", type: "success", isLoading: false, autoClose:2000});
-            //   const newCategoryId = response.category._id;
-            //   navigate(`../${newCategoryId}/edit`)
+              const {category} = response;
+              setCategory({...category});
             }
             else{
-              toast.update(id, {render: `${response.message}`, type: "error", isLoading: false, autoClose:2000});
+              toast.error(`${response.message}`)
             }
         }catch(err){
             console.log(err);
         } 
     }
     fetchCategory();
-    
+
   },[])
 
-  useEffect(()=>{
-    console.log(category, subCategories);
-  },[category])
-
   const handleSubmit =async(e)=>{
+    const toastId = toast.loading('Updating category');
     e.preventDefault();
-    const data = JSON.stringify({...category, sub_categories:subCategories});
+    const data = JSON.stringify({title:category.title, description:category.description});
     try{
-      const res = await fetch('http://localhost:4000/api/category/add', {
-        method:"POST",
+      const res = await fetch(`http://localhost:4000/api/category/${categoryId}`, {
+        method:"PUT",
         headers:myheaders,
         body:data
       })
-
+      
       const response = await res.json();
-      console.log(response);
+      
+      if(res.ok){
+        toast.update(toastId, {render:'Updating category', type:'success', isLoading:false, autoClose:6000});
+      }
+      else{
+        toast.update(toastId, {render:`${response.message}`, type:'error', isLoading:false, autoClose:6000});
+      }
+
+      
+      console.log(data);
     }
     catch(err){
       console.log(err);
@@ -71,10 +75,10 @@ const EditCategory = () => {
   }
 
   return (
-    <div className='page create-category-page'>
+    <div className='page edit-category-page'>
       <div className="page-wrapper">
         <div className="page-header">
-           <h2>edit category</h2>
+           <h2>Category {category? `(${category.title})`: ''} :</h2>
         </div>
         <div className="page-body">
            {category ? 
@@ -84,11 +88,16 @@ const EditCategory = () => {
                 </div>
                 <div className="form-body">
                     <div className="form-group">
-                      <AddCategory category={category} setCategory={setCategory} />
+                      <EditCategoryInfos category={category} setCategory={setCategory} />
                     </div>
 
                     <div className="form-group">
-                      <AddSubCategories subCategories={subCategories} setSubCategories={setSubCategories} />
+                      <EditSubCategories categoryId={categoryId}
+                                        subCategories={subCategories} 
+                                        setSubCategories={setSubCategories} 
+                                        isAddingSub={isAddingSub} 
+                                        setIsAddingSub={setIsAddingSub}
+                      />
                     </div>
                 </div>
                 <div className="form-actions">
@@ -109,7 +118,8 @@ const EditCategory = () => {
   )
 }
 
-const AddCategory= ({category , setCategory})=>{
+const EditCategoryInfos = ({category , setCategory})=>{
+  
   return(
     <>
       <div className="form-line">
@@ -143,22 +153,28 @@ const AddCategory= ({category , setCategory})=>{
   )
 }
 
-const AddSubCategories= ({subCategories, setSubCategories})=>{
+const EditSubCategories= ({categoryId, subCategories, isAddingSub, setIsAddingSub, setSubCategories})=>{
   const [showBody, setShowBody]=useState(true)
+  const [isAdded, setIsAdded]= useState(1)
   
-  const handleChange = (e,index)=>{
-    const updatedSubCats = [...subCategories];
-    updatedSubCats[index].title = e.target.value;
-    setSubCategories(updatedSubCats);
-  }
-  const addNewSubCategory = ()=>{
-    setSubCategories([...subCategories, { title:'' }])
-  }
-  const deleteSubCategory = (index)=>{
-    const updateSubCats = [...subCategories];
-    updateSubCats.splice(index, 1);
-    setSubCategories(updateSubCats);
-  }
+  useEffect(()=>{
+      const fetchSubCategory= async()=>{
+        try{
+            const res = await fetch(`http://localhost:4000/api/category/${categoryId}`)
+            const response = await res.json();
+            
+            if(res.ok){
+              const {subCategories} = response;
+              setSubCategories([...subCategories]);
+            }
+        }catch(err){
+            console.log(err);
+        } 
+      }
+      fetchSubCategory();
+
+    console.log('re render sub cat fetch');
+  },[isAdded])
 
   return(
     <>
@@ -176,27 +192,24 @@ const AddSubCategories= ({subCategories, setSubCategories})=>{
                       {
                         subCategories.map((subcat, index)=>{
                           return(
-                          <div key={index} className="elem subcat-wrapper">
-                            <div className="elem-head">
-                              <p>{index + 1}</p>
-                            </div>
-                            <div className="input-wrapper">
-                              <label htmlFor={`subCatTitle-${index}`} className="label">title :</label>
-                              <input type="text" id={`subCatTitle-${index}`} name={`subCatTitle-${index}`} className="input" placeholder='Ex: ...' value={subCategories[index].title} onChange={(e)=>{handleChange(e,index)}}/>
-                            </div>
-                            <div className="delete-elem f-r-c-c">
-                              <button type="button" className='f-r-c-c' onClick={()=>deleteSubCategory(index)}>
-                                <span className="icon f-r-c-c"><FiTrash2/></span>
-                              </button>
-                            </div>
+                          <div key={index} className="subcategory-row">
+                            <SubCategoryBox subElem={subcat} subIndex={index} categoryId={categoryId} subCategories={subCategories} setSubCategories={setSubCategories}/>
                           </div>
                           )
                         })
                       }
-                      <div className="elem action">
-                        <button type="button" className='f-c-c-c' onClick={()=>addNewSubCategory()}>
+                      {isAddingSub ? 
+                          <div className="subcategory-row">
+                            <NewSubCategoryBox  categoryId={categoryId} 
+                                                setIsAddingSub={setIsAddingSub}
+                                                setIsAdded={setIsAdded}
+                            />
+                          </div>
+                      : null}
+                      <div className="subcategory-row action">
+                        <button type="button" className='f-r-c-c' onClick={()=>setIsAddingSub(true)}>
                           <span className="icon f-c-c-c"><AiOutlineAppstoreAdd/></span>
-                          <p>Add sub category</p>
+                          <p>Add</p>
                         </button>
                       </div>
                     </div>  
@@ -205,4 +218,178 @@ const AddSubCategories= ({subCategories, setSubCategories})=>{
     </>
   )
 }
+
+
+
+const SubCategoryBox = ({subElem , subIndex, categoryId , subCategories, setSubCategories})=>{
+  const [isEditing, setIsEditing] = useState(false);
+  const {user} = useAuth();
+  const {token} = user;
+
+  const myheaders = new Headers();
+  myheaders.append('Content-Type', 'application/json');
+  myheaders.append('Authorization', `Bearer ${token}`);
+
+  const deleteSubCategory = async() =>{
+    const subId = subElem._id;
+    const id = toast.loading(`Deleting Subcategory : (${subElem.title})`);
+    try {
+      const res = await fetch(`http://localhost:4000/api/category/${categoryId}/subcategory/${subId}`, {
+        method:"DELETE",
+        headers:myheaders,
+      })
+      const response = await res.json();
+      if(res.ok){
+        const updatedSubCats = [...subCategories];
+        updatedSubCats.splice(subIndex, 1)
+        setSubCategories(updatedSubCats)
+        toast.update(id, {render: "Subcategory deleted Succefully", type: "success", isLoading: false, autoClose:5000});
+      }
+      else{
+        toast.update(id, {render: `${response.message}`, type: "error", isLoading: false, autoClose:5000});
+      }
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const EditSubCategory = async() =>{
+    const id = toast.loading(`Editing Subcategory : (${subElem.title})`);
+    const data = JSON.stringify({...subElem})
+    const subId = subElem._id;
+    console.log(data);
+    try {
+      const res = await fetch(`http://localhost:4000/api/category/${categoryId}/subcategory/${subId}`, {
+        method:"PUT",
+        headers:myheaders,
+        body:data
+      })
+      const response = await res.json();
+      if(res.ok){
+        toast.update(id, {render: "Subcategory Edited Succefully", type: "success", isLoading: false, autoClose:5000});
+      }
+      else{
+        toast.update(id, {render: `${response.message}`, type: "error", isLoading: false, autoClose:5000});
+      }
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const handleEditClick = ()=>{
+    setIsEditing(true)
+  }
+
+  const handleSaveClick = async()=>{
+    await EditSubCategory(subIndex, subElem);
+    setIsEditing(false)
+  }
+
+  const handleEditingChange = (e)=>{
+    const updateSubCats = [...subCategories];
+    updateSubCats[subIndex].title = e.target.value;
+    setSubCategories(updateSubCats)
+  }
+  const handleDeleteClick = (e)=>{
+    confirmAlert(
+      {
+        title: 'Delete',
+        message: `Are you sure you wanna delete subcategory (${subElem.title})`,
+        buttons: [
+          {
+            label: 'Delete',
+            onClick: () => {deleteSubCategory(subElem)}
+          },
+          {
+            label: 'Cancel',
+            onClick: () => {return}
+          }
+        ]
+      }
+    )
+  }
+
+  return(
+    <div className="subcategory-box">
+      { isEditing ?
+        <div className="box-elem edit">
+          <input type="text" value={subElem.title} onChange={(e)=> handleEditingChange(e,subIndex)} autoFocus />
+        </div>
+      :
+        <div className="box-elem title">
+            <p onClick={()=>handleEditClick()}>{subElem.title}</p>
+        </div>
+      }
+      
+      <div className="actions">
+        <button className='action-elem btn-round delete' type="button" onClick={(e)=>handleDeleteClick(e)}><FiTrash2/></button>
+        {isEditing ? null : <button className='action-elem btn-round edit' type="button" onClick={()=>handleEditClick()}><FiEdit3/></button>}
+        {isEditing ? <button className='action-elem btn-round save' type="button" onClick={()=>handleSaveClick()}><FiSave/></button> : null}
+      </div>
+    </div>
+  )
+}
+
+const NewSubCategoryBox = ({categoryId, setIsAdded, setIsAddingSub})=>{
+  const [isEditing, setIsEditing] = useState(true);
+  const [newSubCat, setNewSubCat]= useState({title:''})
+
+  const {user} = useAuth();
+  const {token} = user;
+
+  const myheaders = new Headers();
+  myheaders.append('Content-Type', 'application/json');
+  myheaders.append('Authorization', `Bearer ${token}`);
+
+  const createSubCategory = async() =>{
+    const id = toast.loading(`Creating new Subcategory : (${newSubCat.title})`);
+    const data = JSON.stringify(newSubCat)
+    try {
+      const res = await fetch(`http://localhost:4000/api/category/${categoryId}/addonesubcategory`, {
+        method:"POST",
+        headers:myheaders,
+        body:data
+      })
+      const response = await res.json();
+      if(res.ok){
+        setIsAdded(Math.floor(Math.random() * 150))
+        setIsAddingSub(false)
+        setIsEditing(false)
+        toast.update(id, {render: "Subcategory Created Succefully", type: "success", isLoading: false, autoClose:5000});
+      }
+      else{
+        toast.update(id, {render: `${response.message}`, type: "error", isLoading: false, autoClose:5000});
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const handleDeleteClick = (e)=>{
+    setIsAddingSub(false)
+  }
+  const handleSaveClick = async()=>{
+    await createSubCategory();
+  }
+  const handleEditingChange = (e)=>{
+    setNewSubCat({newSubCat, title:e.target.value})
+  }
+  return(
+    <div className="subcategory-box">
+      { isEditing ?
+        <div className="box-elem edit">
+          <input type="text" autoFocus placeholder='Title..' required onChange={(e)=> handleEditingChange(e)} value={newSubCat.title} />
+        </div>
+      :
+        null
+      }
+      
+      <div className="actions">
+        <button className='action-elem btn-round delete' type="button" onClick={(e)=>handleDeleteClick(e)}><FiTrash2/></button>
+        {isEditing ? null : <button className='action-elem btn-round edit' type="button"><FiEdit3/></button>}
+        {isEditing ? <button className='action-elem btn-round save' type="button" onClick={(e)=>handleSaveClick()}><FiSave/></button> : null}
+      </div>
+    </div>
+  )
+}
+
 export default EditCategory

@@ -60,12 +60,7 @@ const SideBar = () => {
           <Link to="/customers" className='link-wrapper'>
             <div className="icon"> <LuUser /> </div>
             <p>Customers</p>
-          </Link>
-          <Link to="/category" className='link-wrapper'>
-            <div className="icon"> <MdOutlineCategory /> </div>
-            <p>Catgories</p>
-          </Link>
-          
+          </Link>          
           <Link to="/store" className='link-wrapper'>
             <div className="icon"> <LuStore /> </div>
             <p>Store</p>

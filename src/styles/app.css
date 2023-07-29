@@ -28,6 +28,7 @@
     --primary-color-3: #00b4d8;
     --primary-color-4:#90e0ef;
     --primary-color-5: #caf0f8;
+    --primary-color-6: #eefcff;
     --secondary-color-1: #c8b6ff; 
     --secondary-color-2:#e7c6ff;
 
@@ -58,6 +59,10 @@
     --white-15:#ffffff26;
     --white-10:#ffffff1a;
 
+    /* buttons */
+    --edit-btn:#8ecae6;
+    --delete-btn:#ff758f;
+    --save-btn:#b8e0d2;
 
     /* layout */
     --top-bar-height:60px;
@@ -105,7 +110,27 @@ p, a{
     align-items: center;
     justify-content: center;
 }
-
+.btn-round{
+    box-shadow: 3px 3px 3px var(--black-5);
+    cursor: pointer;
+    border: 1px solid var(--black-35);
+    border-radius: 50%;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+}
+.btn-round:hover{
+    box-shadow: 3px 3px 3px var(--black-10);
+}
+.btn-round.delete{
+    background-color: var(--delete-btn);
+}
+.btn-round.edit{
+    background-color: var(--edit-btn);
+}
+.btn-round.save{
+    background-color: var(--save-btn);
+}
 .btn{
     box-shadow: 3px 3px 3px var(--black-15);
     cursor: pointer;
@@ -949,55 +974,36 @@ p, a{
 /* add category page */
 .add-subcat-wrapper{
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 180px);
-    gap: var(--p2);
-}
-.add-subcat-wrapper .elem{
-    width: 100%;
-    border: 1px solid var(--black-50);
     display: flex;
-    flex-direction: column;
-    padding: var(--p3);
-    position: relative;
+    flex-wrap: wrap;
+    /* display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: var(--p2); */
 }
-.add-subcat-wrapper .elem.action{
-    padding: 0;
+.add-subcat-wrapper .subcategory-row{
+    width: auto;
+    min-width:  60px;
+    max-width: 340px;
+    padding-block: var(--p2);
+    padding-inline: var(--p3) ;
+}
+.add-subcat-wrapper .subcategory-row.action button{
     border: 1px solid var(--primary-color-2);
     color: var(--primary-color-2);
-}
-.add-subcat-wrapper .elem.action:hover{
-    border: 2px solid var(--primary-color-2);
-}
-.add-subcat-wrapper .elem.action button{
-    width: 100%;
-    height: 100%;
+    padding: 0;
+    border-radius: var(--p1);
     background-color: transparent;
-    border: none;
     cursor: pointer;
+    padding-block: var(--p3);
+    padding-inline: var(--p2);
 }
-.add-subcat-wrapper .elem.action .icon{
+.add-subcat-wrapper .subcategory-row.action button:hover{
+    border: 1px solid var(--primary-color-1);
+    color: var(--primary-color-1);
+}
+.add-subcat-wrapper .action .icon{
     font-size: 20px;
-}
-.add-subcat-wrapper .elem .elem-head{
-    width: 100%;
-    display: flex;
-    border-bottom: 1px solid var(--black-35);
-    margin-bottom: var(--p3);
-}
-.add-subcat-wrapper .elem.subcat-wrapper .delete-elem{
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    transform: translate(50%, -50%);
-}
-.add-subcat-wrapper .elem.subcat-wrapper .delete-elem button{
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background-color: var(--error-color);
-    border: 1px solid var(--black-50);
-    cursor: pointer;
+    margin-right: var(--p2);
 }
 .add-subcat-wrapper .elem.subcat-wrapper .input-wrapper{
     width: 100%;
@@ -1007,5 +1013,123 @@ p, a{
     margin-bottom: 0;
 }
 .add-subcat-wrapper .elem.subcat-wrapper .input{
+    height: 30px;
+}
+
+
+
+.subcategory-box{
+    width: 100%;
+    background-color: var(--black-5);
+    border-radius: var(--p1);
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--black-25);
+    box-shadow: 0px 3px 3px var(--black-10);
+    padding-block: var(--p3);
+    padding-inline: var(--p2);
+}
+.subcategory-box .actions{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid var(--black-25);
+    padding-left: var(--p2);
+}
+
+.subcategory-box .box-elem{
+    display: flex;
+    padding-right: var(--p2);
+}
+.subcategory-box .box-elem input{
+    width: 100%;
+    max-width: 100%;
+}
+.subcategory-box .actions .action-elem{
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+}
+.subcategory-box .actions .action-elem:not(:last-of-type){
+    margin-right: var(--p4);
+}
+
+.list-wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.list-wrapper .list-header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--p1);
+    background-color: var(--white);
+    box-shadow: 0px 0px 8px var(--black-10);
+    padding: var(--p2);
+}
+.list-wrapper .list-header .list-form{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.list-wrapper .list-header .form-elem{
+    height: 36px;
+    background-color: var(--black-35);
+    display: flex;
+    align-items: center;
+}
+.list-wrapper .list-header .form-elem{
+    >button, input, select{
+        height: 100%;
+    }
+}
+.list-wrapper .list-header .form-elem:not(:last-of-type){
+    margin-right: var(--p1);
+}
+.list-wrapper .form-elem input{
+    padding-inline: var(--p4);
+    outline: none;
+}
+.list-wrapper .form-elem input.search{
+    width: auto;
+}
+.list-wrapper .form-elem .search-btn{
+    box-shadow: none;
+    border-radius: 0;
+    text-transform: capitalize;
+    padding-inline: var(--p2);
+}
+.list-table{
+    width: 100%;
+    background-color: var(--white);
+    box-shadow: 0px 0px 8px var(--black-10);
+}
+.list-table thead{
+    background-color: var(--primary-color-6);
+}
+.list-table td, .list-table th{
+    padding: var(--p3);
+    padding-block: var(--p1);
+    display: table-cell;
+    text-align: start;
+}
+.list-table th p{
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary-color-2);
+    text-transform: capitalize;
+    letter-spacing: .45px;
+}
+
+.list-table .actions-cell{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 30px);
+    gap: var(--p2);
+    width: auto;
+}
+.list-table .actions-cell .action{
+    width: 30px;
     height: 30px;
 }
