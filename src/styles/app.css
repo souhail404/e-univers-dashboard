@@ -1119,8 +1119,23 @@ p, a{
     display: table-cell;
     text-align: start;
 }
-.list-table th.sort-btn{
+.list-table .sort-btn{
     cursor: pointer;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+}
+.list-table .sort-btn .icon{
+    color: var(--black-35);
+    font-size: 10px;
+    margin-left: var(--p2);
+}
+.list-table .sort-btn .icon .asc{
+    color: var(--black);
+}
+.list-table .sort-btn .icon .desc{
+    color: var(--black);
 }
 .list-table th p{
     font-size: 16px;
@@ -1146,20 +1161,21 @@ p, a{
     align-items: center;
     justify-content: center;
 }
-.list-table .empty-result{
+
+
+.empty-fetch-result{
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--black-25);
 }
-.list-table .empty-result p{
+.empty-fetch-result p{
     font-weight: 500;
 }
-.list-table .empty-result .icon{
+.empty-fetch-result .icon{
     font-size: 26px;
     margin-bottom: var(--p3);
 }
-
 
 .pagination .title{
     margin-right: var(--p2);

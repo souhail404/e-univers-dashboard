@@ -7,7 +7,6 @@ const Pagination = ({page, setPage, totalPages }) => {
     const start = (page - Math.floor(maxVisiblePages/2) < 2) ? 2 : (page -Math.floor(maxVisiblePages/2)) ;
     const endPage = ((start + maxVisiblePages - 1 ) < totalPages) ? (start + maxVisiblePages - 1 ): (totalPages - 1);
     const startPage= ((endPage - maxVisiblePages+1 ) > 2) ? (endPage - maxVisiblePages+1 ): 2;
-    console.log(startPage, endPage) 
     // Create an array containing the page numbers in the range
     const pages = Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
 
