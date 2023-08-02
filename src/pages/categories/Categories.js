@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useDebounce } from 'use-debounce';
 // services
-import deleteCategory from '../../services/deleteCategory'
+import deleteCategoryService from '../../services/deleteCategoryService'
 import { toast } from 'react-toastify';
 import { confirmAlert } from 'react-confirm-alert';
 // components
@@ -12,6 +12,8 @@ import Pagination from '../../components/ListingTable/Pagination';
 import SortButton from '../../components/ListingTable/SortButton';
 import TableSkeleton from '../../components/ListingTable/TableSkeleton';
 import EmptyFetchRes from '../../components/ListingTable/EmptyFetchRes';
+import PageHeading from '../../components/common/PageHeading';
+
 // icons
 import {FiEdit3, FiTrash2} from 'react-icons/fi'
 // css
@@ -26,7 +28,7 @@ const Categories = () => {
   const [page, setPage] =useState(1);
   const [pageSize, setPageSize] =useState(5);
   const [totalPages, setTotalPages] = useState();
-  const [categoriesCount, setCategoriesCount] = useState();
+  const [productsCount, setProductsCount] = useState();
   const [isFetching, setIsFetching] = useState(false)
   
   // hooks----
@@ -45,7 +47,7 @@ const Categories = () => {
             label: 'Delete',
             onClick: async() => 
             {
-              const res = await deleteCategory(category, user)
+              const res = await deleteCategoryService(category, user)
               if(res.ok){
                 const updatedState = [...categoriesData];
                 updatedState.splice(index, 1)
@@ -75,10 +77,10 @@ const Categories = () => {
         const response = await res.json();
 
         if(res.ok){
-          const {categories, totalPages, categoriesCount} = response;
+          const {categories, totalPages, productsCount} = response;
           setCategoriesData(categories);
           setTotalPages(totalPages);
-          setCategoriesCount(categoriesCount);
+          setProductsCount(productsCount);
         }
         else{
           toast.error(`${response.message}`)
@@ -99,26 +101,24 @@ const Categories = () => {
   // render
   return (
     <div className='page category-page'>
-      <div className="list-wrapper">
-          <div className="list-header">
-            <div className="heading">
-              <h3>Categories {categoriesCount ?`(${categoriesCount})` :null}</h3>
+      <div className="table-list-wrapper">
+          <div className="table-list-header">
+            <PageHeading title={`categories ${productsCount ? `(${productsCount})` : ''} `} />
+            <div className="tlh--right">
+              <form className="tlh-right--elem search-filter">
+                  <input className='search-field' type="text" placeholder='search for category' onChange={(e)=>setSearch(e.target.value)} />
+                  <button type="button" className='search-btn btn'>
+                      <p>search</p>
+                  </button>
+              </form>
+              <div className="tlh-right--elem nav-links">
+                  <button type="button" className='nav-link btn' onClick={()=>navigate('./create')}>
+                      <p>new category</p>
+                  </button>
+              </div>
             </div>
-            <form className="list-form">
-              <div className="form-elem search">
-                <input className='search' type="text" placeholder='search for category' onChange={(e)=>setSearch(e.target.value)} />
-                <button type="button" className='search-btn btn'>
-                  <p>search</p>
-                </button>
-              </div>
-              <div className="form-elem">
-                <button type="button" className='btn' onClick={()=>navigate('./create')}>
-                    <p>new category</p>
-                </button>
-              </div>
-            </form>
           </div>
-          <table className="list-table">
+          <table className="table-list-body">
             <thead>
               <tr>
                 <th> 
@@ -169,8 +169,7 @@ const Categories = () => {
             :null}
             
           </table>
-      </div>
-        
+      </div> 
     </div>
   )
 }

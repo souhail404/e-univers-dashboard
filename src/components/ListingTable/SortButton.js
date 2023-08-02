@@ -11,7 +11,7 @@ const SortButton = ({title, value, sortConf, setSortConf }) => {
         }
     };  
     return (
-        <button type='button' className='sort-btn f-r-c-c' onClick={() => handleHeaderClick(value)}>
+        <button type='button' className='table-cell-sort f-r-c-c' onClick={() => handleHeaderClick(value)}>
         <p>{title}</p> 
             <div className="icon f-c-c-c"> 
                 <AiOutlineUp className={(sortConf.sortField===value && sortConf.sortOrder==='desc')?'desc': ''}/> 

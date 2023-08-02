@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-const deleteCategory = async(category, user) =>{
+const deleteCategoryService = async(category, user) =>{
     
     const myheaders = new Headers();
 
@@ -17,7 +17,7 @@ const deleteCategory = async(category, user) =>{
         })
         const response = await res.json();
         if(res.ok){
-            toast.update(toastId, {render: "Subcategory deleted Succefully", type: "success", isLoading: false, autoClose:5000});
+            toast.update(toastId, {render: "Category deleted Succefully", type: "success", isLoading: false, autoClose:5000});
         }
         else{
             toast.update(toastId, {render: `${response.message}`, type: "error", isLoading: false, autoClose:5000});
@@ -29,4 +29,4 @@ const deleteCategory = async(category, user) =>{
 
 }
 
-export default deleteCategory;
+export default deleteCategoryService;

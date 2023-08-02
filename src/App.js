@@ -1,3 +1,4 @@
+import './styles/component.css';
 import './styles/app.css';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -19,6 +20,7 @@ import Settings from './pages/Settings'
 import Store from './pages/Store'
 import Account from './pages/Account' 
 import CreateProduct from './pages/products/CreateProduct';
+import EditProduct from './pages/products/EditProduct';
 
 
 function App() {
@@ -34,6 +36,7 @@ function App() {
             <Route path="products">
               <Route index element={user ? <Products />: <Navigate to='/login' />}/>
               <Route path="create" element={user ? <CreateProduct />: <Navigate to='/login' />} />
+              <Route path=":productId/edit" element={user ? <EditProduct />: <Navigate to='/login' />} />
             </Route>
             <Route path="categories">
               <Route index element={user ? <Categories /> : <Navigate to='/login' />}/>
