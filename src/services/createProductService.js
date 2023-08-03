@@ -8,7 +8,7 @@ const createProductService = async(data, user) =>{
     }
 
     formData.append('title', data.title);
-    formData.append('slugTitle', data.slug_title);
+    formData.append('slugTitle', data.slugTitle);
     formData.append('category', data.category);
     formData.append('subcategory', data.subcategory);
     formData.append('miniDescription', data.miniDescription);

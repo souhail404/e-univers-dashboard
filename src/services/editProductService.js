@@ -3,19 +3,18 @@ import { toast } from 'react-toastify';
 const editProductService = async(data, user, productId) =>{
     const formData = new FormData();
     const existingImages = [];
-    // console.log(data.images);
     for (let i = 0; i < data.images.length; i++) {
-        if(data.images[i].isSaved){
-            console.log('0');
-            existingImages.push(data.images[i].url)
+        if(data.images[i].isSaved===true){
+            existingImages.push({url:data.images[i].url})
         }
-        else{
+        else if(data.images[i].isSaved===false){
             formData.append('images', data.images[i].file);
+            existingImages.push({url:i})
         }
     }
-    console.log(existingImages);
+
     formData.append('title', data.title);
-    formData.append('slugTitle', data.slug_title);
+    formData.append('slugTitle', data.slugTitle);
     formData.append('category', data.category);
     formData.append('subcategory', data.subcategory);
     formData.append('miniDescription', data.miniDescription);
@@ -23,7 +22,7 @@ const editProductService = async(data, user, productId) =>{
     formData.append('sellPrice', data.sellPrice);
     formData.append('comparePrice', data.comparePrice);
     formData.append('costPrice', data.costPrice);
-    formData.append('existingImages', existingImages); 
+    formData.append('existingImages', JSON.stringify(existingImages)); 
     const variants = data.variants
     formData.append('variants', JSON.stringify(variants)); 
 

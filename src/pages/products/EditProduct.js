@@ -26,7 +26,6 @@ const EditProduct = () => {
     
     const handleSaveClick=async(e)=>{
         e.preventDefault()
-        console.log(formBody);
         await editProductService(formBody, user, productId)
     }
 

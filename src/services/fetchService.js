@@ -1,12 +1,12 @@
 
-const fetchService = async(link, dispatch, state) =>{
+const fetchService = async(link, dispatch, setLoading) =>{
     try {
         const response = await fetch(`${link}`)
 
         const data = await response.json()
         
         dispatch(data)
-        state(false)
+        setLoading(false)
         return data
 
     } catch (error) {
