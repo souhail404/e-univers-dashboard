@@ -5,8 +5,6 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import {CiSaveDown2} from 'react-icons/ci'
-import {AiOutlineDown, AiOutlineAppstoreAdd} from 'react-icons/ai'
-import {FiTrash2} from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom';
 
 

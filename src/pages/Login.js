@@ -16,7 +16,7 @@ const Login = () => {
 
   const {values , errors, touched,  handleBlur , handleChange , handleSubmit} = useFormik({
     initialValues:{
-      user_ref:'',
+      userRef:'',
       password:'',
     },
     onSubmit
@@ -45,11 +45,11 @@ const Login = () => {
                 <label className='label' htmlFor="user-ref">Username, Email or Mobile</label>
                 <input 
                       type="text" 
-                      value={values.user_ref} 
+                      value={values.userRef} 
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      id='user_ref' 
-                      name='user_ref' 
+                      id='userRef' 
+                      name='userRef' 
                       className='input' 
                       placeholder='Your Username, Email or Mobile...' 
                 />
@@ -76,7 +76,7 @@ const Login = () => {
         </div>
         <div className='form-actions'>
           <div className="action-elem">
-            <button className="btn">
+            <button type='submit' className="btn">
               <div className="icon">
                 <BiLogIn />
               </div>
