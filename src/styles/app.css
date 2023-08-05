@@ -730,9 +730,11 @@ p, a{
 }
 .tlh-right--elem{
     height: 36px;
+    max-height: 36px;
     display: flex;
     align-items: center;
-    
+    position: relative;
+    min-width: 180px;
 }
 .tlh-right--elem:not(:last-child){
     margin-right: var(--p2 );
@@ -813,3 +815,7 @@ select.tlh-right--elem option{
 }
 
 
+
+.basic-single-select{
+    width: 100%;
+}

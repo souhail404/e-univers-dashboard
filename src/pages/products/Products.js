@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import deleteProductService from '../../services/deleteProductService';
 import { useAuth } from '../../hooks/useAuth';
-
+ 
 // components
 import PageHeading from '../../components/common/PageHeading';
 import SortButton from '../../components/ListingTable/SortButton';
@@ -14,7 +14,7 @@ import EmptyFetchRes from '../../components/ListingTable/EmptyFetchRes';
 import Pagination from '../../components/ListingTable/Pagination';
 
 import { FiEdit3, FiTrash2 } from 'react-icons/fi';
-
+ 
 const Products = () => {
   const [productsData, setProductsData] = useState([]); // data
   const [categoriesData, setCategoriesData] = useState([]); // data
@@ -24,7 +24,7 @@ const Products = () => {
   const [page, setPage] =useState(1);
   const [pageSize, setPageSize] =useState(12);
   const [totalPages, setTotalPages] = useState();
-  const [categoriesCount, setCategoriesCount] = useState();
+  const [productsCount, setProductsCount] = useState();
   const [isFetching, setIsFetching] = useState(false)
 
   const [serachValue]=useDebounce(search, 500)
@@ -90,7 +90,7 @@ const Products = () => {
           const {products, totalPages, totalProducts} = response;
           setProductsData(products);
           setTotalPages(totalPages);
-          setCategoriesCount(totalProducts);
+          setProductsCount(totalProducts);
         }
         else{
           toast.error(`${response.message}`)
@@ -113,7 +113,7 @@ const Products = () => {
     <div className='page products-page'>
       <div className="table-list-wrapper">
         <div className="table-list-header">
-          <PageHeading title={`products ${categoriesCount ? `(${categoriesCount})` : ''} `} />
+          <PageHeading title={`products ${productsCount ? `(${productsCount})` : ''} `} />
           <div className="tlh--right">
             <form className="tlh-right--elem search-filter">
                 <input className='search-field' type="text" placeholder='search for product' onChange={(e)=>setSearch(e.target.value)}/>
