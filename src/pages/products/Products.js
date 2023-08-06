@@ -27,7 +27,7 @@ const Products = () => {
   const [productsCount, setProductsCount] = useState();
   const [isFetching, setIsFetching] = useState(false)
 
-  const [serachValue]=useDebounce(search, 500)
+  const [serachValue]=useDebounce(search, 500) 
   const navigate = useNavigate();
   const {user} = useAuth()
 

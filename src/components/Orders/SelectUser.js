@@ -41,7 +41,7 @@ const SelectUser = ({setFilterUser}) => {
         let selectOpts = [{value:'', label:'All users'}]
 
         usersData.forEach(user =>{
-            selectOpts.push({value:user._id, label:user.userName})
+            selectOpts.push({value:user._id, label:`${user.lastName} ${user.firstName}`})
         })
         setOptions(selectOpts)
     },[usersData])
