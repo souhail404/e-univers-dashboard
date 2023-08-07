@@ -40,9 +40,6 @@ const SelectProduct = ({setFilterProduct}) => {
         setOptions(selectOpts)
     },[products])
 
-    useEffect(()=>{
-        console.log(options);
-    },[options])
 
     return ( 
         <div className='tlh-right--elem'>

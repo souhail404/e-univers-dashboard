@@ -819,3 +819,116 @@ select.tlh-right--elem option{
 .basic-single-select{
     width: 100%;
 }
+
+
+.overview-cards-wrapper{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--p1);
+}
+
+.stat-overview-card{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: var(--p2);
+    background-color: var(--white);
+    box-shadow: 0px 0px 8px var(--black-10);
+}
+.stat-overview-card .header{
+    display: flex;
+    align-items: center;
+    column-gap: var(--p2);
+    margin-bottom: var(--p1);
+    line-height: 16px;
+    
+}
+.stat-overview-card .header .txt{
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--p4);
+}
+.stat-overview-card .header .head-txt{
+    font-size: 16px;
+    font-weight: 600;
+}
+.stat-overview-card .header .period-txt{
+    color: var(--black-50);
+}
+.stat-overview-card .header .icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    background-color: var(--primary-color-5);
+    padding: var(--p2);
+    border-radius: 50%;
+}
+
+.stat-overview-card .content{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    column-gap: var(--p2);
+}
+.stat-overview-card .content .data{
+    font-size: 24px;
+    font-weight: 500;
+    
+}
+.stat-overview-card .content .stats{
+    color: var(--success-color);
+    display: flex;
+    align-items: center;
+    column-gap: var(--p3);
+}
+
+
+/* top-products-warpper */
+.top-table-wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--white);
+    box-shadow: 0px 0px 8px var(--black-10);
+    margin-top: var(--p1);
+}
+.top-table-wrapper .list-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--p2);
+    border-bottom: 1px solid var(--black-15);
+}
+.top-table-wrapper .list-header .header{
+    display: flex;
+    align-items: center;
+    column-gap: var(--p2);
+}
+.top-table-wrapper .list-header .head-txt{
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.top-table-wrapper .list-header .period-txt{
+    color: var(--black-50);
+}
+.top-table-wrapper .list-header .link-txt{
+    color: var(--black-50);
+    text-decoration: underline;   
+}
+.top-table-wrapper table{
+    padding: var(--p2);
+}
+.top-table-wrapper td, 
+.top-table-wrapper th{
+    padding: var(--p2);
+    padding-block: var(--p3);
+}
+.top-table-wrapper thead td{
+    font-weight: 500;
+    text-transform: capitalize;
+    border-right: 1px solid var(--black-10);
+}
