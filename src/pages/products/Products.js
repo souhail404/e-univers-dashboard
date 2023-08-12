@@ -14,6 +14,8 @@ import EmptyFetchRes from '../../components/ListingTable/EmptyFetchRes';
 import Pagination from '../../components/ListingTable/Pagination';
 
 import { FiEdit3, FiTrash2 } from 'react-icons/fi';
+import SelectCategory from '../../components/Product/SelectCategory';
+import { AiOutlineSearch } from 'react-icons/ai';
  
 const Products = () => {
   const [productsData, setProductsData] = useState([]); // data
@@ -64,23 +66,6 @@ const Products = () => {
     )
   };
 
-  const fetchCategories= async()=>{
-      try{
-          const res = await fetch(`http://localhost:4000/api/category/`)
-          const response = await res.json();
-
-          if(res.ok){
-            const {categories} = response;
-            setCategoriesData(categories);
-          }
-          else{
-            toast.error(`${response.message}`)
-          }
-      }catch(err){
-          console.log(err);
-      } 
-  }
-
   const fetchProducts = async()=>{
     try{
         setIsFetching(true)
@@ -102,10 +87,6 @@ const Products = () => {
   }
 
   useEffect(()=>{
-    fetchCategories()
-  },[])
-
-  useEffect(()=>{
     fetchProducts()
   },[serachValue, sortConf, page, filterCategory])
 
@@ -115,24 +96,15 @@ const Products = () => {
         <div className="table-list-header">
           <PageHeading title={`products ${productsCount ? `(${productsCount})` : ''} `} />
           <div className="tlh--right">
+            <SelectCategory setFilterCategory={setFilterCategory} />
             <form className="tlh-right--elem search-filter">
-                <input className='search-field' type="text" placeholder='search for product' onChange={(e)=>setSearch(e.target.value)}/>
+                <input className='search-field' type="text" placeholder='Search For Product' onChange={(e)=>setSearch(e.target.value)}/>
                 <button type="button" className='search-btn btn'>
-                    search
+                    <AiOutlineSearch />
                 </button>
             </form>
-            <select className="tlh-right--elem category-filter" onChange={(e)=>{setFilterCategory(e.target.value)}}>
-                <option value="">All Categories</option>
-                <>
-                  {
-                    categoriesData.map((category, index)=>{
-                      return <option key={index} value={category._id}>{category.title}</option>
-                    })
-                  }
-                </>
-            </select>
             <button type='button' className="tlh-right--elem nav-link">
-              new product
+              + new product
             </button>
           </div>
         </div>

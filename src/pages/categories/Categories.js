@@ -18,6 +18,7 @@ import PageHeading from '../../components/common/PageHeading';
 import {FiEdit3, FiTrash2} from 'react-icons/fi'
 // css
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
+import { AiOutlineSearch } from 'react-icons/ai';
 
 
 const Categories = () => {
@@ -106,16 +107,14 @@ const Categories = () => {
             <PageHeading title={`categories ${productsCount ? `(${productsCount})` : ''} `} />
             <div className="tlh--right">
               <form className="tlh-right--elem search-filter">
-                  <input className='search-field' type="text" placeholder='search for category' onChange={(e)=>setSearch(e.target.value)} />
+                  <input className='search-field' type="text" placeholder='Search For Category' onChange={(e)=>setSearch(e.target.value)} />
                   <button type="button" className='search-btn btn'>
-                      <p>search</p>
+                      <AiOutlineSearch />
                   </button>
               </form>
-              <div className="tlh-right--elem nav-links">
-                  <button type="button" className='nav-link btn' onClick={()=>navigate('./create')}>
-                      <p>new category</p>
-                  </button>
-              </div>
+              <button type='button' className="tlh-right--elem nav-link">
+                + New Category
+              </button>
             </div>
           </div>
           <table className="table-list-body">

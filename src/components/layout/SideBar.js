@@ -25,7 +25,7 @@ const SideBar = () => {
         <div className="logo">
           <img src={logoImg} alt="" />
         </div>
-        <h3>E-univers</h3>
+        <h3>E-Univers</h3>
       </div>
       <div className="sidebar-body">
         <nav className='nav-links-wrapper'>

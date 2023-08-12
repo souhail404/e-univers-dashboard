@@ -61,7 +61,7 @@ const Orders = () => {
 
     useEffect(()=>{
         fetchOrders()
-    },[filterProduct, filterState, filterUser, sortConf, page])
+    },[filterProduct, filterState, filterUser, sortConf, page]) 
 
     return (
         <main className='page orders-page'>
