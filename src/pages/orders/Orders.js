@@ -11,6 +11,7 @@ import { FiEdit3 } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
 import EmptyFetchRes from '../../components/ListingTable/EmptyFetchRes'
 import Pagination from '../../components/ListingTable/Pagination'
+import formatDate from '../../services/formatDate'
 
 const Orders = () => {
     const {user}= useAuth()
@@ -27,14 +28,8 @@ const Orders = () => {
     const [isFetching, setIsFetching]= useState(false)
     const [ordersData, setOrdersData]= useState([])
 
-    const formatDate = (dateString) => {
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
-        return formattedDate;
-    };
-
     const fetchOrders = async()=>{
-        try{
+        try{ 
             setIsFetching(true)
             const res = await fetch(`http://localhost:4000/api/order/all?page=${page}&pageSize=${pageSize}&orderState=${filterState}&user=${filterUser}&product=${filterProduct}&sort=${sortConf.sortField}:${sortConf.sortOrder}`, {
                 headers: {

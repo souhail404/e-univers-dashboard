@@ -6,6 +6,8 @@
     height: 100%;
     background-color: transparent;
     border: none;
+    display: flex;
+    align-items: center;
 }
 .table-cell-sort .icon{
     color: var(--black-35);
@@ -22,25 +24,15 @@
 /* ----------------------------- */
 /* ROUNDED BUTTON */
 .btn-round{
-    box-shadow: 3px 3px 3px var(--black-5);
+    /* box-shadow: 3px 3px 3px var(--black-5); */
     cursor: pointer;
-    border: 1px solid var(--black-35);
+    border: 1px solid var(--primary-color-2);
+    color: var(--primary-color-2);
     border-radius: 50%;
     display: flex;
     align-items:center;
     justify-content: center;
-}
-.btn-round:hover{
-    box-shadow: 3px 3px 3px var(--black-10);
-}
-.btn-round.delete{
-    background-color: var(--delete-btn);
-}
-.btn-round.edit{
-    background-color: var(--edit-btn);
-}
-.btn-round.save{
-    background-color: var(--save-btn);
+    background-color: transparent;
 }
 
 /* ----------------------- */

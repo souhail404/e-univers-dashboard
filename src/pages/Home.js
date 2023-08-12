@@ -7,6 +7,7 @@ import { useAuth } from '../hooks/useAuth'
 import AmountComparisonChart from '../components/Charts/AmountComparaisonChart'
 import OverviewCard from '../components/common/OverviewCard'
 import { Skeleton } from '@mui/material'
+import RecentOrdersList from '../components/Dashboard/RecentOrdersList'
 
 const Home = () => {
   const {user} = useAuth()
@@ -99,6 +100,12 @@ const Home = () => {
           </>
         }
         
+      </section>
+      <section className='recent-orders-wrapper'>
+        <div className="list-header">
+          <h3>Recent Orders </h3>
+        </div>
+        <RecentOrdersList />
       </section>
     </main>
   )
