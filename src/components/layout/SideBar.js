@@ -37,7 +37,7 @@ const SideBar = () => {
             <div className="icon"> <MdOutlineShoppingCart /> </div>
             <p>Orders</p>
           </Link>
-          <LinksDropDown header='products' icon={<LuPackage2/>} show>
+          <LinksDropDown header='products' icon={<LuPackage2/>}>
             <Link to="/products" className='link-wrapper-t2'>
               <div className="icon"> <BiListUl /> </div>
               <p>All Products</p>
@@ -61,10 +61,6 @@ const SideBar = () => {
             <div className="icon"> <LuUser /> </div>
             <p>Customers</p>
           </Link>          
-          <Link to="/store" className='link-wrapper'>
-            <div className="icon"> <LuStore /> </div>
-            <p>Store</p>
-          </Link>
           <Link to="/settings" className='link-wrapper'>
             <div className="icon"> <LuSettings /> </div>
             <p>Settings</p>

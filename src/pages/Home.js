@@ -5,7 +5,7 @@ import OrdersComparisonChart from '../components/Charts/OrdersComparisonChart'
 import { toast } from 'react-toastify'
 import { useAuth } from '../hooks/useAuth'
 import AmountComparisonChart from '../components/Charts/AmountComparaisonChart'
-import OverviewCard from '../components/common/OverviewCard'
+import OverviewCard from '../components/Dashboard/OverviewCard'
 import { Skeleton } from '@mui/material'
 import RecentOrdersList from '../components/Dashboard/RecentOrdersList'
 
@@ -101,8 +101,8 @@ const Home = () => {
         }
         
       </section>
-      <section className='recent-orders-wrapper'>
-        <div className="list-header">
+      <section className='white-bg-section'>
+        <div className="section-header">
           <h3>Recent Orders </h3>
         </div>
         <RecentOrdersList />

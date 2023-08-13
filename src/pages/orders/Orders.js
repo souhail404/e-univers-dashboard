@@ -7,11 +7,11 @@ import { useAuth } from '../../hooks/useAuth'
 import { toast } from 'react-toastify'
 import SortButton from '../../components/ListingTable/SortButton'
 import TableSkeleton from '../../components/ListingTable/TableSkeleton'
-import { FiEdit3 } from 'react-icons/fi'
+import { FiEdit3, FiEye } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
 import EmptyFetchRes from '../../components/ListingTable/EmptyFetchRes'
 import Pagination from '../../components/ListingTable/Pagination'
-import formatDate from '../../services/formatDate'
+import formatDate from '../../services/formatDate' 
 
 const Orders = () => {
     const {user}= useAuth()
@@ -90,11 +90,11 @@ const Orders = () => {
                                 <tr key={index}>
                                     <td>{`${order.userId.lastName} ${order.userId.firstName}`} </td>
                                     <td>{order.total} Dhs</td>
-                                    <td>{order.orderState}</td>
+                                    <td> <p className={`order-state-view ${order.orderState}`}>{order.orderState}</p> </td>
                                     <td>{formatDate(order.createdAt)}</td>
                                     <td>
                                         <div className="actions-cell">
-                                            <button className='action btn-round edit' type="button" onClick={()=>navigate(`./${order._id}/edit`)} ><FiEdit3/></button>
+                                            <button className='action btn-round edit' type="button" onClick={()=>navigate(`./${order._id}/details`)} ><FiEye/></button>
                                         </div>
                                     </td>
                                 </tr>

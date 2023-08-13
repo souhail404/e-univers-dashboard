@@ -71,11 +71,11 @@ const RecentOrdersList = () => {
                     return(
                         <tr key={index}>
                             <td>{order.total} Dhs</td>
-                            <td>{order.orderState}</td>
+                            <td> <p className={`order-state-view ${order.orderState}`}> {order.orderState} </p></td>
                             <td>{formatDate(order.createdAt)}</td>
                             <td>
                                 <div className="actions-cell">
-                                    <button className='action btn-round' type="button" onClick={()=>navigate(`./${order._id}/edit`)} ><FiEye/></button>
+                                    <button className='action btn-round' type="button" onClick={()=>navigate(`orders/${order._id}/details`)} ><FiEye/></button>
                                 </div>
                             </td>
                         </tr>

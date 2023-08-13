@@ -2,9 +2,9 @@ import React from 'react'
 import { MdShowChart } from 'react-icons/md'
 
 const OverviewCard = ({icon, period, label, thisData, prevData}) => {
-    const percent= (((thisData * 100)/ prevData) - 100).toFixed(2);
+    const percent= (thisData > 0) ? (((thisData * 100)/ prevData) - 100).toFixed(2): 0;
     const sign = Math.sign(percent);
-
+    console.log(thisData, prevData);
     return (
         <div className="stat-overview-card">
             <div className="header">
