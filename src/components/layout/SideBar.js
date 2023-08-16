@@ -68,7 +68,7 @@ const SideBar = () => {
         </nav>
       </div>
       <div className="sidebar-footer">
-        <Link to="/account" className='link-wrapper profile'>
+        <Link to="/settings?tab=account" className='link-wrapper profile'>
           <div className="img"><img src={userImage} alt="admin" /></div>
           <p>{user ? user.user: null}</p>
           <div className="arrow">

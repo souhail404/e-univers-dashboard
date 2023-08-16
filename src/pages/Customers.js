@@ -9,6 +9,7 @@ import { Pagination } from '@mui/material';
 import TableSkeleton from '../components/ListingTable/TableSkeleton';
 import { FiEdit3 } from 'react-icons/fi';
 import { useDebounce } from 'use-debounce';
+import { AiOutlineSearch } from 'react-icons/ai';
 
 const Customers = () => {
     const {user}= useAuth()
@@ -69,7 +70,7 @@ const Customers = () => {
                     <form className="tlh-right--elem search-filter">
                       <input className='search-field' type="text" placeholder='search for product' onChange={(e)=>setSearch(e.target.value)}/>
                       <button type="button" className='search-btn btn'>
-                          search
+                          <AiOutlineSearch />
                       </button>
                     </form>
                   </div>

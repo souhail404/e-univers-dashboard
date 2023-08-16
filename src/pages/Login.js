@@ -59,7 +59,7 @@ const Login = () => {
             <div className="form-line">
               <div className='input-wrapper'>
                 <label className='label' label='label' htmlFor="password">Password</label>
-                <input type="text" 
+                <input type="password" 
                       value={values.password} 
                       onBlur={handleBlur}
                       onChange={handleChange}

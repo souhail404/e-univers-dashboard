@@ -980,3 +980,85 @@ select.tlh-right--elem option{
     background-color:#fcd3d3;
     color: #ff6363;
 }
+
+/* MULTI TAB SECTION */
+.multi-tab-section{
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--p1);
+}
+.multi-tab-nav-hor{
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: 20%;
+    min-width: 140px;
+    border-right: none;
+    background-color: var(--white);
+    box-shadow: 0px 0px 8px var(--black-10);
+}
+.multi-tab-link{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 54px;
+    padding-block: var(--p3);
+    padding-inline: var(--p2);
+    border-left: 3px solid transparent;
+    color: var(--black-50);
+    font-weight: 500;
+}
+.multi-tab-link .icon{
+    font-size: 22px;
+    margin-right: var(--p2);
+}
+.multi-tab-link.active{
+    border-left: 3px solid var(--primary-color-1);
+    color: var(--primary-color-1);
+}
+.multi-tab-section .tabs-body{
+    width: 80%;
+    min-width: 400px;
+    background-color: var(--white);
+    box-shadow: 0px 0px 8px var(--black-10);
+}
+
+.multi-tab-section .selected-tab-wrapper{
+    width: 100%;
+    display: none;
+    flex-direction: column;
+}
+.multi-tab-section .selected-tab-wrapper.active{
+    display: flex;
+}
+.multi-tab-section .selected-tab-header{
+    width: 100%;
+    border-bottom: 1px solid var(--black-50);
+    padding: var(--p2);
+}
+.multi-tab-section .selected-tab-body{
+    width: 100%;
+   
+}
+.multi-tab-section .selected-tab-body .form-heading{
+    padding: var(--p2);
+    padding-inline: var(--p1);
+}
+.multi-tab-section .selected-tab-body .form-heading h4{
+    width: 100%;
+    font-weight: 600;
+    font-size: 16px
+}
+.multi-tab-section .selected-tab-body .form-buttons{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-inline: var(--p1);
+    padding-bottom: var(--p1);
+}
+.multi-tab-section .selected-tab-body .form-buttons button{
+    width: 140px;
+    height: 36px;
+    font-size: 16px
+}

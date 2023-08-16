@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useAuth } from "../hooks/useAuth"
+import { toast } from "react-toastify"
 
 export const useLogin = ()=>{
     const [error, setError] = useState(null)
@@ -9,7 +10,7 @@ export const useLogin = ()=>{
     const login = async (data)=>{
         setIsLoading(true)
         setError(null)
-
+        const toastId = toast.loading(`Login`);
         const response = await fetch("http://localhost:4000/api/user/admin-login/", {
             method:"POST",
             headers:{
@@ -21,12 +22,14 @@ export const useLogin = ()=>{
 
         if(!response.ok){
             setIsLoading(false)
-            setError(json.error)
+            setError(json.message)
+            toast.update(toastId, {render: `${json.message}`, type: "error", isLoading: false, autoClose:5000});
         }
         if(response.ok){
             localStorage.setItem("user", JSON.stringify(json))
             dispatch({type:'LOGIN', payload: json})
             setIsLoading(false)
+            toast.update(toastId, {render: "loging success", type: "success", isLoading: false, autoClose:5000});
         }   
     }
 

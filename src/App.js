@@ -44,7 +44,7 @@ function App() {
             <Route path="categories">
               <Route index element={user ? <Categories /> : <Navigate to='/login' />}/>
               <Route path="create" element={user ? <CreateCategory />: <Navigate to='/login' />} />
-              <Route path=":categoryId/details" element={user ? <EditCategory />: <Navigate to='/login' />} />
+              <Route path=":categoryId/edit" element={user ? <EditCategory />: <Navigate to='/login' />} />
             </Route>
             <Route path="orders">
               <Route index element={user ? <Orders /> : <Navigate to='/login' />}/>
