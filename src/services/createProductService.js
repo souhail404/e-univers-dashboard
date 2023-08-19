@@ -2,7 +2,6 @@ import { toast } from 'react-toastify';
 
 const createProductService = async(data, user) =>{
     const formData = new FormData();
-    // console.log(data.images);
     for (let i = 0; i < data.images.length; i++) {
         formData.append('images', data.images[i]);
     }
@@ -29,7 +28,7 @@ const createProductService = async(data, user) =>{
             body:formData
         })
         const response = await res.json();
-        console.log(response);
+
         if(res.ok){
             toast.update(toastId, {render: "product created Successfully", type: "success", isLoading: false, autoClose:5000});
         }

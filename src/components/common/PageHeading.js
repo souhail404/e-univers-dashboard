@@ -3,7 +3,7 @@ import React from 'react'
 const PageHeading = ({title}) => {
   return (
     <div className="page-heading">
-        <h3>{title}</h3>
+        <h4>{title}</h4>
     </div>
   )
 }

@@ -42,7 +42,6 @@ const OrderDeatails = () => {
   const changeState = async(state)=>{
     try{ 
         const data= JSON.stringify({orderState:state});
-        console.log(data);
         const toastId = toast.loading(`Updating State to (${state}`);
         const res = await fetch(`http://localhost:4000/api/order/update/${orderId}`, {
             method: 'PUT',

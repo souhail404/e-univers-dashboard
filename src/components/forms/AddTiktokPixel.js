@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { MdAdd, MdDelete, MdSave } from 'react-icons/md'
+import { MdAdd, MdDeleteOutline, MdSave } from 'react-icons/md'
 import { toast } from 'react-toastify';
 import { useAuth } from '../../hooks/useAuth';
 import { Skeleton } from '@mui/material';
@@ -80,11 +80,7 @@ const AddTiktokPixel = () => {
     useEffect (()=>{
         fetchTiktokPixels()
     },[])
-
-    useEffect(()=>{
-        console.log(pixels);
-    }, [pixels])
-
+    
     return (
         <form action="" className='form pixel-form tiktok'>
             <div className="form-body">
@@ -122,7 +118,7 @@ const AddTiktokPixel = () => {
                                         {pixel.script}
                                     </p>
                                     <button type="button" className='delete-btn btn-round' onClick={()=>{removePixel(index)}}>
-                                        <MdDelete />
+                                        <MdDeleteOutline />
                                     </button>
                                 </div>
                             )

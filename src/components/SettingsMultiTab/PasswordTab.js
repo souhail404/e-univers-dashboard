@@ -40,7 +40,7 @@ const PasswordTab = () => {
 
     return (
         <div className="selected-tab-body">
-            <form action="" className='form'>
+            <form action="" className='form form-type-2'>
                 <div className="form-body">
                     <div className="form-heading">
                         <h4>Resest Password</h4>

@@ -16,6 +16,7 @@ import Pagination from '../../components/ListingTable/Pagination';
 import { FiEdit3, FiTrash2 } from 'react-icons/fi';
 import SelectCategory from '../../components/Product/SelectCategory';
 import { AiOutlineSearch } from 'react-icons/ai';
+import formatDate from '../../services/formatDate';
  
 const Products = () => {
   const [productsData, setProductsData] = useState([]); // data
@@ -33,11 +34,6 @@ const Products = () => {
   const navigate = useNavigate();
   const {user} = useAuth()
 
-  const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
-    return formattedDate;
-  };
 
   const handleDeleteClick = async(product, index)=>{
     confirmAlert(

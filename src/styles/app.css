@@ -93,6 +93,10 @@ h3{
     font-size: var(--font-size-header3);
     font-weight: var(--font-weight-bold);
 }
+h4{
+    font-weight: 600;
+    font-size: 16px;
+}
 p, a{
     font-size: var(--font-size-body);
     font-weight: var(--font-weight-regular);
@@ -110,6 +114,18 @@ p, a{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+.bg-white{
+    background-color: var(--white);
+}
+.shadow-5{
+    box-shadow: 0px 0px 8px var(--black-10);
+}
+.pi-1{
+    padding-inline: var(--p1);
+}
+.pb-2{
+    padding-block: var(--p2);
 }
 .flex-c-jb{
     display: flex;
@@ -1041,28 +1057,32 @@ select.tlh-right--elem option{
     width: 100%;
    
 }
-.multi-tab-section .selected-tab-body .form-heading{
+
+
+.form-type-2:not(:last-child){
+    margin-bottom: 30px;
+}
+.form-type-2 .form-heading{
     padding: var(--p2);
     padding-inline: var(--p1);
 }
-.multi-tab-section .selected-tab-body .form-heading h4{
+.form-type-2 .form-heading h4{
     width: 100%;
     font-weight: 600;
     font-size: 16px
 }
-.multi-tab-section .selected-tab-body .form-buttons{
+.form-type-2 .form-buttons{
     display: flex;
     align-items: center;
     justify-content: flex-end;
     padding-inline: var(--p1);
     padding-bottom: var(--p1);
 }
-.multi-tab-section .selected-tab-body .form-buttons button{
+.form-type-2 .form-buttons button{
     width: 140px;
     height: 36px;
     font-size: 16px
 }
-
 
 
 
@@ -1105,8 +1125,10 @@ select.tlh-right--elem option{
     right: 4px;
     width: 30px;
     height: 30px;
+    font-size: 18px;
     background-color: var(--error-color);
     color: var(--black);
+    border: 1px solid var(--black);
 }
 .form.pixel-form .pixel-wrapper .script{
     width: 100%;
@@ -1141,4 +1163,19 @@ select.tlh-right--elem option{
 }
 .form.pixel-form.snapchat .form-heading .save-btn{
     color: #a09d00;
+}
+
+.selected-tab-body .table-list-header{
+    margin-bottom: 0;
+    background-color: transparent;
+    box-shadow: none;
+    padding-inline: var(--p1);
+}
+
+.selected-tab-body .table-list-body{
+    margin-bottom: 0;
+    background-color: transparent;
+    box-shadow: none;
+    padding-inline: var(--p1);
+    margin-bottom: var(--p2);
 }

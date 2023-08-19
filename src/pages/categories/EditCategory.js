@@ -72,9 +72,6 @@ const EditCategory = () => {
       else{
         toast.update(toastId, {render:`${response.message}`, type:'error', isLoading:false, autoClose:6000});
       }
-
-      
-      console.log(data);
     }
     catch(err){
       console.log(err);
@@ -189,8 +186,6 @@ const EditSubCategories= ({categoryId, subCategories, isAddingSub, setIsAddingSu
         } 
       }
       fetchSubCategory();
-
-    console.log('re render sub cat fetch');
   },[isAdded])
 
   return(
@@ -240,8 +235,6 @@ const EditSubCategories= ({categoryId, subCategories, isAddingSub, setIsAddingSu
   )
 }
 
-
-
 const SubCategoryBox = ({subElem , subIndex, categoryId , subCategories, setSubCategories})=>{
   const [isEditing, setIsEditing] = useState(false);
   const {user} = useAuth();
@@ -269,7 +262,6 @@ const SubCategoryBox = ({subElem , subIndex, categoryId , subCategories, setSubC
       else{
         toast.update(id, {render: `${response.message}`, type: "error", isLoading: false, autoClose:5000});
       }
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -278,7 +270,6 @@ const SubCategoryBox = ({subElem , subIndex, categoryId , subCategories, setSubC
     const id = toast.loading(`Editing Subcategory : (${subElem.title})`);
     const data = JSON.stringify({...subElem})
     const subId = subElem._id;
-    console.log(data);
     try {
       const res = await fetch(`http://localhost:4000/api/category/${categoryId}/subcategory/${subId}`, {
         method:"PUT",
@@ -292,7 +283,6 @@ const SubCategoryBox = ({subElem , subIndex, categoryId , subCategories, setSubC
       else{
         toast.update(id, {render: `${response.message}`, type: "error", isLoading: false, autoClose:5000});
       }
-      console.log(response);
     } catch (error) {
       console.log(error);
     }

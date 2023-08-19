@@ -5,6 +5,7 @@ import {MdOutlineManageAccounts, MdOutlineOnlinePrediction, MdOutlineStorefront,
 import AccountTab from '../components/SettingsMultiTab/AccountTab';
 import PasswordTab from '../components/SettingsMultiTab/PasswordTab';
 import PixelTab from '../components/SettingsMultiTab/PixelTab';
+import AdminsTable from '../components/tables/AdminsTable';
 
 const Settings = () => {
   const queryParams = new URLSearchParams(window.location.search)
@@ -30,7 +31,8 @@ const Settings = () => {
             <div className="selected-tab-header">
               <h3>Manage Account</h3>
             </div>
-            <AccountTab />
+            {tab==='account'?<AccountTab />:null}
+            
           </div>
           <div className={`selected-tab-wrapper ${tab==='store'?'active':''}`}>
             <div className="selected-tab-header">
@@ -42,18 +44,21 @@ const Settings = () => {
             <div className="selected-tab-header">
               <h3>Manage Pixels</h3>
             </div>
-            <PixelTab />
+            {tab==='online'?<PixelTab />:null}
+            
           </div>
           <div className={`selected-tab-wrapper ${tab==='admins'?'active':''}`}>
             <div className="selected-tab-header">
               <h3>Manage Admins</h3>
             </div>
+            {tab==='admins'?<AdminsTable />: null}
           </div>
           <div className={`selected-tab-wrapper ${tab==='password'?'active':''}`}>
             <div className="selected-tab-header">
               <h3>Manage Password</h3>
             </div>
-              <PasswordTab />
+              {tab==='password'?<PasswordTab />:null}
+              
           </div>
         </div>
       </section>
