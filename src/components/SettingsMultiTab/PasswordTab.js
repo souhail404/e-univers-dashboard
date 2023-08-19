@@ -38,10 +38,6 @@ const PasswordTab = () => {
         }
     }
 
-    // useEffect(()=>{
-    //     fetchUserData();
-    // },[])
-
     return (
         <div className="selected-tab-body">
             <form action="" className='form'>

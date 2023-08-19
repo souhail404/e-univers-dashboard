@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import {MdOutlineManageAccounts, MdOutlineOnlinePrediction, MdOutlineStorefront, MdOutlineAdminPanelSettings, MdOutlinePassword} from 'react-icons/md'
 import AccountTab from '../components/SettingsMultiTab/AccountTab';
 import PasswordTab from '../components/SettingsMultiTab/PasswordTab';
+import PixelTab from '../components/SettingsMultiTab/PixelTab';
 
 const Settings = () => {
   const queryParams = new URLSearchParams(window.location.search)
@@ -41,6 +42,7 @@ const Settings = () => {
             <div className="selected-tab-header">
               <h3>Manage Pixels</h3>
             </div>
+            <PixelTab />
           </div>
           <div className={`selected-tab-wrapper ${tab==='admins'?'active':''}`}>
             <div className="selected-tab-header">
@@ -52,7 +54,7 @@ const Settings = () => {
               <h3>Manage Password</h3>
             </div>
               <PasswordTab />
-            </div>
+          </div>
         </div>
       </section>
     </div>

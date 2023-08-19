@@ -1062,3 +1062,83 @@ select.tlh-right--elem option{
     height: 36px;
     font-size: 16px
 }
+
+
+
+
+.form.pixel-form:not(:last-child){
+    margin-bottom: var(--p2);
+}
+.form.pixel-form .form-line{
+    display: flex;
+}
+.form.pixel-form .form-heading{
+    margin-bottom: var(--p1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+.form.pixel-form .form-heading .save-btn{
+    padding: 6px 12px;
+    font-size: 16px;
+    background-color: var(--gray-1);
+    box-shadow: none;
+    color: var(--primary-color-1);
+}
+.form.pixel-form .add-pixel{
+    width: 120px;
+    border-radius: 0;
+}
+.form.pixel-form .pixels-preview{
+    display: flex;
+    flex-direction: column;
+    gap: var(--p2);
+    padding-inline: var(--p1);
+    padding-bottom: var(--p1);
+}
+.form.pixel-form .pixel-wrapper{
+    position: relative;
+}
+.form.pixel-form .pixel-wrapper .delete-btn{
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 30px;
+    height: 30px;
+    background-color: var(--error-color);
+    color: var(--black);
+}
+.form.pixel-form .pixel-wrapper .script{
+    width: 100%;
+    border: 1px solid var(--black);
+    padding: var(--p3);
+}
+
+.form.pixel-form.facebook{
+    border: 3px solid #0165E1;
+}
+.form.pixel-form.facebook .form-heading{
+    background-color: #0165E1;
+}
+.form.pixel-form.facebook .form-heading .save-btn{
+    color: #0165E1;
+}
+.form.pixel-form.tiktok{
+    border: 3px solid #010101;
+}
+.form.pixel-form.tiktok .form-heading{
+    background-color: #010101;
+    color: var(--white);
+}
+.form.pixel-form.tiktok .form-heading .save-btn{
+    color: #010101;
+}
+.form.pixel-form.snapchat{
+    border: 3px solid #FFFC00;
+}
+.form.pixel-form.snapchat .form-heading{
+    background-color: #FFFC00;
+}
+.form.pixel-form.snapchat .form-heading .save-btn{
+    color: #a09d00;
+}
