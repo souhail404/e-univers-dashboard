@@ -6,6 +6,7 @@ import AccountTab from '../components/SettingsMultiTab/AccountTab';
 import PasswordTab from '../components/SettingsMultiTab/PasswordTab';
 import PixelTab from '../components/SettingsMultiTab/PixelTab';
 import AdminsTable from '../components/tables/AdminsTable';
+import BannerTab from '../components/SettingsMultiTab/BannerTab';
 
 const Settings = () => {
   const queryParams = new URLSearchParams(window.location.search)
@@ -38,7 +39,7 @@ const Settings = () => {
             <div className="selected-tab-header">
               <h3>Manage Store</h3>
             </div>
-           
+            {tab==='store'?<BannerTab />:null}
           </div>
           <div className={`selected-tab-wrapper ${tab==='online'?'active':''}`}>
             <div className="selected-tab-header">

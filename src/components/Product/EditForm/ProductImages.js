@@ -4,7 +4,8 @@ import Nb from '../../common/Nb';
 import { AiOutlineArrowDown, AiOutlineArrowUp, AiOutlineDelete, AiOutlineDown } from 'react-icons/ai';
 
 const ProductImages = ({formBody , setFormBody})=>{
-    const [showBody, setShowBody]=useState(true);
+  const [showBody, setShowBody]=useState(true);
+  const [deletedImg, setDeletedImg]=useState([]);
 
     const onDrop = (acceptedFiles) => {
         const newImages = acceptedFiles.map((file) => ({
@@ -16,8 +17,13 @@ const ProductImages = ({formBody , setFormBody})=>{
 
     const removeImage = (e,index) => {
         e.preventDefault()
+        if(formBody.images[index].isSaved){
+          const arr = deletedImg;
+          arr.push({publicId:formBody.images[index].publicId})
+          setDeletedImg(arr)
+        }
         const updatedImages = formBody.images.filter((_, i) => i !== index);
-        setFormBody({...formBody, images:updatedImages});
+        setFormBody({...formBody, images:updatedImages, deletedImages:deletedImg});
     };
 
     const moveImageUp = (e,index) => {

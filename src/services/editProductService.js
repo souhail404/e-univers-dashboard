@@ -5,7 +5,7 @@ const editProductService = async(data, user, productId) =>{
     const existingImages = [];
     for (let i = 0; i < data.images.length; i++) {
         if(data.images[i].isSaved===true){
-            existingImages.push({url:data.images[i].url})
+            existingImages.push({url:data.images[i].url, publicId:data.images[i].publicId})
         }
         else if(data.images[i].isSaved===false){
             formData.append('images', data.images[i].file);
@@ -23,6 +23,7 @@ const editProductService = async(data, user, productId) =>{
     formData.append('comparePrice', data.comparePrice);
     formData.append('costPrice', data.costPrice);
     formData.append('existingImages', JSON.stringify(existingImages)); 
+    formData.append('deletedImages', JSON.stringify(data.deletedImages) );
     const variants = data.variants
     formData.append('variants', JSON.stringify(variants)); 
 

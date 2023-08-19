@@ -26,6 +26,7 @@ const EditProduct = () => {
     
     const handleSaveClick=async(e)=>{
         e.preventDefault()
+        console.log(formBody);
         await editProductService(formBody, user, productId)
     }
 
@@ -40,7 +41,7 @@ const EditProduct = () => {
         if(product.images){
             existingImages = product.images.map((image) => ({
                 isSaved: true,
-                url: image.url,
+                ...image
             }));
         }
         setFormBody({
@@ -54,6 +55,7 @@ const EditProduct = () => {
             comparePrice:product.comparePrice, 
             costPrice:product.costPrice, 
             images:existingImages, 
+            deletedImages:[],
             variants:product.variants,
         })
     },[product])
