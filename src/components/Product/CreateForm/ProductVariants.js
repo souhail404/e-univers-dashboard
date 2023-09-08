@@ -6,46 +6,30 @@ import VariantsField from '../../Form/VariantsField';
 
 
 const ProductVariants = ({formBody , setFormBody})=>{
-    const [showBody, setShowBody]=useState(true);
+    const [showBody, setShowBody]=useState(false);
 
-    const [hasVariants, setHasVariants] = useState(true);
-    const [variants, setVariants] = useState([
-        {   name: '', 
-            options: [
-                {
-                  value:'', 
-                  priceDef:'',
-                  available:true 
-                }
-            ] 
-        }]);
+    const [hasVariants, setHasVariants] = useState(false);
+    const [variants, setVariants] = useState([]);
 
     const handleAddVariant = () => {
-        setVariants([...variants, { name: '', options: [{value:'',priceDef:'',available:true}] }]);
-    };
-    
-    const handleRemoveVariant = (index) => {
-        const updatedVariants = [...variants];
-        updatedVariants.splice(index, 1);
-        setVariants(updatedVariants);
-    };
-
-    const handleAddOption = (index) => {
-        const updatedVariants = [...variants];
-        updatedVariants[index].options.push({value:'',priceDef:'',available:true});
-        setVariants(updatedVariants);
-    };
-
-    const handleRemoveOption = (variantIndex, optionIndex) => {
-        const updatedVariants = [...variants];
-        updatedVariants[variantIndex].options.splice(optionIndex, 1);
-        setVariants(updatedVariants);
+        setVariants([...variants, { name: '', options: [{value:'',priceDef:'0',available:true}] }]);
     };
 
     useEffect(()=>{
         setFormBody({...formBody, variants:variants})
     },[variants])
     
+    useEffect(()=>{
+        if(hasVariants){
+            setShowBody(true)
+            setVariants([{ name: '', options: [{value:'',priceDef:'0',available:true}] }])
+        }
+        else{
+            setShowBody(false)
+            setVariants([])
+        }
+    },[hasVariants])
+
     return(
         <>  
             <div className="outer-block">
@@ -58,7 +42,7 @@ const ProductVariants = ({formBody , setFormBody})=>{
                         <div className='block-actions'>
                             <div className="action">
                                 <label htmlFor="has-variants" className='toggle-switcher'>
-                                    <input type="checkbox" name="has-variants" id="has-variants" onChange={(e)=>{setHasVariants(e.target.checked)}} defaultChecked />
+                                    <input type="checkbox" name="has-variants" id="has-variants" onChange={(e)=>{setHasVariants(e.target.checked)}} />
                                     <span className='slider round'></span>
                                 </label>
                             </div>

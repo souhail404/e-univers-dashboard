@@ -42,7 +42,7 @@ const Login = () => {
           <div className="form-group">
             <div className="form-line">
               <div className='input-wrapper'>
-                <label className='label' htmlFor="user-ref">Username, Email or Mobile</label>
+                <label className='label' htmlFor="user-gref">Username, Email or Mobile</label>
                 <input 
                       type="text" 
                       value={values.userRef} 

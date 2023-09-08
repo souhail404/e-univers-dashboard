@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {useAuth} from '../../hooks/useAuth';
 
 // services
@@ -14,8 +14,11 @@ import ProductImages from '../../components/Product/EditForm/ProductImages';
 import { AiOutlineEye } from 'react-icons/ai';
 import { CiSaveDown2 } from 'react-icons/ci';
 import editProductService from '../../services/editProductService';
+import { createProductSchema } from '../../FormValidations/ProductSchema';
+import { toast } from 'react-toastify';
 
 const EditProduct = () => {
+    const navigate = useNavigate()
     const {user} =useAuth()
     const {productId} = useParams()
     const [product, setProduct] =useState({});
@@ -23,11 +26,26 @@ const EditProduct = () => {
 
     const [formBody, setFormBody] =useState();
 
+    const validateForm = async(e)=>{
+        createProductSchema
+          .validate(formBody, { abortEarly: false })
+          .then(async() => {
+            const response = await editProductService(formBody, user, productId);
+            if(response){
+              if(response.ok){
+                navigate('/products')
+              }
+            }
+        })
+          .catch((err) => {
+            toast.error(`${err.errors[0]}`)
+        });
+    }
     
     const handleSaveClick=async(e)=>{
         e.preventDefault()
+        validateForm();
         console.log(formBody);
-        await editProductService(formBody, user, productId)
     }
 
     useEffect(()=>{

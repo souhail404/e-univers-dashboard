@@ -11,8 +11,12 @@ import ProductGeneralInfo from '../../components/Product/CreateForm/ProductGener
 import ProductPricing from '../../components/Product/CreateForm/ProductPricing';
 import ProductVariants from '../../components/Product/CreateForm/ProductVariants';
 import ProductImages from '../../components/Product/CreateForm/ProductImages';
+import { createProductSchema } from '../../FormValidations/ProductSchema';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const CreateProduct = () => {
+  const navigate = useNavigate()
   const {user} =useAuth()
   const [formBody, setFormBody] =useState(
     {
@@ -28,10 +32,28 @@ const CreateProduct = () => {
         images:[], 
         variants:[]
     });
+
+    const validateForm = async(e)=>{
+        createProductSchema
+          .validate(formBody, { abortEarly: false })
+          .then(async() => {
+            const response = await createProductService(formBody, user);
+            if(response){
+              if(response.ok){
+                navigate('/products')
+              }
+            }
+            
+        })
+          .catch((err) => {
+            toast.error(`${err.errors[0]}`)
+        });
+    }
  
   const handleSaveClick=async(e)=>{
     e.preventDefault()
-    await createProductService(formBody, user)
+    console.log(formBody);
+    validateForm()
   }
 
   return (
@@ -68,7 +90,7 @@ const CreateProduct = () => {
                                 </button>   
                         </div>
                         <div className="action-elem">
-                            <button className="btn" onClick={(e)=>handleSaveClick(e)}>
+                            <button type='submit' className="btn" onClick={(e)=>handleSaveClick(e)}>
                                 <div className="icon">
                                     <CiSaveDown2 />
                                 </div>

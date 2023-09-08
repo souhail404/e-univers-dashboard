@@ -222,12 +222,17 @@ const EditSubCategories= ({categoryId, subCategories, isAddingSub, setIsAddingSu
                             />
                           </div>
                       : null}
-                      <div className="subcategory-row action">
-                        <button type="button" className='f-r-c-c' onClick={()=>setIsAddingSub(true)}>
-                          <span className="icon f-c-c-c"><AiOutlineAppstoreAdd/></span>
-                          <p>Add</p>
-                        </button>
-                      </div> 
+                      {
+                        isAddingSub ?
+                        null :
+                        <div className="subcategory-row action">
+                          <button type="button" className='f-r-c-c' onClick={()=>setIsAddingSub(true)}>
+                            <span className="icon f-c-c-c"><AiOutlineAppstoreAdd/></span>
+                            <p>Add</p>
+                          </button>
+                        </div> 
+                      }
+                      
                     </div>  
                 </div>
       </div>

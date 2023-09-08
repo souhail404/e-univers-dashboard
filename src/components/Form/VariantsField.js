@@ -14,7 +14,7 @@ const VariantsField = ({varIndex, setVariants, variants, variant}) => {
 
     const handleAddOption = (index) => {
         const updatedVariants = [...variants];
-        updatedVariants[index].options.push({value:'',priceDef:'',available:true});
+        updatedVariants[index].options.push({value:'',priceDef:'0',available:true});
         setVariants(updatedVariants);
     };
 
@@ -24,12 +24,13 @@ const VariantsField = ({varIndex, setVariants, variants, variant}) => {
         <div className='variant-elem variant-name'>
             <div className="input-wrapper">
                 <input type="text" className="input" id={`variantName-${varIndex}`} name={`variantName-${varIndex}`} placeholder='Variant Name : (Ex: Colors, Size, Storage...)' 
+                    required
                     value={variant.name}
                     onChange={(e)=>{
                         const updatedVariants = [...variants];
                         updatedVariants[varIndex].name = e.target.value;
                         setVariants(updatedVariants);
-                }}/> 
+                    }}/> 
             </div>
         </div>
         <div className='variant-elem variant-options'>

@@ -99,7 +99,7 @@ const Products = () => {
                     <AiOutlineSearch />
                 </button>
             </form>
-            <button type='button' className="tlh-right--elem nav-link">
+            <button type='button' className="tlh-right--elem nav-link" onClick={()=>navigate('./create')}>
               + new product
             </button>
           </div>

@@ -6,17 +6,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import {CiSaveDown2} from 'react-icons/ci'
 import { useNavigate } from 'react-router-dom';
+import { createCategorySchema } from '../../FormValidations/CartegorySchema';
+import createCategoryService from '../../services/CreateCategoryService';
 
 
 const CreateCategory = () => {
   const navigate = useNavigate()
 
   const {user} = useAuth();
-  const {token} = user;
-
-  const myheaders = new Headers();
-  myheaders.append('Content-Type', 'application/json');
-  myheaders.append('Authorization', `Bearer ${token}`);
 
   const [category, setCategory] =useState(
     {
@@ -25,30 +22,27 @@ const CreateCategory = () => {
     }
   )
 
+  const validateForm = async(e)=>{
+    createCategorySchema
+      .validate(category, { abortEarly: false })
+      .then(async() => {
+        const {res , newCategoryId} = await createCategoryService(category, user);
+        if(res){
+          if(res.ok){
+            navigate(`/categories/${newCategoryId}/edit`)
+          }
+        }
+        
+    })
+      .catch((err) => {
+        toast.error(`${err.errors[0]}`)
+    });
+  }
+
+
   const handleSubmit =async(e)=>{
     e.preventDefault();
-    const id = toast.loading("Saving new category...");
-
-    const data = JSON.stringify({...category});
-    try{
-      const res = await fetch('http://localhost:4000/api/category/add', {
-        method:"POST",
-        headers:myheaders,
-        body:data
-      })
-      const response = await res.json();
-      
-      if(res.ok){
-        toast.update(id, {render: "Category Saved Succefully", type: "success", isLoading: false, autoClose:8000});
-        const newCategoryId = response.category._id;
-        navigate(`../${newCategoryId}/edit`)
-      }
-      else{
-        toast.update(id, {render: `${response.message}`, type: "error", isLoading: false, autoClose:8000});
-      }
-    }catch(err){
-      console.log(err);
-    }
+    validateForm()
   }
 
   return (
