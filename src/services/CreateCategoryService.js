@@ -7,8 +7,9 @@ const createCategoryService = async(category, user) =>{
 
     const id = toast.loading("Saving new category...");
     const data = JSON.stringify({...category});
+    var res;
     try{
-      const res = await fetch('http://localhost:4000/api/category/add', {
+      res = await fetch('http://localhost:4000/api/category/add', {
         method:"POST",
         headers:myheaders,
         body:data
@@ -22,6 +23,7 @@ const createCategoryService = async(category, user) =>{
       else{
         toast.update(id, {render: `${response.message}`, type: "error", isLoading: false, autoClose:8000});
       }
+      console.log(res);
       return {res , newCategoryId}
     }catch(err){
       console.log(err);

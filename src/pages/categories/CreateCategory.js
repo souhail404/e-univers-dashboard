@@ -27,6 +27,7 @@ const CreateCategory = () => {
       .validate(category, { abortEarly: false })
       .then(async() => {
         const {res , newCategoryId} = await createCategoryService(category, user);
+        console.log('from outside: ', res);
         if(res){
           if(res.ok){
             navigate(`/categories/${newCategoryId}/edit`)
@@ -35,7 +36,7 @@ const CreateCategory = () => {
         
     })
       .catch((err) => {
-        toast.error(`${err.errors[0]}`)
+        toast.error(`${err}`) 
     });
   }
 

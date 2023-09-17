@@ -132,6 +132,11 @@ p, a{
     align-items: center;
     justify-content: space-between;
 }
+.flex-c-end{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
 .image-as-icon{
     max-width: 50px;
     max-height:50px;
@@ -950,13 +955,14 @@ select.tlh-right--elem option{
     margin-bottom: var(--p2);
 }
 
-.change-state-form{
+.multi-choices-form{
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    margin-left: auto;
     gap: var(--p2);
 }
-.change-state-form .order-state-label{
+.multi-choices-form .choice-label{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -968,10 +974,11 @@ select.tlh-right--elem option{
     border-radius: 4px;
     cursor: pointer;
 }
-.change-state-form .order-state-label.active{
+.multi-choices-form .choice-label.active{
     background-color: var(--primary-color-1);
     color: var(--primary-color-6);
 }
+
 
 .order-state-view{
     display: flex;
@@ -1255,4 +1262,47 @@ select.tlh-right--elem option{
     background-color: var(--error-color);
     color: var(--black);
     border-color: var(--black);
+}
+
+
+
+.header-200{
+    margin-bottom: var(--p1);
+}
+.header-200__right{
+    gap: var(--p1);
+}
+/* date range picker */
+.date-range-picker-wrapper{
+    position: relative;
+}
+.date-range-picker-menu{
+    display: flex;
+    flex-direction: column;
+    gap: var(--p1);
+    position: absolute;
+    bottom: -8px;
+    right: -0px;
+    transform: translate(0% , 100%);
+    background-color: var(--gray-1);
+    padding: var(--p1);
+    display: none;
+    border: 1px solid var(--black-25);
+}
+.date-range-picker-menu.show{
+    display: flex;
+}
+.date-range-picker-menu .date-input{
+   width: 180px;
+}
+.header-200__button{
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    gap: var(--p1);
+    padding-inline: var(--p3);
+    height: 36px;
+    background-color: var(--gray-1);
+    border: 1px solid var(--black-25);
+    cursor: pointer;
 }

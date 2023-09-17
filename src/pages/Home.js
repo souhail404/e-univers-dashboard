@@ -8,6 +8,8 @@ import AmountComparisonChart from '../components/Charts/AmountComparaisonChart'
 import OverviewCard from '../components/Dashboard/OverviewCard'
 import { Skeleton } from '@mui/material'
 import RecentOrdersList from '../components/Dashboard/RecentOrdersList'
+import DateRangePicker from '../components/common/DateRangePicker'
+import { BiDownload } from 'react-icons/bi'
 
 const Home = () => {
   const {user} = useAuth()
@@ -70,6 +72,17 @@ const Home = () => {
 
   return (
     <main className='page home-page'>
+      <section className='white-bg-section flex-c-jb header-200'>
+        <div>
+        </div>
+        <div className='f-r-c-c header-200__right'>
+          <DateRangePicker />   
+          <button type="button" className='header-200__button'>
+              <BiDownload style={{fontSize:'20px'}} />
+              <span>Download Report</span>
+          </button> 
+        </div>
+      </section>
       <section className='overview-cards-wrapper'>
         {
           isLoading ?

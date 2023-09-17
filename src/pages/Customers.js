@@ -43,7 +43,7 @@ const Customers = () => {
 
           if(res.ok){
               const {customers, totalPages, totalCustomers} = response;
-              setCustomersData(customers);
+              setCustomersData(customers); 
               setTotalPages(totalPages)
               setCustomersCount(totalCustomers)
           }
