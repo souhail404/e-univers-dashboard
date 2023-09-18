@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import {MdOutlineAttachMoney, MdOutlineShoppingCart, MdPersonOutline, MdShowChart} from 'react-icons/md'
+import {MdOutlineAttachMoney, MdOutlineCancel, MdOutlineRemoveShoppingCart, MdOutlineShoppingCart, MdPersonOutline, MdShowChart} from 'react-icons/md'
 import OrdersComparisonChart from '../components/Charts/OrdersComparisonChart'
 import { toast } from 'react-toastify'
 import { useAuth } from '../hooks/useAuth'
@@ -15,54 +15,51 @@ const Home = () => {
   const {user} = useAuth()
 
   const [overviewPeriod, setOverviewPeriod] = useState({startDate:'', endDate:'', range:''})
+  const [isLoadingOverview , setIsLoadingOverview] = useState(false)
+  const [isLoadingCharts , setIsLoadingCharts] = useState(false)
+  const [thisPeriodOrders, setThisPeriodOrders]= useState()
+  const [oldPeriodOrders, setOldPeriodOrders]= useState()
+  const [thisPeriodCustomers, setThisPeriodCustomers]= useState()
+  const [oldPeriodCustomers, setOldPeriodCustomers]= useState()
+  const [thisPeriodAmount, setThisPeriodAmount]= useState()
+  const [oldPeriodAmount, setOldPeriodAmount]= useState()
+  const [thisPeriodReturns, setThisPeriodReturns]= useState()
+  const [oldPeriodReturns, setOldPeriodReturns]= useState()
+  const [thisPeriodData, setThisPeriodData]= useState([])
 
-  const [period , setPeriod] = useState('week')
-  const [isLoading , setIsLoading] = useState(false)
-  const [thisWeekOrders, setThisWeekOrders]= useState()
-  const [prevWeekOrders, setPrevWeekOrders]= useState()
-  const [thisWeekCustomers, setThisWeekCustomers]= useState()
-  const [prevWeekCustomers, setPrevWeekCustomers]= useState()
-  const [thisWeekAmount, setThisWeekAmount]= useState()
-  const [prevWeekAmount, setPrevWeekAmount]= useState()
   const [thisWeekData, setThisWeekData]= useState([])
   const [previousWeekData, setPreviousWeekData]= useState([])
   
-  const fetchOverview = async ()=>{
-    try{
-      setIsLoading(true)
-      const res = await fetch(`http://localhost:4000/api/overview`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
-      const response = await res.json();
-      if(res.ok){
-        const {
-            thisWeekOrders, 
-            prevWeekOrders,
-            thisWeekAmount,
-            prevWeekAmount,
-            thisWeek,
-            previousWeek,
-            thisWeekCustomers,
-            prevWeekCustomers
-          } = response;
-          setThisWeekData(thisWeek);
-          setPreviousWeekData(previousWeek);
-      }
-      else{
-        toast.error(`${response.message}`)
-      }
-      setIsLoading(false)
-    }catch(err){
-        console.log(err);
-        setIsLoading(false)
-    } 
-  }
+  // const fetchOverview = async ()=>{
+  //   try{
+  //     setIsLoading(true)
+  //     const res = await fetch(`http://localhost:4000/api/overview`, {
+  //       headers: {
+  //         Authorization: `Bearer ${user.token}`,
+  //       },
+  //     })
+  //     const response = await res.json();
+  //     if(res.ok){
+  //       const {
+  //           thisWeek,
+  //           previousWeek,
+  //         } = response;
+  //         setThisWeekData(thisWeek);
+  //         setPreviousWeekData(previousWeek);
+  //     }
+  //     else{
+  //       toast.error(`${response.message}`)
+  //     }
+  //     setIsLoading(false)
+  //   }catch(err){
+  //       console.log(err);
+  //       setIsLoading(false)
+  //   } 
+  // }
 
   const fetchGeneralOverview = async ()=>{
     try{
-      console.log(`http://localhost:4000/api/overview/general?startDate=${overviewPeriod.startDate}&endDate=${overviewPeriod.endDate}&range=${overviewPeriod.range}`);
+      setIsLoadingOverview(true)
       const res = await fetch(`http://localhost:4000/api/overview/general?startDate=${overviewPeriod.startDate}&endDate=${overviewPeriod.endDate}&range=${overviewPeriod.range}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -70,31 +67,68 @@ const Home = () => {
       })
       const response = await res.json();
       if(res.ok){
-        const {thisPeriodCustomers, oldPeriodCustomers, thisPeriodOrders, thisPeriodRevenue, oldPeriodOrders, oldPeriodRevenue} = response
-        setThisWeekOrders(thisPeriodOrders);
-        setPrevWeekOrders(oldPeriodOrders);
-        setThisWeekCustomers(thisPeriodCustomers);
-        setPrevWeekCustomers(oldPeriodCustomers);
-        setThisWeekAmount(thisPeriodRevenue);
-        setPrevWeekAmount(oldPeriodRevenue);
-        console.log('yesss');
+        const {
+          thisPeriodCustomers, 
+          oldPeriodCustomers, 
+          thisPeriodOrders, 
+          thisPeriodRevenue, 
+          oldPeriodOrders, 
+          oldPeriodRevenue, 
+          thisPeriodReturns, 
+          oldPeriodReturns 
+        } = response
+        setThisPeriodOrders(thisPeriodOrders);
+        setOldPeriodOrders(oldPeriodOrders);
+        setThisPeriodCustomers(thisPeriodCustomers);
+        setOldPeriodCustomers(oldPeriodCustomers);
+        setThisPeriodAmount(thisPeriodRevenue);
+        setOldPeriodAmount(oldPeriodRevenue);
+        setThisPeriodReturns(thisPeriodReturns);
+        setOldPeriodReturns(oldPeriodReturns);
       }
       else{
         toast.error(`${response.message}`)
       }
+      setIsLoadingOverview(false)
     }catch(err){
         console.log(err);
+        setIsLoadingOverview(false)
     } 
   }
 
+  const fetchChartsData = async ()=>{
+    try{
+      setIsLoadingCharts(true)
+      const res = await fetch(`http://localhost:4000/api/overview/amount-chart?startDate=${overviewPeriod.startDate}&endDate=${overviewPeriod.endDate}&range=${overviewPeriod.range}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      const response = await res.json();
+      if(res.ok){
+        const data = response;
+        setThisPeriodData(data)
+      }
+      else{
+        toast.error(`${response.message}`)
+      }
+      setIsLoadingCharts(false)
+    }catch(err){
+      console.log(err);
+      setIsLoadingCharts(false)
+    } 
+  }
   
-  useEffect(()=>{
-    fetchOverview()
-  }, [])
+  // useEffect(()=>{
+  //   fetchOverview() 
+  // }, [])
 
   useEffect(()=>{
     if(overviewPeriod.startDate, overviewPeriod.endDate){
       fetchGeneralOverview()
+    }
+    if(overviewPeriod.startDate, overviewPeriod.endDate){
+      fetchChartsData()
     }
   }, [overviewPeriod])
 
@@ -112,35 +146,14 @@ const Home = () => {
         </div>
       </section>
       <section className='overview-cards-wrapper'>
-        {
-          isLoading ?
-            <>
-              <Skeleton height={100}/>
-              <Skeleton height={100}/>
-              <Skeleton height={100}/>
-            </>
-          :
-          <>
-            <OverviewCard icon={<MdOutlineShoppingCart /> } label='Orders' period={overviewPeriod.range} thisData={thisWeekOrders} prevData={prevWeekOrders}  />
-            <OverviewCard icon={<MdOutlineAttachMoney /> } label='Revenue' period={overviewPeriod.range} thisData={thisWeekAmount} prevData={prevWeekAmount}  />
-            <OverviewCard icon={<MdPersonOutline /> } label='New Customers' period={overviewPeriod.range} thisData={thisWeekCustomers} prevData={prevWeekCustomers}  />
-          </>
-        }
+        <OverviewCard icon={<MdOutlineShoppingCart /> } label='Orders' period={overviewPeriod.range} thisData={thisPeriodOrders} prevData={oldPeriodOrders} stats={true} isLoading={isLoadingOverview} />
+        <OverviewCard icon={<MdOutlineRemoveShoppingCart /> } label='Returned Orders' period={overviewPeriod.range} thisData={thisPeriodReturns} prevData={oldPeriodReturns} isLoading={isLoadingOverview} />
+        <OverviewCard icon={<MdOutlineAttachMoney /> } label='Revenue' period={overviewPeriod.range} thisData={thisPeriodAmount} prevData={oldPeriodAmount} stats={true} isLoading={isLoadingOverview} unit={`$`} />
+        <OverviewCard icon={<MdPersonOutline /> } label='New Customers' period={overviewPeriod.range} thisData={thisPeriodCustomers} prevData={oldPeriodCustomers} stats={true} isLoading={isLoadingOverview} />
       </section>
       <section className='charts-wrapper'>
-        {
-          isLoading ?
-            <>
-              <Skeleton height={200}/>
-              <Skeleton height={200}/>
-            </>
-          :
-          <>
-            <OrdersComparisonChart thisWeek={thisWeekData} prevWeek={previousWeekData} />
-            <AmountComparisonChart thisWeek={thisWeekData} prevWeek={previousWeekData} />
-          </>
-        }
-        
+        {thisPeriodData ? <OrdersComparisonChart thisPeriod={thisPeriodData} isLoading={isLoadingCharts}/>: null}
+        {thisPeriodData ? <AmountComparisonChart thisPeriod={thisPeriodData} isLoading={isLoadingCharts}/>: null}
       </section>
       <section className='white-bg-section'>
         <div className="section-header">

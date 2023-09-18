@@ -1,7 +1,8 @@
+import { Skeleton } from '@mui/material';
 import React from 'react'
 import { MdShowChart } from 'react-icons/md'
 
-const OverviewCard = ({icon, period, label, thisData, prevData}) => {
+const OverviewCard = ({icon, period, label, thisData, prevData, stats, isLoading, unit}) => {
     var percent= 0;
     if(thisData > 0 && prevData === 0) {
         percent = 100;
@@ -24,12 +25,25 @@ const OverviewCard = ({icon, period, label, thisData, prevData}) => {
                 </div>
                 <div className='txt'>
                     <p className="head-txt">{label}</p>
-                    <p className="period-txt">{period ? `${period==='day'? 'today': `This ${period}`}`: `This period`}</p>
+                    {
+                        isLoading ?
+                        <Skeleton /> :
+                        <p className="period-txt">{period ? `${period==='day'? 'today': `This ${period}`}`: `This period`}</p>
+                    }
                 </div>
             </div>  
             <div className="content">
-                <p className='data'>{thisData}</p>
-                <p className={`stats ${sign===-1?'down':'up'}`} ><MdShowChart/> <span>{sign===-1?'':'+'}{percent} %</span> </p>
+                {
+                    isLoading ?
+                    <Skeleton /> : <p className='data'>{thisData?.toLocaleString(undefined, { minimumFractionDigits: 0})} {unit}</p>
+                }
+                
+                {   
+                    stats ?
+                    isLoading ? <Skeleton /> : <p className={`stats ${sign===-1?'down':'up'}`} ><MdShowChart/> <span>{sign===-1?'':'+'}{percent} %</span> </p>
+                    : null
+                }
+                
             </div>
         </div>
     )

@@ -82,8 +82,8 @@ const OrderDeatails = () => {
             </div>
             {
               orderData ?
-              <form action="" className="change-state-form">
-                <label className={`order-state-label ${orderData.orderState === 'pending'? 'active':''}`} htmlFor="order-state-pending">Pending</label>
+              <form action="" className="multi-choices-form">
+                <label className={`choice-label ${orderData.orderState === 'pending'? 'active':''}`} htmlFor="order-state-pending">Pending</label>
                 <input
                   type="radio"
                   name="order-state"
@@ -94,7 +94,7 @@ const OrderDeatails = () => {
                   hidden
                 />
 
-                <label className={`order-state-label ${orderData.orderState === 'processing'? 'active':''}`} htmlFor="order-state-processing">Processing</label>
+                <label className={`choice-label ${orderData.orderState === 'processing'? 'active':''}`} htmlFor="order-state-processing">Processing</label>
                 <input
                   type="radio"
                   name="order-state"
@@ -105,7 +105,7 @@ const OrderDeatails = () => {
                   hidden
                 />
 
-                <label className={`order-state-label ${orderData.orderState === 'delivered'? 'active':''}`} htmlFor="order-state-delivered">Delivered</label>
+                <label className={`choice-label ${orderData.orderState === 'delivered'? 'active':''}`} htmlFor="order-state-delivered">Delivered</label>
                 <input
                   type="radio"
                   name="order-state"
@@ -116,7 +116,7 @@ const OrderDeatails = () => {
                   hidden
                 />
 
-                <label className={`order-state-label ${orderData.orderState === 'backorder'? 'active':''}`} htmlFor="order-state-backorder">Backorder</label>
+                <label className={`choice-label ${orderData.orderState === 'backorder'? 'active':''}`} htmlFor="order-state-backorder">Backorder</label>
                 <input
                   type="radio"
                   name="order-state"

@@ -960,7 +960,7 @@ select.tlh-right--elem option{
     align-items: center;
     justify-content: flex-end;
     margin-left: auto;
-    gap: var(--p2);
+    gap: var(--p2); 
 }
 .multi-choices-form .choice-label{
     display: flex;

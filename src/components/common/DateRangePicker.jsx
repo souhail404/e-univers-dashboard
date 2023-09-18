@@ -26,7 +26,6 @@ const DateRangePicker = (props) => {
             const dayEnd =  new Date(date);
             dayStart.setHours(2,0,0);
             dayEnd.setHours(25,59,59);
-            console.log(dayStart);
             setStartDate(dayStart.toISOString().split('T')[0])
             setEndDate(dayEnd.toISOString().split('T')[0])
             setOverviewPeriod({startDate:dayStart.toISOString(), endDate:dayEnd.toISOString(), range:'day'})
@@ -36,11 +35,9 @@ const DateRangePicker = (props) => {
             // start of the week
             const weekStart = new Date();
             weekStart.setDate(date.getDate() - currentDay);
-            weekStart.setHours(2,0,0)
             // end of the week
             const weekEnd = new Date();
-            weekEnd.setDate(date.getDate() + (6 - currentDay));
-            weekEnd.setHours(25,59,59)
+            weekEnd.setDate(weekStart.getDate() + 6);
             const start = weekStart.toISOString().split('T')[0]
             const end = weekEnd.toISOString().split('T')[0]
             setStartDate(start)
@@ -48,8 +45,8 @@ const DateRangePicker = (props) => {
             setOverviewPeriod({startDate:weekStart.toISOString(), endDate:weekEnd.toISOString(), range:'week'})
         }
         if(range === 'month'){
-            const startMonth = new Date(date.getFullYear(), date.getMonth(), 1, 2);
-            const endMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0, 26);
+            const startMonth = new Date(date.getFullYear(), date.getMonth(), 1, 1);
+            const endMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0, 1);
             const start = startMonth.toLocaleDateString("fr-CA",{year:"numeric", month:"2-digit", day:"2-digit"});
             const end = endMonth.toLocaleDateString("fr-CA",{year:"numeric", month:"2-digit", day:"2-digit"});
             setStartDate(start)
@@ -58,7 +55,7 @@ const DateRangePicker = (props) => {
         }
         if(range === 'year'){
             const startYear = new Date(date.getFullYear(), 0, 1, 1);
-            const endYear = new Date(date.getFullYear(), 11 + 1, 0, 25);
+            const endYear = new Date(date.getFullYear(), 11 + 1, 0, 1);
             const start = startYear.toLocaleDateString("fr-CA",{year:"numeric", month:"2-digit", day:"2-digit"});
             const end = endYear.toLocaleDateString("fr-CA",{year:"numeric", month:"2-digit", day:"2-digit"});
             setStartDate(start)
@@ -87,9 +84,6 @@ const DateRangePicker = (props) => {
         handleRangeChange()
     }, [range])
 
-    useEffect(()=>{
-        console.log(overviewPeriod);
-    }, [overviewPeriod])
     
     return (
         <div className="date-range-picker-wrapper"> 
