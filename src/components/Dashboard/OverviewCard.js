@@ -2,7 +2,19 @@ import React from 'react'
 import { MdShowChart } from 'react-icons/md'
 
 const OverviewCard = ({icon, period, label, thisData, prevData}) => {
-    const percent= (thisData > 0) ? (((thisData * 100)/ prevData) - 100).toFixed(2): 0;
+    var percent= 0;
+    if(thisData > 0 && prevData === 0) {
+        percent = 100;
+    }
+    else if(thisData === 0 && prevData > 0) {
+        percent = -100;
+    }
+    else if(thisData > 0 && prevData > 0) {
+        percent = (((thisData * 100)/ prevData) - 100).toFixed(2)
+    }
+    else{
+        percent= 0
+    }
     const sign = Math.sign(percent);
     return (
         <div className="stat-overview-card">
@@ -12,7 +24,7 @@ const OverviewCard = ({icon, period, label, thisData, prevData}) => {
                 </div>
                 <div className='txt'>
                     <p className="head-txt">{label}</p>
-                    <p className="period-txt">this {period}</p>
+                    <p className="period-txt">{period ? `${period==='day'? 'today': `This ${period}`}`: `This period`}</p>
                 </div>
             </div>  
             <div className="content">

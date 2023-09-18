@@ -14,6 +14,8 @@ import { BiDownload } from 'react-icons/bi'
 const Home = () => {
   const {user} = useAuth()
 
+  const [overviewPeriod, setOverviewPeriod] = useState({startDate:'', endDate:'', range:''})
+
   const [period , setPeriod] = useState('week')
   const [isLoading , setIsLoading] = useState(false)
   const [thisWeekOrders, setThisWeekOrders]= useState()
@@ -45,12 +47,6 @@ const Home = () => {
             thisWeekCustomers,
             prevWeekCustomers
           } = response;
-          setThisWeekOrders(thisWeekOrders);
-          setPrevWeekOrders(prevWeekOrders);
-          setThisWeekCustomers(thisWeekCustomers);
-          setPrevWeekCustomers(prevWeekCustomers);
-          setThisWeekAmount(thisWeekAmount);
-          setPrevWeekAmount(prevWeekAmount);
           setThisWeekData(thisWeek);
           setPreviousWeekData(previousWeek);
       }
@@ -64,11 +60,43 @@ const Home = () => {
     } 
   }
 
+  const fetchGeneralOverview = async ()=>{
+    try{
+      console.log(`http://localhost:4000/api/overview/general?startDate=${overviewPeriod.startDate}&endDate=${overviewPeriod.endDate}&range=${overviewPeriod.range}`);
+      const res = await fetch(`http://localhost:4000/api/overview/general?startDate=${overviewPeriod.startDate}&endDate=${overviewPeriod.endDate}&range=${overviewPeriod.range}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      const response = await res.json();
+      if(res.ok){
+        const {thisPeriodCustomers, oldPeriodCustomers, thisPeriodOrders, thisPeriodRevenue, oldPeriodOrders, oldPeriodRevenue} = response
+        setThisWeekOrders(thisPeriodOrders);
+        setPrevWeekOrders(oldPeriodOrders);
+        setThisWeekCustomers(thisPeriodCustomers);
+        setPrevWeekCustomers(oldPeriodCustomers);
+        setThisWeekAmount(thisPeriodRevenue);
+        setPrevWeekAmount(oldPeriodRevenue);
+        console.log('yesss');
+      }
+      else{
+        toast.error(`${response.message}`)
+      }
+    }catch(err){
+        console.log(err);
+    } 
+  }
+
   
   useEffect(()=>{
     fetchOverview()
   }, [])
 
+  useEffect(()=>{
+    if(overviewPeriod.startDate, overviewPeriod.endDate){
+      fetchGeneralOverview()
+    }
+  }, [overviewPeriod])
 
   return (
     <main className='page home-page'>
@@ -76,7 +104,7 @@ const Home = () => {
         <div>
         </div>
         <div className='f-r-c-c header-200__right'>
-          <DateRangePicker />   
+          <DateRangePicker overviewPeriod={overviewPeriod} setOverviewPeriod={setOverviewPeriod} />   
           <button type="button" className='header-200__button'>
               <BiDownload style={{fontSize:'20px'}} />
               <span>Download Report</span>
@@ -93,9 +121,9 @@ const Home = () => {
             </>
           :
           <>
-            <OverviewCard icon={<MdOutlineShoppingCart /> } label='Orders' period={period} thisData={thisWeekOrders} prevData={prevWeekOrders}  />
-            <OverviewCard icon={<MdOutlineAttachMoney /> } label='Revenue' period={period} thisData={thisWeekAmount} prevData={prevWeekAmount}  />
-            <OverviewCard icon={<MdPersonOutline /> } label='New Customers' period={period} thisData={thisWeekCustomers} prevData={prevWeekCustomers}  />
+            <OverviewCard icon={<MdOutlineShoppingCart /> } label='Orders' period={overviewPeriod.range} thisData={thisWeekOrders} prevData={prevWeekOrders}  />
+            <OverviewCard icon={<MdOutlineAttachMoney /> } label='Revenue' period={overviewPeriod.range} thisData={thisWeekAmount} prevData={prevWeekAmount}  />
+            <OverviewCard icon={<MdPersonOutline /> } label='New Customers' period={overviewPeriod.range} thisData={thisWeekCustomers} prevData={prevWeekCustomers}  />
           </>
         }
       </section>
