@@ -4,8 +4,8 @@ import { useAuth } from '../../hooks/useAuth';
 import { MdLockReset, MdOutlineSave } from 'react-icons/md'
 import { toast } from 'react-toastify';
 import { Skeleton } from '@mui/material';
-import editAdminService from '../../services/editAdminService';
 import { adminProfileInfoSchema, resetAdminPsswordSchema } from '../../FormValidations/AdminSchemas';
+import editUserService from '../../services/editAdminService';
 
 const CreateAdmin = () => {
   const {user} =useAuth()
@@ -62,7 +62,7 @@ const CreateAdmin = () => {
     adminProfileInfoSchema
       .validate(formBody, { abortEarly: false })
       .then(async() => {
-         await editAdminService(formBody, user, adminId);
+         await editUserService(formBody, user, adminId);
     })
       .catch((err) => {
         toast.error(`${err.errors[0]}`)

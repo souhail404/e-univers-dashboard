@@ -1,23 +1,23 @@
 import { toast } from 'react-toastify';
 
-const editUserService = async(data, user, adminId) =>{
+const deleteUserService = async(customer, user) =>{
+    
     const myheaders = new Headers();
 
     myheaders.append('Content-Type', 'application/json');
     myheaders.append('Authorization', `Bearer ${user.token}`);
 
-    const jsonData = JSON.stringify(data)
-    const toastId = toast.loading(`Updating Profile Infos`);
+    const customerId = customer._id;
+
+    const toastId = toast.loading(`Deleting user : (${customer.userName})`);
     try {
-        const res = await fetch(`http://localhost:4000/api/user/update/${adminId}`, {
-            method:"PUT",
+        const res = await fetch(`http://localhost:4000/api/user/${customerId}`, {
+            method:"DELETE",
             headers:myheaders,
-            body:jsonData
         })
         const response = await res.json();
         if(res.ok){
-            toast.update(toastId, {render: "Profile Updated Successfully", type: "success", isLoading: false, autoClose:5000});
-            
+            toast.update(toastId, {render: "User deleted Succefully", type: "success", isLoading: false, autoClose:5000});
         }
         else{
             toast.update(toastId, {render: `${response.message}`, type: "error", isLoading: false, autoClose:5000});
@@ -29,4 +29,4 @@ const editUserService = async(data, user, adminId) =>{
 
 }
 
-export default editUserService;
+export default deleteUserService;

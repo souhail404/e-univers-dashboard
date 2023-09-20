@@ -7,7 +7,7 @@ const createAdminService = async(data, user) =>{
     myheaders.append('Authorization', `Bearer ${user.token}`);
 
     const jsonData = JSON.stringify(data)
-    const toastId = toast.loading(`Creating Admin : (${data.lastName} ${data.firstName})`);
+    const toastId = toast.loading(`Creating ${data.role} : (${data.lastName} ${data.firstName})`);
     try {
         const res = await fetch(`http://localhost:4000/api/user/register/`, {
             method:"POST",
@@ -16,7 +16,7 @@ const createAdminService = async(data, user) =>{
         })
         const response = await res.json();
         if(res.ok){
-            toast.update(toastId, {render: "Admin created Successfully", type: "success", isLoading: false, autoClose:5000});
+            toast.update(toastId, {render: `${data.role} created Successfully`, type: "success", isLoading: false, autoClose:5000});
             
         }
         else{

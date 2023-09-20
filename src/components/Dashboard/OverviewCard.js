@@ -28,7 +28,7 @@ const OverviewCard = ({icon, period, label, thisData, prevData, stats, isLoading
                     {
                         isLoading ?
                         <Skeleton /> :
-                        <p className="period-txt">{period ? `${period==='day'? 'today': `This ${period}`}`: `This period`}</p>
+                        <p className="period-txt">{period ? `${period==='day'? 'today': `This ${period}`}`: `This Period`}</p>
                     }
                 </div>
             </div>  

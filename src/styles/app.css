@@ -1288,6 +1288,7 @@ select.tlh-right--elem option{
     padding: var(--p1);
     display: none;
     border: 1px solid var(--black-25);
+    z-index: 30;
 }
 .date-range-picker-menu.show{
     display: flex;

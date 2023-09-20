@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
-import {MdOutlineAttachMoney, MdOutlineCancel, MdOutlineRemoveShoppingCart, MdOutlineShoppingCart, MdPersonOutline, MdShowChart} from 'react-icons/md'
+import {MdOutlineAttachMoney, MdOutlineRemoveShoppingCart, MdOutlineShoppingCart, MdPersonOutline, MdShowChart} from 'react-icons/md'
 import OrdersComparisonChart from '../components/Charts/OrdersComparisonChart'
 import { toast } from 'react-toastify'
 import { useAuth } from '../hooks/useAuth'
 import AmountComparisonChart from '../components/Charts/AmountComparaisonChart'
 import OverviewCard from '../components/Dashboard/OverviewCard'
-import { Skeleton } from '@mui/material'
 import RecentOrdersList from '../components/Dashboard/RecentOrdersList'
 import DateRangePicker from '../components/common/DateRangePicker'
 import { BiDownload } from 'react-icons/bi'
@@ -26,37 +25,7 @@ const Home = () => {
   const [thisPeriodReturns, setThisPeriodReturns]= useState()
   const [oldPeriodReturns, setOldPeriodReturns]= useState()
   const [thisPeriodData, setThisPeriodData]= useState([])
-
-  const [thisWeekData, setThisWeekData]= useState([])
-  const [previousWeekData, setPreviousWeekData]= useState([])
   
-  // const fetchOverview = async ()=>{
-  //   try{
-  //     setIsLoading(true)
-  //     const res = await fetch(`http://localhost:4000/api/overview`, {
-  //       headers: {
-  //         Authorization: `Bearer ${user.token}`,
-  //       },
-  //     })
-  //     const response = await res.json();
-  //     if(res.ok){
-  //       const {
-  //           thisWeek,
-  //           previousWeek,
-  //         } = response;
-  //         setThisWeekData(thisWeek);
-  //         setPreviousWeekData(previousWeek);
-  //     }
-  //     else{
-  //       toast.error(`${response.message}`)
-  //     }
-  //     setIsLoading(false)
-  //   }catch(err){
-  //       console.log(err);
-  //       setIsLoading(false)
-  //   } 
-  // }
-
   const fetchGeneralOverview = async ()=>{
     try{
       setIsLoadingOverview(true)
@@ -118,16 +87,10 @@ const Home = () => {
       setIsLoadingCharts(false)
     } 
   }
-  
-  // useEffect(()=>{
-  //   fetchOverview() 
-  // }, [])
 
   useEffect(()=>{
     if(overviewPeriod.startDate, overviewPeriod.endDate){
       fetchGeneralOverview()
-    }
-    if(overviewPeriod.startDate, overviewPeriod.endDate){
       fetchChartsData()
     }
   }, [overviewPeriod])

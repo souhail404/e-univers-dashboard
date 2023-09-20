@@ -39,7 +39,7 @@ const CreateAdmin = () => {
     });
   }
 
-  const handleSaveClick=async(e)=>{
+  const handleSaveClick=async(e)=>{ 
     e.preventDefault()
     validateForm() 
   }
