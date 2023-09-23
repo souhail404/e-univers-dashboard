@@ -8,6 +8,7 @@ import {CiSaveDown2} from 'react-icons/ci'
 import { useNavigate } from 'react-router-dom';
 import { createCategorySchema } from '../../FormValidations/CartegorySchema';
 import createCategoryService from '../../services/CreateCategoryService';
+import { MdOutlineSave } from 'react-icons/md';
 
 
 const CreateCategory = () => {
@@ -53,23 +54,37 @@ const CreateCategory = () => {
             <h3>Create new category</h3>
         </div>
         <div className="page-body">
-            <form className='form create-product-form' action="">
-                <div className="form-haeder">
-                    
-                </div>
+            <form className='form form-type-2 bg-white shadow-5' action="">
                 <div className="form-body">
-                    <div className="form-group">
-                      <AddCategory category={category} setCategory={setCategory} />
+                    <div className="form-line">
+                        <div className="input-wrapper">
+                            <label htmlFor="" className='label'>Title :</label>
+                            <input  type="text" 
+                                    className='input' 
+                                    placeholder='Ex: smartphones, laptops..'
+                                    onChange={(e)=>{
+                                      category.title = e.target.value.toLowerCase();
+                                    }}/>
+                            <Nb message='its better to make a little general'/>
+                        </div>
                     </div>
-                </div>
-                <div className="form-actions">
-                    <div className="action-elem">
-                        <button className="btn" onClick={(e)=>handleSubmit(e)}>
-                            <div className="icon">
-                                <CiSaveDown2 />
-                            </div>
-                            <p>Save</p>
-                        </button>   
+                    <div className="form-line">
+                        <div className="input-wrapper">
+                            <label htmlFor="" className='label'>description :</label>
+                            <textarea name="" id="" 
+                                      className='input' 
+                                      placeholder='Ex: something..' 
+                                      required
+                                      onChange={(e)=>{
+                                        category.description = e.target.value.toLowerCase();
+                                      }}
+                            ></textarea>
+                        </div>
+                    </div>
+                    <div className="form-buttons">
+                        <button type='submit' className="btn" onClick={(e)=>{handleSubmit(e)}}>
+                          <MdOutlineSave className='icon'/> Create 
+                        </button>
                     </div>
                 </div>
             </form>
@@ -82,31 +97,7 @@ const CreateCategory = () => {
 const AddCategory= ({category , setCategory})=>{
   return(
     <>
-      <div className="form-line">
-          <div className="input-wrapper">
-              <label htmlFor="" className='label'>Title :</label>
-              <input  type="text" 
-                      className='input' 
-                      placeholder='Ex: smartphones, laptops..'
-                      onChange={(e)=>{
-                        category.title = e.target.value.toLowerCase();
-                      }}/>
-              <Nb message='its better to make a little general'/>
-          </div>
-      </div>
-      <div className="form-line">
-          <div className="input-wrapper">
-              <label htmlFor="" className='label'>description :</label>
-              <textarea name="" id="" 
-                        className='input' 
-                        placeholder='Ex: something..' 
-                        required
-                        onChange={(e)=>{
-                          category.description = e.target.value.toLowerCase();
-                        }}
-              ></textarea>
-          </div>
-      </div>
+     
     </>
   )
 }

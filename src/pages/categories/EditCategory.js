@@ -10,6 +10,7 @@ import {FiEdit3, FiSave, FiTrash2} from 'react-icons/fi'
 import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Skeleton } from '@mui/material';
+import { MdOutlineSave } from 'react-icons/md';
 
 
 
@@ -67,7 +68,6 @@ const EditCategory = () => {
       
       if(res.ok){
         toast.update(toastId, {render:'Category updated', type:'success', isLoading:false, autoClose:6000});
-        navigate('/categories/')
       }
       else{
         toast.update(toastId, {render:`${response.message}`, type:'error', isLoading:false, autoClose:6000});
@@ -93,35 +93,28 @@ const EditCategory = () => {
 
             :
             category ? 
-              <form className='form create-product-form' action="">
-                  <div className="form-haeder">
-                      
-                  </div>
+            <>
+              <form className='form form-type-2 bg-white shadow-5' action="">
                   <div className="form-body">
-                      <div className="form-group">
                         <EditCategoryInfos category={category} setCategory={setCategory} />
-                      </div>
-
-                      <div className="form-group">
+                        <div className="form-buttons">
+                            <button type='submit' className="btn" onClick={(e)=>{handleSubmit(e)}}>
+                              <MdOutlineSave className='icon'/> Save
+                            </button>
+                        </div>
+                  </div>
+              </form>
+              <form className='form form-type-2 bg-white shadow-5' action="">
+                  <div className="form-body">
                         <EditSubCategories categoryId={categoryId}
                                           subCategories={subCategories} 
                                           setSubCategories={setSubCategories} 
                                           isAddingSub={isAddingSub} 
                                           setIsAddingSub={setIsAddingSub}
                         />
-                      </div>
-                  </div>
-                  <div className="form-actions">
-                      <div className="action-elem">
-                          <button className="btn" onClick={(e)=>handleSubmit(e)}>
-                              <div className="icon">
-                                  <CiSaveDown2 />
-                              </div>
-                              <p>Save</p>
-                          </button>   
-                      </div>
                   </div>
               </form>
+            </>
             : null}
         </div>
       </div>
