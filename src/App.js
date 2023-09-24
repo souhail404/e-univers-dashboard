@@ -30,6 +30,7 @@ import AdminDetails from './pages/admins/AdminDetails';
 import EditCustomer from './pages/customers/EditCustomer';
 import CustomerDetails from './pages/customers/CustomerDetails';
 import CreateCustomer from './pages/customers/CreateCustomer';
+import ProductDetails from './pages/products/ProductDetails';
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
               <Route index element={user ? <Products />: <Navigate to='/login' />}/>
               <Route path="create" element={user ? <CreateProduct />: <Navigate to='/login' />} />
               <Route path=":productId/edit" element={user ? <EditProduct />: <Navigate to='/login' />} />
+              <Route path=":productId/details" element={user ? <ProductDetails />: <Navigate to='/login' />} />
             </Route>
             <Route path="categories">
               <Route index element={user ? <Categories /> : <Navigate to='/login' />}/>

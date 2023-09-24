@@ -140,7 +140,7 @@ const CustomerDetails = () => {
             </section>
             <section className='overview-cards-wrapper'>
                 <OverviewCard icon={<MdOutlineShoppingCart /> } label='Orders' period={``} thisData={customerOrdersOverview.length} isLoading={isFetchingCustomerOrdersOverview} />
-                <OverviewCard icon={<MdOutlineLocalShipping /> } label='Delivred Orders' period={``} thisData={customerOrdersOverview.filter((order) => order.orderState === 'delivered').length} isLoading={isFetchingCustomerOrdersOverview} />
+                <OverviewCard icon={<MdOutlineLocalShipping /> } label='Delivered Orders' period={``} thisData={customerOrdersOverview.filter((order) => order.orderState === 'delivered').length} isLoading={isFetchingCustomerOrdersOverview} />
                 <OverviewCard icon={<MdOutlineRemoveShoppingCart /> } label='Returned Orders' period={``} thisData={customerOrdersOverview.filter((order) => order.orderState === 'backorder').length} isLoading={isFetchingCustomerOrdersOverview} />
                 <OverviewCard icon={<MdOutlineAttachMoney /> } label='Spending' period={``} thisData={customerSpending} isLoading={isFetchingCustomerOrdersOverview} unit={`$`} />
             </section>

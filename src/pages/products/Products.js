@@ -13,7 +13,7 @@ import TableSkeleton from '../../components/ListingTable/TableSkeleton';
 import EmptyFetchRes from '../../components/ListingTable/EmptyFetchRes';
 import Pagination from '../../components/ListingTable/Pagination';
 
-import { FiEdit3, FiTrash2 } from 'react-icons/fi';
+import { FiEdit3, FiEye, FiTrash2 } from 'react-icons/fi';
 import SelectCategory from '../../components/Product/SelectCategory';
 import { AiOutlineSearch } from 'react-icons/ai';
 import formatDate from '../../services/formatDate';
@@ -134,6 +134,7 @@ const Products = () => {
                           <td>
                             <div className="actions-cell">
                               <button className='action btn-round edit' type="button" onClick={()=>navigate(`./${product._id}/edit`)} ><FiEdit3/></button>
+                              <button className='action btn-round edit' type="button" onClick={()=>navigate(`./${product._id}/details`)} ><FiEye/></button>
                               <button className='action btn-round delete' type="button" onClick={()=>handleDeleteClick(product,index)}><FiTrash2/></button>
                             </div>
                           </td>
