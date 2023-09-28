@@ -45,7 +45,6 @@ const EditProduct = () => {
     const handleSaveClick=async(e)=>{
         e.preventDefault()
         validateForm();
-        console.log(formBody);
     }
 
     useEffect(()=>{
@@ -65,8 +64,8 @@ const EditProduct = () => {
         setFormBody({
             title:product.title, 
             slugTitle:product.slugTitle,
-            category:product.category,
-            subcategory:product.subcategory,
+            category:product?.category?._id,
+            subcategory:product?.subcategory?._id,
             miniDescription:product.miniDescription, 
             description:product.description ,
             sellPrice:product.sellPrice, 
@@ -77,6 +76,7 @@ const EditProduct = () => {
             variants:product.variants,
         })
     },[product])
+
 
     return (
         <div className='page create-product-page'>
@@ -91,7 +91,7 @@ const EditProduct = () => {
                 :
                 <div className="page-wrapper">
                     <div className="page-header">
-                        <h3>Edit product ({product.title})</h3>
+                        <h1 className="l-h">Edit product ({product.title})</h1>
                     </div>
                     {formBody ?
                         <div className="page-body">

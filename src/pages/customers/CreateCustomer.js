@@ -146,7 +146,7 @@ const CreateCustomer = () => {
                     </button>
                 </div>
             </div>
-        </form>
+      </form>
     </main>
   )
 }

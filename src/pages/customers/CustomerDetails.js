@@ -129,7 +129,7 @@ const CustomerDetails = () => {
         <main className="page customer-details-page">
             <section className='white-bg-section flex-c-jb header-200' >
                 <div>
-
+                    <h1 className="l-h">Customer Details {customerData ? `(${customerData.userName})`: null}</h1>
                 </div>
                 <div className='f-r-c-c header-200__right'>
                 <button type="button" className='header-200__button'>

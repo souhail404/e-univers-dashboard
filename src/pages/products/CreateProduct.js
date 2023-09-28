@@ -60,7 +60,7 @@ const CreateProduct = () => {
     <div className='page create-product-page'>
         <div className="page-wrapper">
             <div className="page-header">
-                <h3>Create new product</h3>
+                <h1 className="l-h">Create new product</h1>
             </div>
             <div className="page-body">
                 <form className='form create-product-form' action="">

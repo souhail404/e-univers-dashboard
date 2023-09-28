@@ -3,7 +3,7 @@ import Select from 'react-select'
 import { toast } from 'react-toastify';
 import {useAuth} from '../../hooks/useAuth'
 
-const SelectUser = ({setFilterUser}) => {
+const SelectUser = ({setFilterUser, placeholder}) => {
     const {user}= useAuth()
     const [isLoading, setIsLoading] = useState(false);
     const [usersData, setUsersData] = useState([])
@@ -38,7 +38,7 @@ const SelectUser = ({setFilterUser}) => {
     },[])
 
     useEffect(()=>{
-        let selectOpts = [{value:'', label:'All users'}]
+        let selectOpts = [{value:'', label:'None'}]
 
         usersData.forEach(user =>{
             selectOpts.push({value:user._id, label:`${user.lastName} ${user.firstName}`})
@@ -54,7 +54,7 @@ const SelectUser = ({setFilterUser}) => {
                 isLoading={isLoading}
                 name="products"
                 options={options}
-                placeholder='Filter Customers'
+                placeholder={placeholder}
                 onChange={(e)=>setFilterUser(e.value)}
             />
         </div>

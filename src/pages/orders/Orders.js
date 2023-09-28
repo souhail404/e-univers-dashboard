@@ -65,7 +65,7 @@ const Orders = () => {
                     <PageHeading title={`Orders ${ordersCount? `(${ordersCount})` : ''}`} />
                     <div className="tlh--right">
                         <SelectProduct setFilterProduct={setFilterProduct} />
-                        <SelectUser setFilterUser={setFilterUser} />
+                        <SelectUser setFilterUser={setFilterUser} placeholder='Filter Customers' />
                         <SelectState setFilterState={setFilterState} />
                     </div>
                 </div>

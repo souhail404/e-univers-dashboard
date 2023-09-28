@@ -32,6 +32,7 @@ const ProductGeneralInfo =({formBody, setFormBody})=>{
         }
     },[formBody.category])
 
+
     return(
         <>
             <div className="form-line">
@@ -89,7 +90,7 @@ const ProductGeneralInfo =({formBody, setFormBody})=>{
                     <label htmlFor="" className='label'>Sub Category :</label>
                     <select name="" id="" className='input' value={formBody.subcategory} onChange={(e)=>{setFormBody({...formBody, subcategory:e.target.value})}}>
                         <option value="">--</option>
-                        { subCategoriesRes ?
+                        { subCategoriesRes.length > 0 ?
                             subCategoriesRes.map((subcat, index)=>{
                                 return(
                                     <option key={index} value={subcat._id}>{subcat.title}</option>

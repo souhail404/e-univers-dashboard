@@ -79,7 +79,35 @@
 }
 
 /* global styling */
+h1,h2,h3,h4,h5,h6{
+    text-transform: capitalize;
+}
 h1{
+    font-size: 28px;
+    font-weight: 700;
+}
+h2{
+    font-size: 26px;
+    font-weight: 700;
+}
+h3{
+    font-size: 24px;
+    font-weight: 700;
+}
+h4{
+    font-size: 22px;
+    font-weight: 600;
+}
+h5{
+    font-size: 20px;
+    font-weight: 600;
+}
+h6{
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* h1{
     font-size: var(--font-size-header1);
     font-weight: var(--font-weight-bold);
 }
@@ -96,7 +124,7 @@ h3{
 h4{
     font-weight: 600;
     font-size: 16px;
-}
+} */
 p, a{
     font-size: var(--font-size-body);
     font-weight: var(--font-weight-regular);
@@ -949,7 +977,8 @@ select.tlh-right--elem option{
     box-shadow: 0px 0px 8px var(--black-10);
     width: 100%;
     margin-top: var(--p1);
-    padding: var(--p2);
+    padding-block: var(--p2);
+    padding-inline: var(--p1);
 }
 .white-bg-section .section-header{
     margin-bottom: var(--p2);
@@ -1306,4 +1335,57 @@ select.tlh-right--elem option{
     background-color: var(--gray-1);
     border: 1px solid var(--black-25);
     cursor: pointer;
+}
+
+
+.product-preview-box{
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--p1);
+}
+.product-preview-box .left-wrpr{
+
+}
+.product-preview-box .info-wrpr{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--p3);
+}
+.product-preview-box .info-wrpr .el{
+    display: flex;
+    align-items: center;
+    gap: var(--p2);
+}
+.product-preview-box .info-wrpr .el p{
+    font-size: 18px;
+    text-transform: capitalize;
+}
+.product-preview-box .info-wrpr .el .category{
+    font-weight: 500;
+    font-size: 15px;
+}
+.product-preview-box .info-wrpr .el .name{
+    font-weight: 600;
+    font-size: 20px;
+    text-transform: capitalize;
+}
+.product-preview-box .info-wrpr .el .sell-price{
+    font-weight: 500;
+}
+.product-preview-box .info-wrpr .el .compare-price{
+    text-decoration: line-through;
+}
+.product-preview-box .info-wrpr .el .variant{
+    font-weight: 500;
+    font-size: 18px;
+    text-transform: capitalize;
+}
+.product-preview-box .info-wrpr .el .option{
+    font-size: 15px;
+    height: 24px;
+    padding-inline: var(--p3);
+    border:  1px solid var(--black-50);
+    display: flex;
+    align-items: center;
 }

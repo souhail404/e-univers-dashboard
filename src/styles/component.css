@@ -446,15 +446,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    max-width: 400px;
+    width: 340px;
     position: relative;
 }
 .active-img-wrpr{
     width: 100%;
     aspect-ratio: 1/1 !important;
     display: flex;
-    border: 1px solid #dadada;
+    border: 1px solid var(--black-25);
     margin-bottom: 6px;
 }
 .active-img-wrpr img{
@@ -466,7 +465,7 @@
     object-fit: contain;
 }
 .all-imgs-wrpr{
-    height: 60px;
+    height: 55px;
     width: 84%;
     max-width: 100%;
     overflow-x: scroll;
@@ -483,7 +482,7 @@
 .all-imgs-wrpr .img{
     height: 100%;
     aspect-ratio: 1/1;
-    border: 1px solid #dadada;
+    border: 1px solid var(--black-25);
     cursor: pointer;
     scroll-snap-align: start;
 }
@@ -499,7 +498,7 @@
 }
 .all-imgs-wrpr .img img.active{
     filter: brightness(1);
-    border: 1px solid #ff8383;
+    border: 1px solid var(--primary-color-3);
 }
 .move{
     position: absolute;

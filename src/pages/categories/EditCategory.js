@@ -82,7 +82,7 @@ const EditCategory = () => {
     <div className='page edit-category-page'>
       <div className="page-wrapper">
         <div className="page-header">
-           <h3>Category {category? `(${category.title})`: ''} :</h3>
+          <h1 className="l-h">Category {category? `(${category.title})`: ''} :</h1>
         </div>
         <div className="page-body">
            {isCategoryFetching ? 

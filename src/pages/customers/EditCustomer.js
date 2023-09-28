@@ -75,7 +75,7 @@ const EditCustomer = () => {
     <main className="page edit-customer-page">
         <section className='white-bg-section flex-c-jb header-200' >
           <div>
-            <h3>Edit Customer {formBody.lastName ? `(${formBody.lastName} ${formBody.firstName})`: ''}</h3>
+            <h1 className="l-h">Edit Customer {formBody.lastName ? `(${formBody.lastName} ${formBody.firstName})`: ''}</h1>
           </div>
           <div className='f-r-c-c header-200__right'>
           <button type="button" className='header-200__button'>

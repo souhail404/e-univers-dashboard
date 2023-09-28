@@ -73,12 +73,12 @@ const OrderDeatails = () => {
     <main className='page order-details-page'>  
       <div className="page-wrapper">
         <div className="page-header">
-          <h2>Order Details</h2>
+          <h1 className="l-h">Order Details</h1>
         </div>
         <div className="page-body">
           <section className='white-bg-section flex-c-jb'>
             <div className="section-header">
-              <h3>Change State</h3>
+              <h3 className='s-h'>Change State</h3>
             </div>
             {
               orderData ?

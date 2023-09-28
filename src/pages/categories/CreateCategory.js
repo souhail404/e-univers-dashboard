@@ -51,7 +51,7 @@ const CreateCategory = () => {
     <div className='page create-category-page'>
       <div className="page-wrapper">
         <div className="page-header">
-            <h3>Create new category</h3>
+            <h1 className='l-h'>Create new category</h1>
         </div>
         <div className="page-body">
             <form className='form form-type-2 bg-white shadow-5' action="">
