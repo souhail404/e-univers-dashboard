@@ -1393,3 +1393,34 @@ select.tlh-right--elem option{
     display: flex;
     align-items: center;
 }
+
+
+.quantity-input{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+}
+.quantity-input button, .quantity-input .value-body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    width: 26px;
+    border: 1px solid var(--black-25);
+}
+.quantity-input .value-body{
+    border-inline: none;
+}
+
+.intable-var:not(:last-child){
+    margin-bottom: var(--p3);
+}
+.intable-var-title{
+    text-transform: capitalize;
+    font-weight: 500;
+}
+.intable-var-select{
+    width: 130px;
+    height: 36px;
+}

@@ -7,6 +7,8 @@ import PageHeading from '../../components/common/PageHeading';
 import { Link } from 'react-router-dom';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import SelectMultiProducts from '../../components/SelectMultiProducts';
+import { FiTrash } from 'react-icons/fi';
+import { MdOutlineSave } from 'react-icons/md';
 
 const CreateOrder = () => {
   const {user} = useAuth()
@@ -17,7 +19,8 @@ const CreateOrder = () => {
 
   const [totalPriceDef, setTotalPriceDef] = useState(0)
   const [totalOrderPrice, setTotalOrderPrice] = useState(0)
-  const [selectedProducts, setSelectedProducts]= useState([]);
+  const [selectedProduct, setSelectedProduct]= useState();
+  const [products, setProducts]= useState([]);
   const [isFetchingProducts, setIsFetchingProducts]= useState('');
 
 
@@ -45,19 +48,19 @@ const CreateOrder = () => {
   }
 
   const incrementQuantity = (index)=>{
-    if(selectedProducts[index].quantity < 10 ){
-          setSelectedProducts(products => products.map((product, i) => i === index ? {...product, quantity:product.quantity+1} : product));
+    if(products[index].quantity < 10 ){
+          setProducts(products => products.map((product, i) => i === index ? {...product, quantity:product.quantity+1} : product));
     }
   }
 
   const decrementQuantity = (index)=>{
-    if(selectedProducts[index].quantity > 1 ){
-      setSelectedProducts(products => products.map((product, i) => i === index ? {...product, quantity:product.quantity-1} : product));
+    if(products[index].quantity > 1 ){
+      setProducts(products => products.map((product, i) => i === index ? {...product, quantity:product.quantity-1} : product));
     }
   }
 
   const selectOption = (variant, optI, index)=>{
-      const toUpdate = [...selectedProducts[index].itemOptions]
+      const toUpdate = [...products[index].itemOptions]
       const indexA = toUpdate.findIndex((obj => obj.variantId === variant._id))
       if (indexA === -1 ) {
         return
@@ -70,36 +73,42 @@ const CreateOrder = () => {
           totalPriceDef += opt.priceDef;
         }
       });
-      setSelectedProducts(products => products.map((product, i) => i === index ? {...product, itemOptions:toUpdate, totalPriceDef:totalPriceDef} : product));
+      setProducts(products => products.map((product, i) => i === index ? {...product, itemOptions:toUpdate, totalPriceDef:totalPriceDef} : product));
+  }
+
+  const removeProduct = (index)=>{
+    const updated = [...products]
+    updated.splice(index, 1)
+    setProducts(updated)
   }
 
   useEffect(()=>{
+    
     if (customer) {
       fetchCustomer()
     }
   },[customer])
 
-  // useEffect(()=>{
-  //   setTotalPriceDef(0)
-  //   for (let index = 0; index < selectedProducts.length; index++) {
-  //     const element = selectedProducts[index];
-  //     element.itemOptions.forEach(option => {
-  //       if (option.priceDef) {
-  //         setTotalPriceDef(totalPriceDef => totalPriceDef + option.priceDef) 
-  //       }
-  //     });
-  //   }
-  // },[selectedProducts])
+  useEffect(()=>{
+    console.log(customerData);
+  },[customerData])
+  
+  
+  useEffect(()=>{
+    setTotalOrderPrice(0)
+    for (let index = 0; index < products.length; index++) {
+        setTotalOrderPrice(totalOrderPrice => totalOrderPrice + ((products[index].itemPrice + products[index].totalPriceDef) * products[index].quantity))
+    }
+  },[products])
 
   useEffect(()=>{
-    console.log(selectedProducts);
-    setTotalOrderPrice(0)
-    for (let index = 0; index < selectedProducts.length; index++) {
-        var productPrice = (selectedProducts[index].itemPrice + selectedProducts[index].totalPriceDef) * selectedProducts[index].quantity 
-        setTotalOrderPrice(totalOrderPrice => totalOrderPrice + productPrice);
+    const a = [...products]
+    if (selectedProduct) {
+      a.push(selectedProduct)
+      setProducts(a)
     }
-  },[selectedProducts])
-
+    setSelectedProduct()  
+  },[selectedProduct])
 
   return (
     <main className="page create-order-page">
@@ -175,14 +184,14 @@ const CreateOrder = () => {
       <form className='form form-type-2 bg-white shadow-5 mb1'>
         <div className="form-body">
           <div className="form-line">
-            <h6>products</h6>
+            <h6>products</h6>   
           </div>
           <div className="form-line">
-            <SelectMultiProducts setSelectedProducts={setSelectedProducts} />
+            <SelectMultiProducts setSelectedProduct={setSelectedProduct} />
           </div>
           <div className="form-line">
             {
-              selectedProducts.length > 0 ?
+              products.length > 0 ?
               <table className="table-list-body">
                 <thead>
                   <tr>
@@ -191,37 +200,38 @@ const CreateOrder = () => {
                     <th> <p>variants</p> </th>
                     <th> <p>Price</p> </th>
                     <th> <p>Total</p> </th>
+                    <th> <p></p> </th>
                   </tr>
                 </thead>
                 <tbody>
                   { isFetchingProducts ?
                     <TableSkeleton lines={2} rows={4} />
                     :
-                    selectedProducts.length > 0 ? 
+                    products.length > 0 ? 
                     <>
                     {
-                    selectedProducts.map((product, index)=>{
+                    products.map((p, index)=>{
                       return(
                         <tr key={index}>
-                          <td><p>{`${product.label}`}</p></td>
+                          <td><p>{`${p.label}`}</p></td>
                           <td> 
-                            <div>
+                            <div className='quantity-input'>
                               <button type='button' onClick={()=>decrementQuantity(index)}>-</button>
-                              <div>{product.quantity}</div>
+                              <div className='value-body'>{p.quantity}</div>
                               <button type='button' onClick={()=>incrementQuantity(index)}>+</button>
                             </div> 
                           </td>  
                           <td> 
                             <div>
                               {
-                                product.variants.length > 0 ?
+                                p.variants.length > 0 ?
                                 <>
                                   {
-                                    product.variants.map((variant, varI)=>{
+                                    p.variants.map((variant, varI)=>{
                                       return(
-                                        <div key={varI} className='flex-c-jb'>
-                                          <p>{variant.name} :</p>
-                                          <select name="" id="" onChange={(e)=>{selectOption(variant, e.target.value, index)}}>
+                                        <div key={varI} className='flex-c-jb intable-var'>
+                                          <p className='intable-var-title'>{variant.name} :</p>
+                                          <select className='intable-var-select' name="" id="" onChange={(e)=>{selectOption(variant, e.target.value, index)}}>
                                             <option value="">--</option>
                                             <>
                                               {
@@ -238,30 +248,47 @@ const CreateOrder = () => {
                                     })
                                   }
                                 </> :
-                                <p>nothing</p>
+                                <p>No Variants</p>
                               }
                             </div> 
                           </td>
-                          <td> <p>{product.itemPrice} $</p> </td> 
-                          <td> <p>{(product.itemPrice + product.totalPriceDef) * product.quantity} $</p> </td>  
+                          <td> <p>{p.itemPrice} $</p> </td> 
+                          <td> <p>{(p.itemPrice + p.totalPriceDef) * p.quantity} $</p> </td>  
+                          <td> 
+                            <div className="actions-cell">
+                              <button className='action btn-round' type="button" onClick={()=>{removeProduct(index)}} ><FiTrash/></button>
+                            </div>
+                          </td>
                         </tr>
                       )
                     })
                     }
-                    <tr>
-                      <td><h6>Total Price</h6></td>
-                      <td><p>{totalOrderPrice}</p></td>
-                    </tr>
                     </>
                     : null
                   }
                 </tbody>
+                {products.length > 0  ? <tfoot>
+                  <tr>
+                    <td colSpan={4}><h6>Total Price</h6></td>
+                    <td colSpan={2}><h6>{totalOrderPrice} $</h6></td>
+                  </tr>
+                </tfoot>
+                :null}
               </table>
               : null
             } 
           </div>
         </div>
       </form>
+      <div className="form-buttons white-bg-section flex-c-jb">
+          <div></div>
+          <div>
+              <button type='submit' className='type-200__button' onClick={(e)=>{}}>
+                  <MdOutlineSave style={{fontSize:'20px'}} /> 
+                  <p>save</p>
+              </button>
+          </div>
+      </div>
     </main>
   )
 }

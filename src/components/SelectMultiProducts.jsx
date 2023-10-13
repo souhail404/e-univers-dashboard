@@ -3,7 +3,7 @@ import Select from 'react-select'
 import { toast } from 'react-toastify';
 
 
-const SelectMultiProducts = ({setSelectedProducts}) => {
+const SelectMultiProducts = ({setSelectedProduct}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [products, setProducts] = useState([])
     const [options, setOptions] = useState([])
@@ -62,8 +62,7 @@ const SelectMultiProducts = ({setSelectedProducts}) => {
                 isLoading={isLoading}
                 name="products"
                 options={options}
-                onChange={(e)=>setSelectedProducts(e)}
-                isMulti
+                onChange={(e)=>setSelectedProduct(e)}
             />
         </div>
     )
