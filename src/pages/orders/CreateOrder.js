@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import PageHeading from '../../components/common/PageHeading';
 import { Link } from 'react-router-dom';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
+import SelectMultiProducts from '../../components/SelectMultiProducts';
 
 const CreateOrder = () => {
   const {user} = useAuth()
@@ -13,6 +14,12 @@ const CreateOrder = () => {
   const [customer, setCustomer]= useState('');
   const [customerData, setCustomerData]= useState('');
   const [isFetchingCustomer, setIsFetchingCustomer]= useState('');
+
+  const [totalPriceDef, setTotalPriceDef] = useState(0)
+  const [totalOrderPrice, setTotalOrderPrice] = useState(0)
+  const [selectedProducts, setSelectedProducts]= useState([]);
+  const [isFetchingProducts, setIsFetchingProducts]= useState('');
+
 
   const fetchCustomer = async()=>{
     try{ 
@@ -37,11 +44,62 @@ const CreateOrder = () => {
     } 
   }
 
+  const incrementQuantity = (index)=>{
+    if(selectedProducts[index].quantity < 10 ){
+          setSelectedProducts(products => products.map((product, i) => i === index ? {...product, quantity:product.quantity+1} : product));
+    }
+  }
+
+  const decrementQuantity = (index)=>{
+    if(selectedProducts[index].quantity > 1 ){
+      setSelectedProducts(products => products.map((product, i) => i === index ? {...product, quantity:product.quantity-1} : product));
+    }
+  }
+
+  const selectOption = (variant, optI, index)=>{
+      const toUpdate = [...selectedProducts[index].itemOptions]
+      const indexA = toUpdate.findIndex((obj => obj.variantId === variant._id))
+      if (indexA === -1 ) {
+        return
+      }
+      toUpdate[indexA] = {variantId: variant._id, optionId:variant.options[optI]._id, priceDef: variant.options[optI].priceDef}
+      
+      var totalPriceDef = 0;
+      toUpdate.forEach(opt => {
+        if (opt.priceDef) {
+          totalPriceDef += opt.priceDef;
+        }
+      });
+      setSelectedProducts(products => products.map((product, i) => i === index ? {...product, itemOptions:toUpdate, totalPriceDef:totalPriceDef} : product));
+  }
+
   useEffect(()=>{
     if (customer) {
       fetchCustomer()
     }
   },[customer])
+
+  // useEffect(()=>{
+  //   setTotalPriceDef(0)
+  //   for (let index = 0; index < selectedProducts.length; index++) {
+  //     const element = selectedProducts[index];
+  //     element.itemOptions.forEach(option => {
+  //       if (option.priceDef) {
+  //         setTotalPriceDef(totalPriceDef => totalPriceDef + option.priceDef) 
+  //       }
+  //     });
+  //   }
+  // },[selectedProducts])
+
+  useEffect(()=>{
+    console.log(selectedProducts);
+    setTotalOrderPrice(0)
+    for (let index = 0; index < selectedProducts.length; index++) {
+        var productPrice = (selectedProducts[index].itemPrice + selectedProducts[index].totalPriceDef) * selectedProducts[index].quantity 
+        setTotalOrderPrice(totalOrderPrice => totalOrderPrice + productPrice);
+    }
+  },[selectedProducts])
+
 
   return (
     <main className="page create-order-page">
@@ -111,6 +169,96 @@ const CreateOrder = () => {
           </div>
           <div className="form-line">
           
+          </div>
+        </div>
+      </form>
+      <form className='form form-type-2 bg-white shadow-5 mb1'>
+        <div className="form-body">
+          <div className="form-line">
+            <h6>products</h6>
+          </div>
+          <div className="form-line">
+            <SelectMultiProducts setSelectedProducts={setSelectedProducts} />
+          </div>
+          <div className="form-line">
+            {
+              selectedProducts.length > 0 ?
+              <table className="table-list-body">
+                <thead>
+                  <tr>
+                    <th><p>Name</p></th>
+                    <th> <p>quantity</p> </th>  
+                    <th> <p>variants</p> </th>
+                    <th> <p>Price</p> </th>
+                    <th> <p>Total</p> </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  { isFetchingProducts ?
+                    <TableSkeleton lines={2} rows={4} />
+                    :
+                    selectedProducts.length > 0 ? 
+                    <>
+                    {
+                    selectedProducts.map((product, index)=>{
+                      return(
+                        <tr key={index}>
+                          <td><p>{`${product.label}`}</p></td>
+                          <td> 
+                            <div>
+                              <button type='button' onClick={()=>decrementQuantity(index)}>-</button>
+                              <div>{product.quantity}</div>
+                              <button type='button' onClick={()=>incrementQuantity(index)}>+</button>
+                            </div> 
+                          </td>  
+                          <td> 
+                            <div>
+                              {
+                                product.variants.length > 0 ?
+                                <>
+                                  {
+                                    product.variants.map((variant, varI)=>{
+                                      return(
+                                        <div key={varI} className='flex-c-jb'>
+                                          <p>{variant.name} :</p>
+                                          <select name="" id="" onChange={(e)=>{selectOption(variant, e.target.value, index)}}>
+                                            <option value="">--</option>
+                                            <>
+                                              {
+                                                variant.options.map((option, optI)=>{
+                                                  if (option.available) {
+                                                    return <option key={optI} value={optI}>{option.value} {option.priceDef > 0 ? `+${option.priceDef}$` : ''}</option>  
+                                                  }
+                                                })
+                                              }
+                                            </> 
+                                          </select>
+                                        </div>
+                                      )
+                                    })
+                                  }
+                                </> :
+                                <p>nothing</p>
+                              }
+                            </div> 
+                          </td>
+                          <td> <p>{product.itemPrice} $</p> </td> 
+                          <td> <p>{(product.itemPrice + product.totalPriceDef) * product.quantity} $</p> </td>  
+                        </tr>
+                      )
+                    })
+                    }
+                    <tr>
+                      <td><h6>Total Price</h6></td>
+                      <td><p>{totalOrderPrice}</p></td>
+                    </tr>
+                    </>
+                    : null
+                  }
+                </tbody>
+              </table>
+              : null
+            } 
           </div>
         </div>
       </form>

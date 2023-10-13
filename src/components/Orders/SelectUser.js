@@ -9,7 +9,7 @@ const SelectUser = ({setFilterUser, placeholder}) => {
     const [usersData, setUsersData] = useState([])
     const [options, setOptions] = useState([])
 
-    const fetchUsers = async()=>{
+    const fetchUsers = async()=>{ 
         try{
             setIsLoading(true)
             const res = await fetch(`http://localhost:4000/api/user` ,{

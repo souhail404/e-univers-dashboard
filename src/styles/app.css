@@ -793,7 +793,6 @@ p, a{
     border-radius: 0;
     box-shadow: 0 0 0 0 #00000000;
     min-height: 36px;
-    height: 36px;
     border-radius: 0;
     border: 1px solid var(--black-25);
 }
