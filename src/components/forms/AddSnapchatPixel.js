@@ -4,7 +4,8 @@ import { toast } from 'react-toastify';
 import { useAuth } from '../../hooks/useAuth';
 import { Skeleton } from '@mui/material';
 
-const AddSnapchatPixel = () => {
+const AddSnapchatPixel = (props) => {
+    const className= props.className;
     const [isFetching, setIsFetching] = useState(false);
     const [pixels, setPixels] = useState([]);
     const [newPixel, setNewPixel]= useState({script:''});
@@ -83,10 +84,10 @@ const AddSnapchatPixel = () => {
 
 
     return (
-        <form action="" className='form pixel-form snapchat'>
+        <form action="" className={`${className} form pixel-form snapchat`}>
             <div className="form-body">
                 <div className="form-heading">
-                    <h4>Snapchat Pixels</h4>
+                    <h6>Snapchat Pixels</h6>
                     <button type="submit" className='btn save-btn' onClick={(e)=>{updateSnapchatPixels(e)}}>
                         <MdSave className='icon'/> Save
                     </button>

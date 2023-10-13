@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import PageHeading from '../../components/common/PageHeading';
 import SortButton from '../../components/ListingTable/SortButton';
@@ -9,11 +9,11 @@ import { Pagination } from '@mui/material';
 import TableSkeleton from '../../components/ListingTable/TableSkeleton';
 import { FiEdit3, FiEye, FiTrash } from 'react-icons/fi';
 import { useDebounce } from 'use-debounce';
-import { AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
 import deleteUserService from '../../services/deleteUserService';
 import { confirmAlert } from 'react-confirm-alert';
 
-
+ 
 const Customers = () => {
     const {user}= useAuth()
     const navigate = useNavigate();
@@ -93,74 +93,73 @@ const Customers = () => {
 
     return (
       <main className='page customers-page'>
-        <section className="table-list-wrapper">
-            <div className="table-list-header">
-                <PageHeading title={`Customers ${customersCount? `(${customersCount})` : ''}`} />
-                <div className="tlh--right">
-                    <form className="tlh-right--elem search-filter">
-                        <input className='search-field' type="text" placeholder='search for product' onChange={(e)=>setSearch(e.target.value)}/>
-                        <button type="button" className='search-btn btn'>
-                            <AiOutlineSearch />
-                        </button>
-                    </form>
-                    <button type='button' className="tlh-right--elem nav-link" onClick={()=>navigate('./create')}>
-                    + New Customer
-                    </button>
-                </div>
-            </div>
-            <table className="table-list-body">
-                <thead>
-                <tr>
+        <section className='white-bg-section flex-c-jb header-200 mb1'>
+          <PageHeading title={`Customers ${customersCount? `(${customersCount})` : ''}`} />
+          <div className='f-r-c-c header-200__right'>
+            <form className="tlh-right--elem search-filter">
+                <input className='search-field' type="text" placeholder='search for product' onChange={(e)=>setSearch(e.target.value)}/>
+                <button type="button" className='search-btn btn'>
+                    <AiOutlineSearch />
+                </button>
+            </form>
+            <Link to={`/customers/create`} type="button" className='type-200__button'> 
+                <AiOutlinePlus style={{fontSize:'20px'}} />
+                <p>Add customer</p>
+            </Link> 
+          </div>
+        </section>
+        <table className="table-list-body">
+            <thead>
+              <tr>
                 <th> <SortButton title='username' value='userName'  setSortConf={setSortConf} sortConf={sortConf} /> </th>
                 <th> <p>Mobile</p> </th>
                 <th> <p>Email</p> </th>
                 <th> <p>orders</p> </th>
                 <th> <SortButton title='date' value='createdAt'  setSortConf={setSortConf} sortConf={sortConf} /> </th>
                 <th> <p>actions</p> </th>
-                </tr>
-                </thead>
-                <tbody>
-                {
-                    isFetching ?
-                    <TableSkeleton lines={5} rows={6} />
-                    :
-                    (customersData && customersData.length > 0) ?
-                        customersData.map((customer, index)=>{
-                        return(
-                            <tr key={index}>
-                                <td>{customer.userName} </td>
-                                <td>{customer.mobile} </td>
-                                <td>{customer.email}</td>
-                                <td>{customer.orders?.length}</td>
-                                <td>{formatDate(customer.createdAt)}</td>
-                                <td>
-                                    <div className="actions-cell">
-                                        <button className='action btn-round' type="button" onClick={()=>navigate(`./${customer._id}/edit`)} ><FiEdit3/></button>
-                                        <button className='action btn-round' type="button" onClick={()=>navigate(`./${customer._id}/details`)} ><FiEye/></button>
-                                        <button className='action btn-round' type="button" onClick={()=>handleDeleteClick(customer, index)}><FiTrash/></button>
-                                    </div>
-                                </td>
-                            </tr>
-                        )
-                    })
-                    :null   
-                }
-                </tbody>
-                {!isFetching ? <tfoot>
-                <tr>
-                    <td colSpan={6}>
-                        <div className="list-footer">
-                        {(customersData.length <= 0 )?
-                            <EmptyFetchRes text='No customer found' />
-                        : (totalPages > 1) ? <Pagination totalPages={totalPages} setPage={setPage} page={page} /> : null }
-                        </div>
-                        
-                    </td>
-                </tr>
-                </tfoot>
-                :null}
-            </table>
-        </section>
+              </tr>
+            </thead>
+            <tbody>
+            {
+                isFetching ?
+                <TableSkeleton lines={5} rows={6} />
+                :
+                (customersData && customersData.length > 0) ?
+                    customersData.map((customer, index)=>{
+                    return(
+                        <tr key={index}>
+                            <td>{customer.userName} </td>
+                            <td>{customer.mobile} </td>
+                            <td>{customer.email}</td>
+                            <td>{customer.orders?.length}</td>
+                            <td>{formatDate(customer.createdAt)}</td>
+                            <td>
+                                <div className="actions-cell">
+                                    <button className='action btn-round' type="button" onClick={()=>navigate(`./${customer._id}/edit`)} ><FiEdit3/></button>
+                                    <button className='action btn-round' type="button" onClick={()=>navigate(`./${customer._id}/details`)} ><FiEye/></button>
+                                    <button className='action btn-round' type="button" onClick={()=>handleDeleteClick(customer, index)}><FiTrash/></button>
+                                </div>
+                            </td>
+                        </tr>
+                    )
+                })
+                :null   
+            }
+            </tbody>
+            {!isFetching ? <tfoot>
+            <tr>
+                <td colSpan={6}>
+                    <div className="list-footer">
+                    {(customersData.length <= 0 )?
+                        <EmptyFetchRes text='No customer found' />
+                    : (totalPages > 1) ? <Pagination totalPages={totalPages} setPage={setPage} page={page} /> : null }
+                    </div>
+                    
+                </td>
+            </tr>
+            </tfoot>
+            :null}
+        </table>
       </main>
     )
 }

@@ -1,6 +1,6 @@
 // hooks
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useDebounce } from 'use-debounce';
 // services
@@ -18,7 +18,7 @@ import PageHeading from '../../components/common/PageHeading';
 import {FiEdit3, FiTrash2} from 'react-icons/fi'
 // css
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
-import { AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
 
 
 const Categories = () => {
@@ -93,83 +93,80 @@ const Categories = () => {
   }
 
   // useEffects
-  useEffect(()=>{
-    
+  useEffect(()=>{ 
     fetchCategory();
-
   },[serachValue, sortConf, page])
 
   // render
   return (
-    <div className='page category-page'>
-      <div className="table-list-wrapper">
-          <div className="table-list-header">
-            <PageHeading title={`categories ${productsCount ? `(${productsCount})` : ''} `} />
-            <div className="tlh--right">
-              <form className="tlh-right--elem search-filter">
+    <main className='page category-page'>
+      <section className='white-bg-section flex-c-jb header-200 mb1'>
+        <PageHeading title={`categories ${productsCount ? `(${productsCount})` : ''} `} />
+        <div className='f-r-c-c header-200__right'>
+          <form className="tlh-right--elem search-filter">
                   <input className='search-field' type="text" placeholder='Search For Category' onChange={(e)=>setSearch(e.target.value)} />
                   <button type="button" className='search-btn btn'>
                       <AiOutlineSearch />
                   </button>
-              </form>
-              <button type='button' className="tlh-right--elem nav-link" onClick={()=>navigate('./create')}>
-                + New Category
-              </button>
+          </form>
+          <Link to={`/categories/create`} type="button" className='type-200__button'> 
+              <AiOutlinePlus style={{fontSize:'20px'}} />
+              <p>Add category</p>
+          </Link> 
+        </div>
+      </section>
+      <table className="table-list-body">
+        <thead>
+          <tr>
+            <th> 
+              <SortButton title='name' value='title' setSortConf={setSortConf} sortConf={sortConf} />
+            </th>
+            <th> <p>Descriptions</p> </th>  
+            <th>
+              <SortButton title='date' value='createdAt' setSortConf={setSortConf} sortConf={sortConf} />
+            </th>  
+            <th> <p>Actions</p> </th>
+          </tr>
+        </thead>
+        <tbody>
+          { isFetching ?
+            <TableSkeleton lines={5} rows={4} />
+            :
+            (categoriesData && categoriesData.length > 0) ?
+              categoriesData.map((category,index)=>{
+                return(
+                  <tr key={index}>
+                    <td>{category.title} </td>
+                    <td>{category.description}</td>
+                    <td>{formatDate(category.createdAt)}</td>
+                    <td>
+                      <div className="actions-cell">
+                        <button className='action btn-round edit' type="button" onClick={()=>navigate(`./${category._id}/edit`)}><FiEdit3/></button>
+                        <button className='action btn-round delete' type="button" onClick={()=>handleDeleteClick(category,index)}><FiTrash2/></button>
+                      </div>
+                    </td>
+                  </tr>
+                )
+              })
+            : null
+          }
+        </tbody>
+        {!isFetching ? <tfoot>
+        <tr>
+          <td colSpan={4}>
+            <div className="list-footer">
+              {(categoriesData.length <= 0 )?
+                <EmptyFetchRes text='no category found' />
+              : (totalPages > 1) ? <Pagination totalPages={totalPages} setPage={setPage} page={page} /> : null }
             </div>
-          </div>
-          <table className="table-list-body">
-            <thead>
-              <tr>
-                <th> 
-                  <SortButton title='name' value='title' setSortConf={setSortConf} sortConf={sortConf} />
-                </th>
-                <th> <p>Descriptions</p> </th>  
-                <th>
-                  <SortButton title='date' value='createdAt' setSortConf={setSortConf} sortConf={sortConf} />
-                </th>  
-                <th> <p>Actions</p> </th>
-              </tr>
-            </thead>
-            <tbody>
-              { isFetching ?
-                <TableSkeleton lines={5} rows={4} />
-                :
-                (categoriesData && categoriesData.length > 0) ?
-                  categoriesData.map((category,index)=>{
-                    return(
-                      <tr key={index}>
-                        <td>{category.title} </td>
-                        <td>{category.description}</td>
-                        <td>{formatDate(category.createdAt)}</td>
-                        <td>
-                          <div className="actions-cell">
-                            <button className='action btn-round edit' type="button" onClick={()=>navigate(`./${category._id}/edit`)}><FiEdit3/></button>
-                            <button className='action btn-round delete' type="button" onClick={()=>handleDeleteClick(category,index)}><FiTrash2/></button>
-                          </div>
-                        </td>
-                      </tr>
-                    )
-                  })
-                : null
-              }
-            </tbody>
-            {!isFetching ? <tfoot>
-            <tr>
-              <td colSpan={4}>
-                <div className="list-footer">
-                  {(categoriesData.length <= 0 )?
-                    <EmptyFetchRes text='no category found' />
-                  : (totalPages > 1) ? <Pagination totalPages={totalPages} setPage={setPage} page={page} /> : null }
-                </div>
-                
-              </td>
-            </tr>
-            </tfoot>
-            :null}
             
-          </table>
-      </div> 
-    </div>
+          </td>
+        </tr>
+        </tfoot>
+        :null}
+        
+      </table>
+    </main>
   )
 }
 

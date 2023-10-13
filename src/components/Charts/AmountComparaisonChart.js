@@ -24,7 +24,7 @@ const AmountComparisonChart = ({thisPeriod, isLoading}) => {
     return (
         <div className="chart-container f-c-c-c">
             <div className="chart-header">
-                <h3>Revenue Comparison Chart</h3>
+                <h6>Revenue Comparison Chart</h6>
             </div>
             {
                 isLoading ?

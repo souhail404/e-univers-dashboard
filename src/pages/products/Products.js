@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import { useDebounce } from 'use-debounce';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import deleteProductService from '../../services/deleteProductService';
 import { useAuth } from '../../hooks/useAuth';
@@ -15,7 +15,7 @@ import Pagination from '../../components/ListingTable/Pagination';
 
 import { FiEdit3, FiEye, FiTrash2 } from 'react-icons/fi';
 import SelectCategory from '../../components/Product/SelectCategory';
-import { AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
 import formatDate from '../../services/formatDate';
  
 const Products = () => {
@@ -82,85 +82,83 @@ const Products = () => {
     } 
   }
 
-  useEffect(()=>{
+  useEffect(()=>{ 
     fetchProducts()
   },[serachValue, sortConf, page, filterCategory])
 
   return (
-    <div className='page products-page'>
-      <div className="table-list-wrapper">
-        <div className="table-list-header">
-          <PageHeading title={`products ${productsCount ? `(${productsCount})` : ''} `} />
-          <div className="tlh--right">
-            <SelectCategory setFilterCategory={setFilterCategory} />
-            <form className="tlh-right--elem search-filter">
-                <input className='search-field' type="text" placeholder='Search For Product' onChange={(e)=>setSearch(e.target.value)}/>
-                <button type="button" className='search-btn btn'>
-                    <AiOutlineSearch />
-                </button>
-            </form>
-            <button type='button' className="tlh-right--elem nav-link" onClick={()=>navigate('./create')}>
-              + new product
-            </button>
-          </div>
+    <main className='page products-page'>
+      <section className='white-bg-section flex-c-jb header-200 mb1'>
+        <PageHeading title={`products ${productsCount ? `(${productsCount})` : ''} `} />
+        <div className='f-r-c-c header-200__right'>
+          <SelectCategory setFilterCategory={setFilterCategory} />
+          <form className="tlh-right--elem search-filter">
+              <input className='search-field' type="text" placeholder='Search For Product' onChange={(e)=>setSearch(e.target.value)}/>
+              <button type="button" className='search-btn btn'>
+                  <AiOutlineSearch />
+              </button>
+          </form>
+          <Link to={`/products/create`} type="button" className='type-200__button'> 
+              <AiOutlinePlus style={{fontSize:'20px'}} />
+              <p>Add Product</p>
+          </Link> 
         </div>
-        <table className="table-list-body">
-            <thead>
-              <tr>
-                <th></th>
-                <th><SortButton title='name' value='title'  setSortConf={setSortConf} sortConf={sortConf} /></th>
-                <th> <p>category</p> </th>
-                <th> <SortButton title='price' value='price'  setSortConf={setSortConf} sortConf={sortConf} /> </th>
-                <th> <SortButton title='orders' value='ordered'  setSortConf={setSortConf} sortConf={sortConf} /> </th>
-                <th> <SortButton title='date' value='createdAt'  setSortConf={setSortConf} sortConf={sortConf} /> </th>
-                <th> <p>actions</p> </th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                isFetching ?
-                <TableSkeleton lines={5} rows={7} />
-                :
-                (productsData && productsData.length > 0) ?
-                    productsData.map((product, index)=>{
-                      return(
-                        <tr key={index}>
-                          <td>{<img className='image-as-icon' src={product.images[0]?.url} alt="" />} </td>
-                          <td>{product.title} </td>
-                          <td>{product.category? product.category.title : ''} </td>
-                          <td>{product.sellPrice} Dhs</td>
-                          <td>{product.ordered}</td>
-                          <td>{formatDate(product.createdAt)}</td>
-                          <td>
-                            <div className="actions-cell">
-                              <button className='action btn-round edit' type="button" onClick={()=>navigate(`./${product._id}/edit`)} ><FiEdit3/></button>
-                              <button className='action btn-round edit' type="button" onClick={()=>navigate(`./${product._id}/details`)} ><FiEye/></button>
-                              <button className='action btn-round delete' type="button" onClick={()=>handleDeleteClick(product,index)}><FiTrash2/></button>
-                            </div>
-                          </td>
-                        </tr>
-                      )
-                  })
-                :null   
-              }
-            </tbody>
-            {!isFetching ? <tfoot>
+      </section>
+      <table className="table-list-body">
+          <thead>
             <tr>
-              <td colSpan={7}>
-                <div className="list-footer">
-                  {(productsData.length <= 0 )?
-                    <EmptyFetchRes text='no product found' />
-                  : (totalPages > 1) ? <Pagination totalPages={totalPages} setPage={setPage} page={page} /> : null }
-                </div>
-                
-              </td>
+              <th></th>
+              <th><SortButton title='name' value='title'  setSortConf={setSortConf} sortConf={sortConf} /></th>
+              <th> <p>category</p> </th>
+              <th> <SortButton title='price' value='price'  setSortConf={setSortConf} sortConf={sortConf} /> </th>
+              <th> <SortButton title='orders' value='ordered'  setSortConf={setSortConf} sortConf={sortConf} /> </th>
+              <th> <SortButton title='date' value='createdAt'  setSortConf={setSortConf} sortConf={sortConf} /> </th>
+              <th> <p>actions</p> </th>
             </tr>
-            </tfoot>
-            :null}
-        </table>
-
-      </div>
-    </div>
+          </thead>
+          <tbody>
+            {
+              isFetching ?
+              <TableSkeleton lines={5} rows={7} />
+              :
+              (productsData && productsData.length > 0) ?
+                  productsData.map((product, index)=>{
+                    return(
+                      <tr key={index}>
+                        <td>{<img className='image-as-icon' src={product.images[0]?.url} alt="" />} </td>
+                        <td>{product.title} </td>
+                        <td>{product.category? product.category.title : ''} </td>
+                        <td>{product.sellPrice} Dhs</td>
+                        <td>{product.ordered}</td>
+                        <td>{formatDate(product.createdAt)}</td>
+                        <td>
+                          <div className="actions-cell">
+                            <button className='action btn-round edit' type="button" onClick={()=>navigate(`./${product._id}/edit`)} ><FiEdit3/></button>
+                            <button className='action btn-round edit' type="button" onClick={()=>navigate(`./${product._id}/details`)} ><FiEye/></button>
+                            <button className='action btn-round delete' type="button" onClick={()=>handleDeleteClick(product,index)}><FiTrash2/></button>
+                          </div>
+                        </td>
+                      </tr>
+                    )
+                })
+              :null   
+            }
+          </tbody>
+          {!isFetching ? <tfoot>
+          <tr>
+            <td colSpan={7}>
+              <div className="list-footer">
+                {(productsData.length <= 0 )?
+                  <EmptyFetchRes text='no product found' />
+                : (totalPages > 1) ? <Pagination totalPages={totalPages} setPage={setPage} page={page} /> : null }
+              </div>
+              
+            </td>
+          </tr>
+          </tfoot>
+          :null}
+      </table>
+    </main>
   )
 }
 

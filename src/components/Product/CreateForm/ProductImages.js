@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone';
 import Nb from '../../common/Nb';
-import {useAuth} from '../../../hooks/useAuth';
 import { AiOutlineArrowDown, AiOutlineArrowUp, AiOutlineDelete, AiOutlineDown } from 'react-icons/ai';
 
 const ProductImages = ({formBody , setFormBody})=>{
-    const {user} = useAuth()
     const [showBody, setShowBody]=useState(true);
     const [images, setImages] = useState([]);
 
@@ -56,7 +54,7 @@ const ProductImages = ({formBody , setFormBody})=>{
                         <button className={showBody ? `toggler-btn active` : `toggler-btn`} type="button" onClick={()=>setShowBody(!showBody)}> <AiOutlineDown/> </button>
                     </div>
                     <div className="heading">
-                        <p className='block-header'>Images</p>
+                        <h6 className='block-header'>Images</h6>
                     </div>
                 </div>
                 <div className={showBody ? `outer-block-body active` : `outer-block-body`}>

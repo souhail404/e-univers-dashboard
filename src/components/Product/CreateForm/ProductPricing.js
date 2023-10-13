@@ -5,7 +5,7 @@ const ProductPricing = ({formBody , setFormBody})=>{
     
     const [showBody, setShowBody]=useState(true);
     
-    return(
+    return( 
         <>  
             <div className="outer-block">
                 <div className="outer-block-header">
@@ -13,7 +13,7 @@ const ProductPricing = ({formBody , setFormBody})=>{
                         <button className={showBody ? `toggler-btn active` : `toggler-btn`} type="button" onClick={()=>setShowBody(!showBody)}> <AiOutlineDown /> </button>
                     </div>
                     <div className="heading">
-                        <p className='block-header'>Pricing</p>
+                        <h6 className='block-header'>Pricing</h6>
                     </div>
                 </div>
                 <div className={showBody ? `outer-block-body active` : `outer-block-body`}>

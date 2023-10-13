@@ -4,7 +4,8 @@ import { toast } from 'react-toastify';
 import { useAuth } from '../../hooks/useAuth';
 import { Skeleton } from '@mui/material';
 
-const AddTiktokPixel = () => {
+const AddTiktokPixel = (props) => {
+    const className= props.className;
     const [isFetching, setIsFetching] = useState(false);
     const [pixels, setPixels] = useState([]);
     const [newPixel, setNewPixel]= useState({script:''});
@@ -82,10 +83,10 @@ const AddTiktokPixel = () => {
     },[])
     
     return (
-        <form action="" className='form pixel-form tiktok'>
+        <form action="" className={`${className} form pixel-form tiktok`}>
             <div className="form-body">
                 <div className="form-heading">
-                    <h4>Tiktok Pixels</h4>
+                    <h6>Tiktok Pixels</h6>
                     <button type="submit" className='btn save-btn' onClick={(e)=>{updateTiktokPixels(e)}}>
                         <MdSave className='icon'/> Save
                     </button>

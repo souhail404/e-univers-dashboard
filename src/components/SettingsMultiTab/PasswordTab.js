@@ -43,7 +43,7 @@ const PasswordTab = () => {
             <form action="" className='form form-type-2'>
                 <div className="form-body">
                     <div className="form-heading">
-                        <h4>Resest Password</h4>
+                        <h6>Resest Password</h6>
                     </div>
                     <div className="form-line">
                         <div className="input-wrapper">
@@ -78,9 +78,10 @@ const PasswordTab = () => {
                         </div>                     
                     </div>
                     <div className="form-buttons">
-                        <button type='submit' className="btn" onClick={(e)=>handleResetPasswod(e)}>
-                          <MdLockReset className='icon' /> Reset
-                        </button>
+                        <button type="submit" className='type-200__button'  onClick={(e)=>handleResetPasswod(e)}>
+                            <MdLockReset style={{fontSize:'20px'}} />
+                            <p>Reset</p>
+                        </button> 
                     </div>
                 </div>
             </form>

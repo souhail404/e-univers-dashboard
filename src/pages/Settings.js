@@ -15,10 +15,7 @@ const Settings = () => {
   const [tab, setTab] = useState(tabParam || 'account');
 
   return (
-    <div className='page settings-page'> 
-      <div className="page-header">
-        <h2>General Settings</h2> 
-      </div>
+    <main className='page settings-page'> 
       <section className='multi-tab-section'>
         <nav className='multi-tab-nav-hor'>
           <Link className={`multi-tab-link ${tab==='account'?'active':''}`} to='?tab=account' onClick={()=>setTab('account')}> <MdOutlineManageAccounts className='icon'/> Account</Link>
@@ -63,7 +60,7 @@ const Settings = () => {
           </div>
         </div>
       </section>
-    </div>
+    </main>
   )
 }
 

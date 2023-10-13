@@ -4,7 +4,8 @@ import { toast } from 'react-toastify';
 import { useAuth } from '../../hooks/useAuth';
 import { Skeleton } from '@mui/material';
 
-const AddFacbookPixel = () => {
+const AddFacbookPixel = (props) => {
+    const className = props.className;
     const [isFetching, setIsFetching] = useState(false);
     const [pixels, setPixels] = useState([]);
     const [newPixel, setNewPixel]= useState({script:''});
@@ -82,10 +83,10 @@ const AddFacbookPixel = () => {
     },[])
 
     return (
-        <form action="" className='form pixel-form facebook'>
+        <form action="" className={`${className} form pixel-form facebook`}>
             <div className="form-body">
                 <div className="form-heading">
-                    <h4>Facebook Pixels</h4>
+                    <h6>Facebook Pixels</h6>
                     <button type="submit" className='btn save-btn' onClick={(e)=>{updateFacebookPixels(e)}}>
                         <MdSave className='icon'/> Save
                     </button>

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { FiEye } from 'react-icons/fi'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import { toast } from 'react-toastify'
 import { Skeleton } from '@mui/material'
 import { adminProfileInfoSchema } from '../../FormValidations/AdminSchemas'
 import { MdOutlineSave } from 'react-icons/md'
 import editUserService from '../../services/editAdminService'
+import PageHeading from '../../components/common/PageHeading'
+import { AiOutlineArrowLeft } from 'react-icons/ai'
 
 const EditCustomer = () => {
   const {user} =useAuth()
@@ -14,6 +16,7 @@ const EditCustomer = () => {
   const [isFetching, setIsFetching] = useState(false)
   const [formBody, setFormBody] =useState( 
     {
+      _id:"",
       firstName: "",
       lastName: "",
       userName: "",
@@ -34,6 +37,7 @@ const EditCustomer = () => {
         if(res.ok){
           const {user} = response;
           setFormBody({
+            _id:user._id,
             firstName:user.firstName,
             lastName:user.lastName,
             userName:user.userName,
@@ -73,21 +77,25 @@ const EditCustomer = () => {
 
   return (
     <main className="page edit-customer-page">
-        <section className='white-bg-section flex-c-jb header-200' >
-          <div>
-            <h1 className="l-h">Edit Customer {formBody.lastName ? `(${formBody.lastName} ${formBody.firstName})`: ''}</h1>
-          </div>
+        <section className='white-bg-section flex-c-jb header-200 mb1' >
+          <PageHeading title={`Edit Customer ${formBody.lastName ? `(${formBody.lastName} ${formBody.firstName})`: ''}`} />
           <div className='f-r-c-c header-200__right'>
-          <button type="button" className='header-200__button'>
-              <FiEye style={{fontSize:'20px'}} />
-              <span>View</span>
-          </button>
+              { formBody._id ?
+                <Link to={`/customers/${formBody?._id}/details`} className='type-200__button'>
+                  <FiEye style={{fontSize:'20px'}} />
+                  <p>Details</p>
+                </Link> : null
+              }
+              <Link to={`/customers`} className='type-200__button'>
+                  <AiOutlineArrowLeft style={{fontSize:'20px'}} />
+                  <p>Back</p>
+              </Link> 
           </div>
         </section>
         <form action="" className='form form-type-2 bg-white shadow-5'>
             <div className="form-body">
                 <div className="form-heading">
-                    <h4>Profile Infos </h4>
+                    <h6>Profile Infos </h6>
                 </div>
                 <div className="form-line">
                     {
@@ -179,9 +187,10 @@ const EditCustomer = () => {
                     }
                 </div>
                 <div className="form-buttons">
-                    <button type='submit' className="btn" onClick={(e)=>{handleSaveClick(e)}}>
-                      <MdOutlineSave className='icon'/> Save
-                    </button>
+                    <button type='submit' className='type-200__button' onClick={(e)=>{handleSaveClick(e)}}>
+                      <MdOutlineSave style={{fontSize:'20px'}} />
+                      <p>save</p>
+                    </button> 
                 </div>
             </div>
         </form>

@@ -5,10 +5,12 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import {CiSaveDown2} from 'react-icons/ci'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { createCategorySchema } from '../../FormValidations/CartegorySchema';
 import createCategoryService from '../../services/CreateCategoryService';
 import { MdOutlineSave } from 'react-icons/md';
+import PageHeading from '../../components/common/PageHeading';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 
 const CreateCategory = () => {
@@ -39,7 +41,7 @@ const CreateCategory = () => {
       .catch((err) => {
         toast.error(`${err}`) 
     });
-  }
+  } 
 
 
   const handleSubmit =async(e)=>{
@@ -48,49 +50,52 @@ const CreateCategory = () => {
   }
 
   return (
-    <div className='page create-category-page'>
-      <div className="page-wrapper">
-        <div className="page-header">
-            <h1 className='l-h'>Create new category</h1>
-        </div>
-        <div className="page-body">
-            <form className='form form-type-2 bg-white shadow-5' action="">
-                <div className="form-body">
-                    <div className="form-line">
-                        <div className="input-wrapper">
-                            <label htmlFor="" className='label'>Title :</label>
-                            <input  type="text" 
-                                    className='input' 
-                                    placeholder='Ex: smartphones, laptops..'
-                                    onChange={(e)=>{
-                                      category.title = e.target.value.toLowerCase();
-                                    }}/>
-                            <Nb message='its better to make a little general'/>
-                        </div>
-                    </div>
-                    <div className="form-line">
-                        <div className="input-wrapper">
-                            <label htmlFor="" className='label'>description :</label>
-                            <textarea name="" id="" 
-                                      className='input' 
-                                      placeholder='Ex: something..' 
-                                      required
-                                      onChange={(e)=>{
-                                        category.description = e.target.value.toLowerCase();
-                                      }}
-                            ></textarea>
-                        </div>
-                    </div>
-                    <div className="form-buttons">
-                        <button type='submit' className="btn" onClick={(e)=>{handleSubmit(e)}}>
-                          <MdOutlineSave className='icon'/> Create 
-                        </button>
-                    </div>
+    <main className='page create-category-page'>
+      <section className='white-bg-section flex-c-jb header-200 mb1'>
+            <PageHeading title={`Create category`} />
+            <div className='f-r-c-c header-200__right'>
+              <Link to={`/categories`} type="button" className='type-200__button'>
+                  <AiOutlineArrowLeft style={{fontSize:'20px'}} />
+                  <p>Back</p>
+              </Link> 
+            </div>
+      </section>
+      <form className='form form-type-2 bg-white shadow-5' action="">
+        <div className="form-body">
+            <div className="form-line">
+                <div className="input-wrapper">
+                    <label htmlFor="" className='label'>Title :</label>
+                    <input  type="text" 
+                            className='input' 
+                            placeholder='Ex: smartphones, laptops..'
+                            onChange={(e)=>{
+                              category.title = e.target.value.toLowerCase();
+                            }}/>
+                    <Nb message='its better to make a little general'/>
                 </div>
-            </form>
+            </div>
+            <div className="form-line">
+                <div className="input-wrapper">
+                    <label htmlFor="" className='label'>description :</label>
+                    <textarea name="" id="" 
+                              className='input' 
+                              placeholder='Ex: something..' 
+                              required
+                              onChange={(e)=>{
+                                category.description = e.target.value.toLowerCase();
+                              }}
+                    ></textarea>
+                </div>
+            </div>
+            <div className="form-buttons">
+                <button type='submit' className='type-200__button' onClick={(e)=>{handleSubmit(e)}}>
+                  <MdOutlineSave style={{fontSize:'20px'}}/> 
+                  <p>save</p> 
+                </button>
+            </div>
         </div>
-      </div>
-    </div>
+      </form>
+    </main>
   )
 }
 

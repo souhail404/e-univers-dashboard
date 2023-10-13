@@ -71,7 +71,7 @@ const AccountTab = () => {
             <form action="" className='form form-type-2'>
                 <div className="form-body">
                     <div className="form-heading">
-                        <h4>Profile Infos </h4>
+                        <h6>Profile Infos </h6>
                     </div>
                     <div className="form-line">
                         {
@@ -163,9 +163,13 @@ const AccountTab = () => {
                         }
                     </div>
                     <div className="form-buttons">
-                        <button type='submit' className="btn" onClick={(e)=>handleSaveGeneralInfos(e)}>
+                        <button type="submit" className='type-200__button' onClick={(e)=>handleSaveGeneralInfos(e)}>
+                            <MdOutlineSave style={{fontSize:'20px'}} />
+                            <p>Save</p>
+                        </button> 
+                        {/* <button type='submit' className="btn" onClick={(e)=>handleSaveGeneralInfos(e)}>
                            <MdOutlineSave className='icon'/> Save
-                        </button>
+                        </button> */}
                     </div>
                 </div>
             </form>

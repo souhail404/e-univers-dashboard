@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { useAuth } from '../../hooks/useAuth';
-import {AiOutlineEye } from 'react-icons/ai';
+import {AiOutlineArrowLeft, AiOutlineEye, AiOutlinePlus } from 'react-icons/ai';
 
 import {CiSaveDown2} from 'react-icons/ci'
 
@@ -12,8 +12,10 @@ import ProductPricing from '../../components/Product/CreateForm/ProductPricing';
 import ProductVariants from '../../components/Product/CreateForm/ProductVariants';
 import ProductImages from '../../components/Product/CreateForm/ProductImages';
 import { createProductSchema } from '../../FormValidations/ProductSchema';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import PageHeading from '../../components/common/PageHeading';
+import { MdOutlineSave } from 'react-icons/md';
 
 const CreateProduct = () => {
   const navigate = useNavigate()
@@ -55,53 +57,45 @@ const CreateProduct = () => {
     console.log(formBody);
     validateForm()
   }
-
+ 
   return (
-    <div className='page create-product-page'>
-        <div className="page-wrapper">
-            <div className="page-header">
-                <h1 className="l-h">Create new product</h1>
+    <main className='page create-product-page'>
+        <section className='white-bg-section flex-c-jb header-200 mb1'>
+            <PageHeading title={`Create product`} />
+            <div className='f-r-c-c header-200__right'>
+                <Link to={`/products`} type="button" className='type-200__button'>
+                    <AiOutlineArrowLeft style={{fontSize:'20px'}} />
+                    <p>Back</p>
+                </Link> 
             </div>
-            <div className="page-body">
-                <form className='form create-product-form' action="">
-                    <div className="form-body">
-                        <div className="form-group">
-                            <ProductGeneralInfo formBody={formBody} setFormBody={setFormBody} />
-                        </div>
-
-                        <div className="form-group">
-                            <ProductPricing formBody={formBody} setFormBody={setFormBody} />
-                        </div>
-                        <div className="form-group">
-                            <ProductImages formBody={formBody} setFormBody={setFormBody} />
-                        </div>
-                        <Nb message='if the product has different variants (like Colrs, Sizes, Storage... ) please enable this field and add them.' />
-                        <div className="form-group">
-                            <ProductVariants formBody={formBody} setFormBody={setFormBody} />
-                        </div>
-                    </div>
-                    <div className="form-actions">
-                        <div className="action-elem">
-                                <button type='button' className="btn gray">
-                                    <div className="icon">
-                                        <AiOutlineEye />
-                                    </div>
-                                    <p>Preview</p>
-                                </button>   
-                        </div>
-                        <div className="action-elem">
-                            <button type='submit' className="btn" onClick={(e)=>handleSaveClick(e)}>
-                                <div className="icon">
-                                    <CiSaveDown2 />
-                                </div>
-                                <p>Save</p>
-                            </button>   
-                        </div>
-                     </div>
-                </form>
+        </section>
+        <form className='form create-product-form' action="">
+            <div className="form-body">
+                <div className="form-group mb1">
+                    <ProductGeneralInfo formBody={formBody} setFormBody={setFormBody} />
+                </div>
+                <div className="form-group mb1">
+                    <ProductPricing formBody={formBody} setFormBody={setFormBody} />
+                </div>
+                <div className="form-group mb1">
+                    <ProductImages formBody={formBody} setFormBody={setFormBody} />
+                </div>
+                <Nb message='if the product has different variants (like Colrs, Sizes, Storage... ) please enable this field and add them.' />
+                <div className="form-group mb1">
+                    <ProductVariants formBody={formBody} setFormBody={setFormBody} />
+                </div>
             </div>
-        </div>
-    </div>
+            <div className="form-buttons white-bg-section flex-c-jb">
+                <div></div>
+                <div>
+                    <button type='submit' className='type-200__button' onClick={(e)=>{handleSaveClick(e)}}>
+                        <MdOutlineSave style={{fontSize:'20px'}} /> 
+                        <p>save</p>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </main>
   )
 }
 

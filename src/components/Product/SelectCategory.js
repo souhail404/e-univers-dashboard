@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Select from 'react-select'
 import { toast } from 'react-toastify';
-import {useAuth} from '../../hooks/useAuth'
 
 const SelectCategory = ({setFilterCategory}) => {
-    const {user}= useAuth()
     const [isLoading, setIsLoading] = useState(false);
     const [categoriesData, setCategoriesData] = useState([])
     const [options, setOptions] = useState([])

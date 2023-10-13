@@ -87,9 +87,9 @@ const DateRangePicker = (props) => {
     
     return (
         <div className="date-range-picker-wrapper"> 
-            <button type="button" className='header-200__button' onClick={()=> setShow(!show)}>
+            <button type="button" className='type-200__button' onClick={()=> setShow(!show)}>
                 <BiCalendarEvent style={{fontSize:'20px'}} />
-                <span>{dayjs(startDate).format('DD/MM/YYYY')} - {dayjs(endDate).format('DD/MM/YYYY')}</span>
+                <p>{dayjs(startDate).format('DD/MM/YYYY')} - {dayjs(endDate).format('DD/MM/YYYY')}</p>
                 {show ? <AiOutlineUp /> : <AiOutlineDown />}
             </button>
             <div className={`date-range-picker-menu shadow-5 ${show ? 'show': ''}`}>

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import fetchService from '../../services/fetchService';
 import { FiEdit } from 'react-icons/fi';
 import OverviewCard from '../../components/Dashboard/OverviewCard';
 import ProductImagesSlider from '../../components/common/ProductImagesSlider';
 import { MdAddShoppingCart, MdFavoriteBorder, MdOutlineRemoveShoppingCart, MdOutlineShoppingCart } from 'react-icons/md';
+import PageHeading from '../../components/common/PageHeading';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 const ProductDetails = () => {
     const {productId} = useParams();
@@ -21,18 +23,20 @@ const ProductDetails = () => {
     },[])
     return (
         <main className="page product-details-page">
-            <section className='white-bg-section flex-c-jb header-200' >
-                <div>
-                  <h1 className="l-h">Product Details {product ? `(${product.title})`: null}</h1>
-                </div>
-                <div className='f-r-c-c header-200__right'>
-                <button type="button" className='header-200__button'>
+            <section className='white-bg-section flex-c-jb header-200 mb1' >
+              <PageHeading title={`Product Details ${product ? `(${product.title})`: null}`} />
+              <div className='f-r-c-c header-200__right'>
+                  <Link to={`/products/${product?._id}/edit`} className='type-200__button'>
                     <FiEdit style={{fontSize:'20px'}} />
-                    <span>Edit</span>
-                </button>
-                </div>
+                    <p>Edit</p>
+                  </Link>
+                  <Link to={`/products`} className='type-200__button'>
+                      <AiOutlineArrowLeft style={{fontSize:'20px'}} />
+                      <p>Back</p>
+                  </Link> 
+              </div>
             </section>
-            <section className='overview-cards-wrapper'>
+            <section className='overview-cards-wrapper mb1'>
                 <OverviewCard icon={<MdOutlineShoppingCart /> } label='Orders' period={``} thisData={product.ordered} isLoading={isFetching} />
                 <OverviewCard icon={<MdOutlineRemoveShoppingCart /> } label='Returned' period={``} thisData={product.ordered} isLoading={isFetching} />
                 <OverviewCard icon={<MdFavoriteBorder /> } label='Liked' period={``} thisData={product.liked} isLoading={isFetching} />

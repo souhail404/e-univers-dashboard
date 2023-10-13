@@ -59,7 +59,7 @@ const ProductImages = ({formBody , setFormBody})=>{
                         <button className={showBody ? `toggler-btn active` : `toggler-btn`} type="button" onClick={()=>setShowBody(!showBody)}> <AiOutlineDown/> </button>
                     </div>
                     <div className="heading">
-                        <p className='block-header'>Images</p>
+                        <h6 className='block-header'>Images</h6>
                     </div>
                 </div>
                 <div className={showBody ? `outer-block-body active` : `outer-block-body`}>

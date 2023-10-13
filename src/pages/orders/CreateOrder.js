@@ -3,6 +3,9 @@ import SelectUser from '../../components/Orders/SelectUser'
 import TableSkeleton from '../../components/ListingTable/TableSkeleton';
 import { useAuth } from '../../hooks/useAuth';
 import { toast } from 'react-toastify';
+import PageHeading from '../../components/common/PageHeading';
+import { Link } from 'react-router-dom';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 const CreateOrder = () => {
   const {user} = useAuth()
@@ -42,15 +45,19 @@ const CreateOrder = () => {
 
   return (
     <main className="page create-order-page">
-      <section className='white-bg-section flex-c-jb header-200' >
-        <div>
-          <h3>Create Order</h3>
+      <section className='white-bg-section flex-c-jb header-200 mb1' >
+        <PageHeading title={`Create order`} />
+        <div className='f-r-c-c header-200__right'>
+            <Link to={`/orders`} className='type-200__button'>
+                <AiOutlineArrowLeft style={{fontSize:'20px'}} />
+                <p>Back</p>
+            </Link> 
         </div>
       </section>
-      <form action="" className='form form-type-2 bg-white shadow-5'>
+      <form action="" className='form form-type-2 bg-white shadow-5 mb1'>
         <div className="form-body">
           <div className="form-line">
-            <h5 className='s-h'>Customer</h5>
+            <h6 className='s-h'>Customer</h6>
           </div>
           <div className="form-line">
             <div>
@@ -97,10 +104,10 @@ const CreateOrder = () => {
           </div>
         </div>
       </form>
-      <form className='form form-type-2 bg-white shadow-5'>
+      <form className='form form-type-2 bg-white shadow-5 mb1'>
         <div className="form-body">
           <div className="form-line">
-            <h5 className='s-h'>Shipping Address</h5>
+            <h6>Shipping Address</h6>
           </div>
           <div className="form-line">
           

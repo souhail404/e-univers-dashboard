@@ -80,16 +80,12 @@ const BannerTab = () => {
     fetchBanners();
   },[])
 
-  useEffect(()=>{
-    console.log(bannersData);
-  },[bannersData])
-
   return (
     <div className="selected-tab-body">
         <AddBanner />
         <section className="banners-preview">
           <div className="section-header">
-            <h4>Existing Banners</h4>
+            <h6>Existing Banners {bannersData ? `(${bannersData.length})`: ``}</h6>
           </div>
           <div className="section-body">
             {

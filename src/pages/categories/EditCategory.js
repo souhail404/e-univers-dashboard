@@ -5,12 +5,13 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 import {CiSaveDown2} from 'react-icons/ci'
-import {AiOutlineDown, AiOutlineAppstoreAdd} from 'react-icons/ai'
+import {AiOutlineDown, AiOutlineAppstoreAdd, AiOutlineArrowLeft} from 'react-icons/ai'
 import {FiEdit3, FiSave, FiTrash2} from 'react-icons/fi'
 import { toast } from 'react-toastify';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Skeleton } from '@mui/material';
 import { MdOutlineSave } from 'react-icons/md';
+import PageHeading from '../../components/common/PageHeading';
 
 
 
@@ -79,12 +80,17 @@ const EditCategory = () => {
   }
 
   return (
-    <div className='page edit-category-page'>
-      <div className="page-wrapper">
-        <div className="page-header">
-          <h1 className="l-h">Category {category? `(${category.title})`: ''} :</h1>
-        </div>
-        <div className="page-body">
+    <main className='page edit-category-page'>
+        <section className='white-bg-section flex-c-jb header-200 mb1' >
+          <PageHeading title={category ? `Category (${category.title})`: 'Category'} />
+          <div className='f-r-c-c header-200__right'>
+              <Link to={`/categories`} className='type-200__button'>
+                  <AiOutlineArrowLeft style={{fontSize:'20px'}} />
+                  <p>Back</p>
+              </Link> 
+          </div>
+        </section>
+        <section className="page-body">
            {isCategoryFetching ? 
             <>
               <Skeleton height={250} />
@@ -92,16 +98,17 @@ const EditCategory = () => {
             </>
 
             :
-            category ? 
+            category ?  
             <>
-              <form className='form form-type-2 bg-white shadow-5' action="">
+              <form className='form form-type-2 bg-white shadow-5 mb1' action="">
                   <div className="form-body">
-                        <EditCategoryInfos category={category} setCategory={setCategory} />
-                        <div className="form-buttons">
-                            <button type='submit' className="btn" onClick={(e)=>{handleSubmit(e)}}>
-                              <MdOutlineSave className='icon'/> Save
-                            </button>
-                        </div>
+                    <EditCategoryInfos category={category} setCategory={setCategory} />
+                    <div className="form-buttons">
+                        <button type='submit' className='type-200__button' onClick={(e)=>{handleSubmit(e)}}>
+                            <MdOutlineSave style={{fontSize:'20px'}} /> 
+                            <p>save</p>
+                        </button>
+                    </div>
                   </div>
               </form>
               <form className='form form-type-2 bg-white shadow-5' action="">
@@ -116,9 +123,8 @@ const EditCategory = () => {
               </form>
             </>
             : null}
-        </div>
-      </div>
-    </div>
+        </section>
+    </main>
   )
 }
 
@@ -184,50 +190,50 @@ const EditSubCategories= ({categoryId, subCategories, isAddingSub, setIsAddingSu
   return(
     <>
       <div className="outer-block">
-                <div className="outer-block-header">
-                    <div className="body-toggler">
-                        <button className={showBody ? `toggler-btn active` : `toggler-btn`} type="button" onClick={()=>setShowBody(!showBody)}> <AiOutlineDown/> </button>
-                    </div>
-                    <div className="heading">
-                        <p className='block-header'>Sub Categories {`(${subCategories.length})`}</p>
-                    </div>
-                </div>
-                <div className={showBody ? `outer-block-body active` : `outer-block-body`}>
-                    <div className="add-subcat-wrapper">
-                      {
-                        subCategories.map((subcat, index)=>{
-                          return(
-                          <div key={index} className="subcategory-row">
-                            <SubCategoryBox subElem={subcat} subIndex={index} categoryId={categoryId} subCategories={subCategories} setSubCategories={setSubCategories} />
-                          </div>
-                          )
-                        })
-                      }
-                      {isSubCatFetching?
-                        <Skeleton animation='wave' width={100} height={60}/>
-                        :null
-                      }
-                      {isAddingSub ? 
-                          <div className="subcategory-row">
-                            <NewSubCategoryBox  categoryId={categoryId} 
-                                                setIsAddingSub={setIsAddingSub}
-                                                setIsAdded={setIsAdded}
-                            />
-                          </div>
-                      : null}
-                      {
-                        isAddingSub ?
-                        null :
-                        <div className="subcategory-row action">
-                          <button type="button" className='f-r-c-c' onClick={()=>setIsAddingSub(true)}>
-                            <span className="icon f-c-c-c"><AiOutlineAppstoreAdd/></span>
-                            <p>Add</p>
-                          </button>
-                        </div> 
-                      }
-                      
-                    </div>  
-                </div>
+        <div className="outer-block-header">
+            <div className="body-toggler">
+                <button className={showBody ? `toggler-btn active` : `toggler-btn`} type="button" onClick={()=>setShowBody(!showBody)}> <AiOutlineDown/> </button>
+            </div>
+            <div className="heading">
+                <h6 className='block-header'>Sub Categories {`(${subCategories.length})`}</h6>
+            </div>
+        </div>
+        <div className={showBody ? `outer-block-body active` : `outer-block-body`}>
+            <div className="add-subcat-wrapper">
+              {
+                subCategories.map((subcat, index)=>{
+                  return(
+                  <div key={index} className="subcategory-row">
+                    <SubCategoryBox subElem={subcat} subIndex={index} categoryId={categoryId} subCategories={subCategories} setSubCategories={setSubCategories} />
+                  </div>
+                  )
+                })
+              }
+              {isSubCatFetching?
+                <Skeleton animation='wave' width={100} height={60}/>
+                :null
+              }
+              {isAddingSub ? 
+                  <div className="subcategory-row">
+                    <NewSubCategoryBox  categoryId={categoryId} 
+                                        setIsAddingSub={setIsAddingSub}
+                                        setIsAdded={setIsAdded}
+                    />
+                  </div>
+              : null}
+              {
+                isAddingSub ?
+                null :
+                <div className="subcategory-row action">
+                  <button type="button" className='f-r-c-c' onClick={()=>setIsAddingSub(true)}>
+                    <span className="icon f-c-c-c"><AiOutlineAppstoreAdd/></span>
+                    <p>Add</p>
+                  </button>
+                </div> 
+              }
+              
+            </div>  
+        </div>
       </div>
     </>
   )

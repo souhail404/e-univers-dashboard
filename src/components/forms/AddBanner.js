@@ -3,7 +3,7 @@ import { MdAdd } from 'react-icons/md'
 import { useDropzone } from 'react-dropzone';
 import { useAuth } from '../../hooks/useAuth';
 import Nb from '../common/Nb'
-import { AiOutlineDelete } from 'react-icons/ai';
+import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import createBannerService from '../../services/createBannerService';
 
 const AddBanner = () => {
@@ -43,10 +43,10 @@ const AddBanner = () => {
     };
 
     return (
-        <form action="" className='form form-type-2 add-banner-form'>
+        <form action="" className='form form-type-2 add-banner-form mb1'>
                   <div className="form-body">
                       <div className="form-heading">
-                          <h4>Home Banners</h4>
+                          <h6>Home Banners</h6>
                       </div>
                       <div className="form-line">
                           <div className="input-wrapper">
@@ -84,6 +84,7 @@ const AddBanner = () => {
                             <input 
                                 type="text" 
                                 className='input' 
+                                placeholder='http://example.com'
                                 required
                                 value={bannerData.link}
                                 onChange={(e)=> setBannerData({...bannerData, link:`${e.target.value}`})}
@@ -91,9 +92,10 @@ const AddBanner = () => {
                         </div>
                       </div>
                       <div className="form-buttons">
-                          <button type='submit' className="btn" onClick={(e)=>{handleAddClick(e)}}>
-                            <MdAdd className='icon'/> Add
-                          </button>
+                        <button type="submit" className='type-200__button'onClick={(e)=>{handleAddClick(e)}}> 
+                            <AiOutlinePlus style={{fontSize:'20px'}} />
+                            <p>Add</p>
+                        </button> 
                       </div>
                   </div>
               </form>

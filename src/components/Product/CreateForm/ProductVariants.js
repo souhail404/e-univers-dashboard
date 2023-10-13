@@ -38,7 +38,7 @@ const ProductVariants = ({formBody , setFormBody})=>{
                         <button className={showBody ? `toggler-btn active` : `toggler-btn`} type="button" onClick={()=>setShowBody(!showBody)}> <AiOutlineDown/> </button>
                     </div>
                     <div className="heading">
-                        <p className='block-header'>Variants</p>
+                        <h6 className='block-header'>Variants</h6>
                         <div className='block-actions'>
                             <div className="action">
                                 <label htmlFor="has-variants" className='toggle-switcher'>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {useAuth} from '../../hooks/useAuth';
 
 // services
@@ -11,11 +11,13 @@ import ProductPricing from '../../components/Product/EditForm/ProductPricing';
 import ProductVariants from '../../components/Product/EditForm/ProductVariants';
 import ProductImages from '../../components/Product/EditForm/ProductImages';
 // icons 
-import { AiOutlineEye } from 'react-icons/ai';
+import { AiOutlineArrowLeft, AiOutlineEye } from 'react-icons/ai';
 import { CiSaveDown2 } from 'react-icons/ci';
 import editProductService from '../../services/editProductService';
 import { createProductSchema } from '../../FormValidations/ProductSchema';
 import { toast } from 'react-toastify';
+import PageHeading from '../../components/common/PageHeading';
+import { MdOutlineSave } from 'react-icons/md';
 
 const EditProduct = () => {
     const navigate = useNavigate()
@@ -79,7 +81,7 @@ const EditProduct = () => {
 
 
     return (
-        <div className='page create-product-page'>
+        <main className='page create-product-page'>
             {isFetching ? 
                 <>
                     <Skeleton height={45} width={200}/>
@@ -89,52 +91,49 @@ const EditProduct = () => {
                     <Skeleton height={100}/>                    
                 </>
                 :
-                <div className="page-wrapper">
-                    <div className="page-header">
-                        <h1 className="l-h">Edit product ({product.title})</h1>
-                    </div>
+                <>  
+                    <section className='white-bg-section flex-c-jb header-200 mb1' >
+                        <PageHeading title={`Edit product (${product.title})`} />
+                        <div className='f-r-c-c header-200__right'>
+                            <Link to={`/products`} className='type-200__button'>
+                                <AiOutlineArrowLeft style={{fontSize:'20px'}} />
+                                <p>Back</p>
+                            </Link> 
+                        </div>
+                    </section>
                     {formBody ?
                         <div className="page-body">
                             <form className='form create-product-form' action="">
                                 <div className="form-body">
-                                    <div className="form-group">
+                                    <div className="form-group mb1">
                                         {formBody.title ? <ProductGeneralInfo formBody={formBody} setFormBody={setFormBody} /> :null}
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group mb1">
                                         {formBody.sellPrice ? <ProductPricing formBody={formBody} setFormBody={setFormBody} /> :null}
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group mb1">
                                         {formBody.images ? <ProductImages formBody={formBody} setFormBody={setFormBody} /> :null}
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group mb1">
                                         {formBody.variants ? <ProductVariants formBody={formBody} setFormBody={setFormBody} /> :null}
                                     </div> 
                                 </div>
-                                <div className="form-actions">
-                                    <div className="action-elem">
-                                            <button type='button' className="btn gray">
-                                                <div className="icon">
-                                                    <AiOutlineEye />
-                                                </div>
-                                                <p>Preview</p>
-                                            </button>   
-                                    </div>
-                                    <div className="action-elem">
-                                        <button className="btn" onClick={(e)=>handleSaveClick(e)}>
-                                            <div className="icon">
-                                                <CiSaveDown2 />
-                                            </div>
-                                            <p>Save</p>
-                                        </button>   
+                                <div className="form-buttons white-bg-section flex-c-jb">
+                                    <div></div>
+                                    <div>
+                                        <button type='submit' className='type-200__button' onClick={(e)=>{handleSaveClick(e)}}>
+                                            <MdOutlineSave style={{fontSize:'20px'}} /> 
+                                            <p>save</p>
+                                        </button>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                    : null}
-                </div>
+                   : null}
+                </> 
             }
             
-        </div>
+        </main>
     )
 }
 

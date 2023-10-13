@@ -3,7 +3,7 @@ import { FiEdit, FiEye } from 'react-icons/fi'
 import OverviewCard from '../../components/Dashboard/OverviewCard'
 import { MdOutlineAttachMoney, MdOutlineLocalShipping, MdOutlineRemoveShoppingCart, MdOutlineShoppingCart } from 'react-icons/md'
 import TableSkeleton from '../../components/ListingTable/TableSkeleton'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import formatDate from '../../services/formatDate'
 import { toast } from 'react-toastify'
@@ -12,6 +12,7 @@ import PageHeading from '../../components/common/PageHeading'
 import SelectProduct from '../../components/Orders/SelectProduct'
 import SelectState from '../../components/Orders/SelectState'
 import Pagination from '../../components/ListingTable/Pagination'
+import { AiOutlineArrowLeft } from 'react-icons/ai'
 
 
 const CustomerDetails = () => {
@@ -127,26 +128,28 @@ const CustomerDetails = () => {
 
     return (
         <main className="page customer-details-page">
-            <section className='white-bg-section flex-c-jb header-200' >
-                <div>
-                    <h1 className="l-h">Customer Details {customerData ? `(${customerData.userName})`: null}</h1>
-                </div>
-                <div className='f-r-c-c header-200__right'>
-                <button type="button" className='header-200__button'>
+            <section className='white-bg-section flex-c-jb header-200 mb1' >
+              <PageHeading title={`Customer Details ${customerData ? `(${customerData.userName})`: ''}`} />
+              <div className='f-r-c-c header-200__right'>
+                  <Link to={`/customers/${customerData?._id}/edit`} className='type-200__button'>
                     <FiEdit style={{fontSize:'20px'}} />
-                    <span>Edit</span>
-                </button>
-                </div>
+                    <p>Edit</p>
+                  </Link>
+                  <Link to={`/customers`} className='type-200__button'>
+                      <AiOutlineArrowLeft style={{fontSize:'20px'}} />
+                      <p>Back</p>
+                  </Link> 
+              </div>
             </section>
-            <section className='overview-cards-wrapper'>
+            <section className='overview-cards-wrapper mb1'>
                 <OverviewCard icon={<MdOutlineShoppingCart /> } label='Orders' period={``} thisData={customerOrdersOverview.length} isLoading={isFetchingCustomerOrdersOverview} />
                 <OverviewCard icon={<MdOutlineLocalShipping /> } label='Delivered Orders' period={``} thisData={customerOrdersOverview.filter((order) => order.orderState === 'delivered').length} isLoading={isFetchingCustomerOrdersOverview} />
                 <OverviewCard icon={<MdOutlineRemoveShoppingCart /> } label='Returned Orders' period={``} thisData={customerOrdersOverview.filter((order) => order.orderState === 'backorder').length} isLoading={isFetchingCustomerOrdersOverview} />
                 <OverviewCard icon={<MdOutlineAttachMoney /> } label='Spending' period={``} thisData={customerSpending} isLoading={isFetchingCustomerOrdersOverview} unit={`$`} />
             </section>
-            <section className='white-bg-section'>
+            <section className='white-bg-section mb1'>
                 <div className="section-header">
-                    <h3>Personal info </h3>
+                    <h6>Personal info </h6>
                 </div>
                 <table className="table-list-body">
                     <thead>
@@ -174,8 +177,10 @@ const CustomerDetails = () => {
                 </table>
             </section>
             <section className='white-bg-section'>
-                <div className="table-list-header">
-                    <PageHeading title={`Customer's Orders ${ordersCount? `(${ordersCount})` : ''}`} />
+                <div className="section-header flex-c-jb">
+                    <div className='f-r-c-c'>
+                        <h6>Customer's Orders {ordersCount? `(${ordersCount})` : ''}</h6>
+                    </div>
                     <div className="tlh--right">
                         <SelectProduct setFilterProduct={setFilterProduct} />
                         <SelectState setFilterState={setFilterState} />

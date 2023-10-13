@@ -9,6 +9,7 @@ import OverviewCard from '../components/Dashboard/OverviewCard'
 import RecentOrdersList from '../components/Dashboard/RecentOrdersList'
 import DateRangePicker from '../components/common/DateRangePicker'
 import { BiDownload } from 'react-icons/bi'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
   const {user} = useAuth()
@@ -97,30 +98,30 @@ const Home = () => {
 
   return (
     <main className='page home-page'>
-      <section className='white-bg-section flex-c-jb header-200'>
+      <section className='white-bg-section flex-c-jb header-200 mb1'>
         <div>
         </div>
         <div className='f-r-c-c header-200__right'>
           <DateRangePicker overviewPeriod={overviewPeriod} setOverviewPeriod={setOverviewPeriod} />   
-          <button type="button" className='header-200__button'>
-              <BiDownload style={{fontSize:'20px'}} />
-              <span>Download Report</span>
-          </button> 
+          <Link to={'/orders'} type="button" className='type-200__button'>
+              <MdOutlineShoppingCart style={{fontSize:'20px'}} />
+              <p>orders</p>
+          </Link> 
         </div>
       </section>
-      <section className='overview-cards-wrapper'>
+      <section className='overview-cards-wrapper mb1'>
         <OverviewCard icon={<MdOutlineShoppingCart /> } label='Orders' period={overviewPeriod.range} thisData={thisPeriodOrders} prevData={oldPeriodOrders} stats={true} isLoading={isLoadingOverview} />
         <OverviewCard icon={<MdOutlineRemoveShoppingCart /> } label='Returned Orders' period={overviewPeriod.range} thisData={thisPeriodReturns} prevData={oldPeriodReturns} isLoading={isLoadingOverview} />
         <OverviewCard icon={<MdOutlineAttachMoney /> } label='Revenue' period={overviewPeriod.range} thisData={thisPeriodAmount} prevData={oldPeriodAmount} stats={true} isLoading={isLoadingOverview} unit={`$`} />
         <OverviewCard icon={<MdPersonOutline /> } label='New Customers' period={overviewPeriod.range} thisData={thisPeriodCustomers} prevData={oldPeriodCustomers} stats={true} isLoading={isLoadingOverview} />
       </section>
-      <section className='charts-wrapper'>
+      <section className='charts-wrapper mb1'>
         {thisPeriodData ? <OrdersComparisonChart thisPeriod={thisPeriodData} isLoading={isLoadingCharts}/>: null}
         {thisPeriodData ? <AmountComparisonChart thisPeriod={thisPeriodData} isLoading={isLoadingCharts}/>: null}
       </section>
       <section className='white-bg-section'>
         <div className="section-header">
-          <h3>Recent Orders </h3>
+          <h6>Recent Orders </h6>
         </div>
         <RecentOrdersList />
       </section>

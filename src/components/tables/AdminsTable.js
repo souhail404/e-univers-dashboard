@@ -11,7 +11,7 @@ import SortButton from '../ListingTable/SortButton'
 import Pagination from '../ListingTable/Pagination'
 import { toast } from 'react-toastify'
 import { MdAdd } from 'react-icons/md'
-import { AiOutlineSearch } from 'react-icons/ai'
+import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai'
 import { confirmAlert } from 'react-confirm-alert'
 
 const AdminsTable = () => {
@@ -111,7 +111,7 @@ const AdminsTable = () => {
     return (
         <div className="selected-tab-body">
             <div className="table-list-header">
-                <PageHeading title={`Current Admins`} />
+                <h6>Current Admins</h6>
                 <div className="tlh--right">
                     <form className="tlh-right--elem search-filter">
                         <input className='search-field' type="text" placeholder='Search For Admin' onChange={(e)=>setSearch(e.target.value)}/>
@@ -119,8 +119,9 @@ const AdminsTable = () => {
                             <AiOutlineSearch />
                         </button>
                     </form>
-                    <button type='button' className="tlh-right--elem nav-link btn" onClick={()=>navigate('/admins/create')}>
-                        <MdAdd className='icon' /> new admin
+                    <button type='button' className="type-200__button" onClick={()=>navigate('/admins/create')}>
+                        <AiOutlinePlus style={{fontSize:'20px'}} />
+                        <p>Add Admin</p>  
                     </button>
                 </div>
             </div>
