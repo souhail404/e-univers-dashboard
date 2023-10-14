@@ -1424,3 +1424,8 @@ select.tlh-right--elem option{
     width: 130px;
     height: 36px;
 }
+.intable-address-select{
+    width: 100%;
+    min-width: 130px;
+    height: 36px;
+}

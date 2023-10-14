@@ -4,7 +4,7 @@ import TableSkeleton from '../../components/ListingTable/TableSkeleton';
 import { useAuth } from '../../hooks/useAuth';
 import { toast } from 'react-toastify';
 import PageHeading from '../../components/common/PageHeading';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import SelectMultiProducts from '../../components/SelectMultiProducts';
 import { FiTrash } from 'react-icons/fi';
@@ -12,18 +12,34 @@ import { MdOutlineSave } from 'react-icons/md';
 
 const CreateOrder = () => {
   const {user} = useAuth()
+  const navigate = useNavigate()
+
+  const [orderData, setOrderData] = useState(
+    {
+      items:[
+
+      ],
+      userId:"",
+      shippingAddress:{
+        country:"",
+        city:"",
+        zip:"",
+        street:"",
+        houseNumber:""
+      }
+    }
+  )
 
   const [customer, setCustomer]= useState('');
   const [customerData, setCustomerData]= useState('');
   const [isFetchingCustomer, setIsFetchingCustomer]= useState('');
 
-  const [totalPriceDef, setTotalPriceDef] = useState(0)
   const [totalOrderPrice, setTotalOrderPrice] = useState(0)
   const [selectedProduct, setSelectedProduct]= useState();
   const [products, setProducts]= useState([]);
-  const [isFetchingProducts, setIsFetchingProducts]= useState('');
-
-
+  const [isFetchingProducts, setIsFetchingProducts]= useState(false);
+  const [showAddAddress, setShowAddAddress]= useState(false);
+  
   const fetchCustomer = async()=>{
     try{ 
         setIsFetchingCustomer(true)
@@ -82,22 +98,87 @@ const CreateOrder = () => {
     setProducts(updated)
   }
 
+  const handleSelectAddress = (val)=>{
+    setShowAddAddress(false)
+    setOrderData(
+      {
+        ...orderData, 
+        shippingAddress:{
+          country:"",
+          city:"",
+          zip:"",
+          street:"",
+          houseNumber:""
+        }
+      })
+    if (val === "addOtherAddress") {
+      setShowAddAddress(true)
+      return
+    }
+
+    setOrderData(
+      {
+        ...orderData, 
+        shippingAddress:{
+          country:customerData.addresses[val].country,
+          city:customerData.addresses[val].city,
+          zip:customerData.addresses[val].zip,
+          street:customerData.addresses[val].street,
+          houseNumber:customerData.addresses[val].houseNumber
+        }
+      })
+  }
+
+  const createOrder = async()=>{
+      const myheaders = new Headers();
+      myheaders.append('Content-Type', 'application/json');
+      myheaders.append('Authorization', `Bearer ${user.token}`);
+
+      const id = toast.loading("Creating new order...");
+      const data = JSON.stringify({...orderData});
+      var res;
+      try{
+        res = await fetch('http://localhost:4000/api/order/create', {
+          method:"POST",
+          headers:myheaders,
+          body:data
+        })
+        const response = await res.json();
+        
+        if(res.ok){
+          toast.update(id, {render: "Order Created Succefully", type: "success", isLoading: false, autoClose:8000});
+          navigate(`/orders/${response.order._id}/details`)
+        }
+        else{
+          toast.update(id, {render: `${response.message}`, type: "error", isLoading: false, autoClose:8000});
+        }
+      }catch(err){
+        console.log(err);
+      }
+  }
+
+  const handleSaveClick = ()=>{
+    createOrder()
+  }
+
   useEffect(()=>{
-    
     if (customer) {
       fetchCustomer()
     }
   },[customer])
-
-  useEffect(()=>{
-    console.log(customerData);
-  },[customerData])
-  
   
   useEffect(()=>{
     setTotalOrderPrice(0)
     for (let index = 0; index < products.length; index++) {
         setTotalOrderPrice(totalOrderPrice => totalOrderPrice + ((products[index].itemPrice + products[index].totalPriceDef) * products[index].quantity))
+    }
+
+    if (products.length > 0) {
+      const items = []
+      products.forEach(product=>{
+        items.push({itemId:product.itemId, itemPrice:product.itemPrice, itemOptions:product.itemOptions, quantity:product.quantity})
+      })
+      setOrderData({...orderData, items})
     }
   },[products])
 
@@ -109,6 +190,13 @@ const CreateOrder = () => {
     }
     setSelectedProduct()  
   },[selectedProduct])
+
+  useEffect(()=>{
+    if(customerData){
+      setOrderData({...orderData, userId:customerData._id})
+    }
+  },[customerData])
+
 
   return (
     <main className="page create-order-page">
@@ -153,14 +241,31 @@ const CreateOrder = () => {
                       <td> <p>{`${customerData.email}`}</p> </td>  
                       <td> <p>{`${customerData.mobile}`}</p> </td>
                       <td> 
-                        <p>
-                          {/* {`
-                          ${customerData.addre.country ? customerData.shippingAddress.country : ''}
-                          ${customerData.shippingAddress.city ? customerData.shippingAddress.city : ''}
-                          ${customerData.shippingAddress.street ? customerData.shippingAddress.street : ''}
-                          ${customerData.shippingAddress.houseNumber ? customerData.shippingAddress.houseNumber : ''}
-                          `} */}
-                        </p> 
+                        <div>
+                          {
+                            customerData.addresses?.length > 0 ?
+                            <>
+                            <div className='flex-c-jb intable-address'>
+                              <select className='intable-address-select' name="" id="" onChange={(e)=>{handleSelectAddress(e.target.value)}}>
+                                <option value="">Select Address</option>
+                                <>
+                                  {
+                                    customerData.addresses.map((address, index)=>{
+                                        return <option key={index} value={index}>{address.city} {address.street}</option>  
+                                    })
+                                  }
+                                </> 
+                                <option value="addOtherAddress">+ Another Address</option>
+                              </select>
+                            </div>
+                            </> 
+                            :
+                            <div>
+                              <p>No Address Registred</p>
+                              <button type="button" onClick={()=>setShowAddAddress(true)}>+ Add Address</button>
+                            </div>                            
+                            }
+                        </div> 
                       </td>
                     </tr> : null
                   }
@@ -171,16 +276,131 @@ const CreateOrder = () => {
           </div>
         </div>
       </form>
-      <form className='form form-type-2 bg-white shadow-5 mb1'>
-        <div className="form-body">
-          <div className="form-line">
-            <h6>Shipping Address</h6>
+      { 
+        showAddAddress ? 
+        <form className='form form-type-2 bg-white shadow-5 mb1'>
+          <div className="form-body">
+            <div className="form-line">
+              <h6>Shipping Address</h6>
+            </div>
+            <div className="form-line">
+              <div className="input-wrapper">
+                  <label htmlFor="" className='label'>Country :</label>
+                  <input 
+                    type="text" 
+                    className='input' 
+                    placeholder='Ex: USA...' 
+                    required 
+                    value={orderData.shippingAddress.country}
+                    onChange={(e)=>{
+                      setOrderData({
+                        ...orderData, 
+                        shippingAddress: {
+                          country:e.target.value, 
+                          city:orderData.shippingAddress.city, 
+                          zip:orderData.shippingAddress.zip,
+                          street:orderData.shippingAddress.street, 
+                          houseNumber:orderData.shippingAddress.houseNumber
+                        }
+                      })
+                    }}
+                  />
+              </div>
+              <div className="input-wrapper">
+                  <label htmlFor="" className='label'>City :</label>
+                  <input 
+                    type="text" 
+                    className='input' 
+                    placeholder='Ex: Cityville...' 
+                    required 
+                    value={orderData.shippingAddress.city}
+                    onChange={(e)=>{
+                      setOrderData({
+                        ...orderData, 
+                        shippingAddress: {
+                          city:e.target.value, 
+                          country:orderData.shippingAddress.country, 
+                          zip:orderData.shippingAddress.zip,
+                          street:orderData.shippingAddress.street, 
+                          houseNumber:orderData.shippingAddress.houseNumber
+                        }
+                      })
+                    }}
+                  />
+              </div>
+            </div>
+            <div className="form-line">
+              <div className="input-wrapper">
+                  <label htmlFor="" className='label'>Street :</label>
+                  <input 
+                    type="text" 
+                    className='input' 
+                    placeholder='Ex: 123 Main Street Apartment 4B...' 
+                    required 
+                    value={orderData.shippingAddress.street}
+                    onChange={(e)=>{
+                      setOrderData({
+                        ...orderData, 
+                        shippingAddress: {
+                          street:e.target.value, 
+                          country:orderData.shippingAddress.country, 
+                          zip:orderData.shippingAddress.zip,
+                          city:orderData.shippingAddress.city, 
+                          houseNumber:orderData.shippingAddress.houseNumber
+                        }
+                      })
+                    }}
+                  />
+              </div>
+              <div className="input-wrapper">
+                  <label htmlFor="" className='label'>Zip code :</label>
+                  <input 
+                    type="text" 
+                    className='input' 
+                    placeholder='Ex: 50400...' 
+                    required 
+                    value={orderData.shippingAddress.zip}
+                    onChange={(e)=>{
+                      setOrderData({
+                        ...orderData, 
+                        shippingAddress: {
+                          zip:e.target.value, 
+                          country:orderData.shippingAddress.country, 
+                          street:orderData.shippingAddress.street,
+                          city:orderData.shippingAddress.city, 
+                          houseNumber:orderData.shippingAddress.houseNumber
+                        }
+                      })
+                    }}
+                  />
+              </div>
+              <div className="input-wrapper">
+                  <label htmlFor="" className='label'>House Number :</label>
+                  <input 
+                    type="text" 
+                    className='input' 
+                    placeholder='Ex: 365...' 
+                    required 
+                    value={orderData.shippingAddress.houseNumber}
+                    onChange={(e)=>{
+                      setOrderData({
+                        ...orderData, 
+                        shippingAddress: {
+                          houseNumber:e.target.value, 
+                          country:orderData.shippingAddress.country, 
+                          zip:orderData.shippingAddress.zip,
+                          city:orderData.shippingAddress.city, 
+                          street:orderData.shippingAddress.street
+                        }
+                      })
+                    }}
+                  />
+              </div>
+            </div>
           </div>
-          <div className="form-line">
-          
-          </div>
-        </div>
-      </form>
+        </form>
+        : null
+      }
       <form className='form form-type-2 bg-white shadow-5 mb1'>
         <div className="form-body">
           <div className="form-line">
@@ -204,9 +424,7 @@ const CreateOrder = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  { isFetchingProducts ?
-                    <TableSkeleton lines={2} rows={4} />
-                    :
+                  { 
                     products.length > 0 ? 
                     <>
                     {
@@ -283,7 +501,7 @@ const CreateOrder = () => {
       <div className="form-buttons white-bg-section flex-c-jb">
           <div></div>
           <div>
-              <button type='submit' className='type-200__button' onClick={(e)=>{}}>
+              <button type='submit' className='type-200__button' onClick={(e)=>{handleSaveClick()}}>
                   <MdOutlineSave style={{fontSize:'20px'}} /> 
                   <p>save</p>
               </button>
