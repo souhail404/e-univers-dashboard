@@ -14,7 +14,7 @@ export const useLogin = ()=>{
         const toastId = toast.loading(`Login`);
         const response = await fetch(`${BASE_URL}api/user/admin-login/`, {
             method:"POST",
-            mode:"no-cors",
+            mode:"cors",
             headers:{
                 "Content-Type":"application/json",
             },
