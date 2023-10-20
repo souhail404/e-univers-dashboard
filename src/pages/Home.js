@@ -69,7 +69,7 @@ const Home = () => {
   const fetchChartsData = async ()=>{
     try{
       setIsLoadingCharts(true)
-      const res = await fetch(`http://localhost:4000/api/overview/amount-chart?startDate=${overviewPeriod.startDate}&endDate=${overviewPeriod.endDate}&range=${overviewPeriod.range}`, {
+      const res = await fetch(`/api/overview/amount-chart?startDate=${overviewPeriod.startDate}&endDate=${overviewPeriod.endDate}&range=${overviewPeriod.range}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

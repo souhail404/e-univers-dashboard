@@ -4,10 +4,11 @@ import { toast } from 'react-toastify';
 import SortButton from '../ListingTable/SortButton';
 import formatDate from '../../services/formatDate';
 import { useNavigate } from 'react-router-dom';
-import { FiEdit3, FiEye } from 'react-icons/fi';
+import { FiEye } from 'react-icons/fi';
 import TableSkeleton from '../ListingTable/TableSkeleton';
 import EmptyFetchRes from '../ListingTable/EmptyFetchRes';
-import { Pagination } from '@mui/material';
+import Pagination from '../ListingTable/Pagination'
+
 
 const RecentOrdersList = () => {
     const {user}= useAuth();
