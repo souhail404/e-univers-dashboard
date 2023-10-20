@@ -22,9 +22,6 @@ const Login = () => {
     onSubmit
   })
 
-  useEffect(()=>{
-    
-  },[])
 
   return (
     <div className='page login-page'>

@@ -11,7 +11,7 @@ export const useLogin = ()=>{
         setIsLoading(true)
         setError(null)
         const toastId = toast.loading(`Login`);
-        const response = await fetch("http://localhost:4000/api/user/admin-login/", {
+        const response = await fetch("/api/user/admin-login/", {
             method:"POST",
             headers:{
                 "Content-Type":"application/json",
