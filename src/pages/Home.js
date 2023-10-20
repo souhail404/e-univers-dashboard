@@ -10,6 +10,7 @@ import RecentOrdersList from '../components/Dashboard/RecentOrdersList'
 import DateRangePicker from '../components/common/DateRangePicker'
 import { BiDownload } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
+import BASE_URL from '../APIurl'
 
 const Home = () => {
   const {user} = useAuth()
@@ -69,7 +70,7 @@ const Home = () => {
   const fetchChartsData = async ()=>{
     try{
       setIsLoadingCharts(true)
-      const res = await fetch(`/api/overview/amount-chart?startDate=${overviewPeriod.startDate}&endDate=${overviewPeriod.endDate}&range=${overviewPeriod.range}`, {
+      const res = await fetch(`${BASE_URL}api/overview/amount-chart?startDate=${overviewPeriod.startDate}&endDate=${overviewPeriod.endDate}&range=${overviewPeriod.range}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

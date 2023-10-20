@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useAuth } from "../hooks/useAuth"
 import { toast } from "react-toastify"
+import BASE_URL from "../APIurl"
 
 export const useLogin = ()=>{
     const [error, setError] = useState(null)
@@ -11,7 +12,7 @@ export const useLogin = ()=>{
         setIsLoading(true)
         setError(null)
         const toastId = toast.loading(`Login`);
-        const response = await fetch("/api/user/admin-login/", {
+        const response = await fetch(`${BASE_URL}api/user/admin-login/`, {
             method:"POST",
             headers:{
                 "Content-Type":"application/json",
