@@ -18,6 +18,7 @@ import { createProductSchema } from '../../FormValidations/ProductSchema';
 import { toast } from 'react-toastify';
 import PageHeading from '../../components/common/PageHeading';
 import { MdOutlineSave } from 'react-icons/md';
+import BASE_URL from '../../APIurl';
 
 const EditProduct = () => {
     const navigate = useNavigate()
@@ -51,7 +52,7 @@ const EditProduct = () => {
 
     useEffect(()=>{
         setIsFetching(true)
-        fetchService(`http://localhost:4000/api/product/${productId}` , setProduct, setIsFetching)
+        fetchService(`${BASE_URL}api/product/${productId}` , setProduct, setIsFetching)
     },[])
 
     useEffect(()=>{

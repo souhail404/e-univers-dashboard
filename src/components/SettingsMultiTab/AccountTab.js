@@ -3,6 +3,7 @@ import { useAuth } from '../../hooks/useAuth'
 import { toast } from 'react-toastify';
 import { Skeleton } from '@mui/material';
 import { MdOutlineSave } from 'react-icons/md';
+import BASE_URL from '../../APIurl';
 
 const AccountTab = () => {
     const {user} =useAuth()
@@ -16,7 +17,7 @@ const AccountTab = () => {
     const fetchUserData = async()=>{
         try {
             setIsFetching(true)
-            const res = await fetch(`http://localhost:4000/api/user/id/${user.id}`, {
+            const res = await fetch(`${BASE_URL}api/user/id/${user.id}`, {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },
@@ -41,7 +42,7 @@ const AccountTab = () => {
         const toastId = toast.loading('Updating your account infos');
         const data = JSON.stringify(accountData);
         try{
-            const res = await fetch(`http://localhost:4000/api/user/update/${user.id}`, {
+            const res = await fetch(`${BASE_URL}api/user/update/${user.id}`, {
                 method:"PUT",
                 headers:myheaders,
                 body:data

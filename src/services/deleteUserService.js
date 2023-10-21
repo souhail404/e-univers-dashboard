@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import BASE_URL from '../APIurl';
 
 const deleteUserService = async(customer, user) =>{
     
@@ -11,7 +12,7 @@ const deleteUserService = async(customer, user) =>{
 
     const toastId = toast.loading(`Deleting user : (${customer.userName})`);
     try {
-        const res = await fetch(`http://localhost:4000/api/user/${customerId}`, {
+        const res = await fetch(`${BASE_URL}api/user/${customerId}`, {
             method:"DELETE",
             headers:myheaders,
         })

@@ -31,7 +31,7 @@ const Home = () => {
   const fetchGeneralOverview = async ()=>{
     try{
       setIsLoadingOverview(true)
-      const res = await fetch(`http://localhost:4000/api/overview/general?startDate=${overviewPeriod.startDate}&endDate=${overviewPeriod.endDate}&range=${overviewPeriod.range}`, {
+      const res = await fetch(`${BASE_URL}api/overview/general?startDate=${overviewPeriod.startDate}&endDate=${overviewPeriod.endDate}&range=${overviewPeriod.range}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

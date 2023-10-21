@@ -1,4 +1,6 @@
 import { toast } from 'react-toastify';
+import BASE_URL from '../APIurl';
+
 
 const createCategoryService = async(category, user) =>{
     const myheaders = new Headers();
@@ -9,7 +11,7 @@ const createCategoryService = async(category, user) =>{
     const data = JSON.stringify({...category});
     var res;
     try{
-      res = await fetch('http://localhost:4000/api/category/add', {
+      res = await fetch(`${BASE_URL}api/category/add`, {
         method:"POST",
         headers:myheaders,
         body:data

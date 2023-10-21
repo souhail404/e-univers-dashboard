@@ -9,6 +9,7 @@ import { AiOutlineArrowLeft } from 'react-icons/ai';
 import SelectMultiProducts from '../../components/SelectMultiProducts';
 import { FiTrash } from 'react-icons/fi';
 import { MdOutlineSave } from 'react-icons/md';
+import BASE_URL from '../../APIurl';
 
 const CreateOrder = () => {
   const {user} = useAuth()
@@ -43,7 +44,7 @@ const CreateOrder = () => {
   const fetchCustomer = async()=>{
     try{ 
         setIsFetchingCustomer(true)
-        const res = await fetch(`http://localhost:4000/api/user/id/${customer}`, {
+        const res = await fetch(`${BASE_URL}api/user/id/${customer}`, {
             headers: {
                 Authorization: `Bearer ${user.token}`,
             },
@@ -138,7 +139,7 @@ const CreateOrder = () => {
       const data = JSON.stringify({...orderData});
       var res;
       try{
-        res = await fetch('http://localhost:4000/api/order/create', {
+        res = await fetch(`${BASE_URL}api/order/create`, {
           method:"POST",
           headers:myheaders,
           body:data

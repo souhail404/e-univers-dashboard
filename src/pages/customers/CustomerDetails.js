@@ -13,6 +13,7 @@ import SelectProduct from '../../components/Orders/SelectProduct'
 import SelectState from '../../components/Orders/SelectState'
 import Pagination from '../../components/ListingTable/Pagination'
 import { AiOutlineArrowLeft } from 'react-icons/ai'
+import BASE_URL from '../../APIurl';
 
 
 const CustomerDetails = () => {
@@ -38,7 +39,7 @@ const CustomerDetails = () => {
     const fetchCustomer = async()=>{
         try{ 
             setIsFetchingGeneralInfos(true)
-            const res = await fetch(`http://localhost:4000/api/user/id/${customerId}`, {
+            const res = await fetch(`${BASE_URL}api/user/id/${customerId}`, {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },
@@ -61,7 +62,7 @@ const CustomerDetails = () => {
     const fetchCustomerOrdersList = async()=>{
         try{ 
             setIsFetchingCustomerOrders(true)
-            const res = await fetch(`http://localhost:4000/api/order/all?page=${page}&pageSize=${pageSize}&user=${customerId}&orderState=${filterState}&product=${filterProduct}`, {
+            const res = await fetch(`${BASE_URL}api/order/all?page=${page}&pageSize=${pageSize}&user=${customerId}&orderState=${filterState}&product=${filterProduct}`, {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },
@@ -86,7 +87,7 @@ const CustomerDetails = () => {
     const fetchCustomerOrders = async()=>{
         try{ 
             setIsFetchingCustomerOrdersOverview(true)
-            const res = await fetch(`http://localhost:4000/api/order/all?page=${1}&pageSize=${`unlimited`}&user=${customerId}`, {
+            const res = await fetch(`${BASE_URL}api/order/all?page=${1}&pageSize=${`unlimited`}&user=${customerId}`, {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },

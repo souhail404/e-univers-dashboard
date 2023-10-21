@@ -5,6 +5,7 @@ import Nb from '../../common/Nb';
 import 'react-quill/dist/quill.snow.css';
 import fetchService from '../../../services/fetchService';
 import { AiOutlineDown } from 'react-icons/ai';
+import BASE_URL from '../../../APIurl';
 
 const ProductGeneralInfo =({formBody, setFormBody})=>{
     const [showBody, setShowBody]=useState(true);
@@ -26,12 +27,12 @@ const ProductGeneralInfo =({formBody, setFormBody})=>{
     const [subCategoriesRes, setSubCategoriesRes] = useState([])
 
     useEffect(()=>{
-        fetchService('http://localhost:4000/api/category/', setCategoriesRes);
+        fetchService(`${BASE_URL}api/category/`, setCategoriesRes);
     }, [])
 
     useEffect(()=>{
         if(formBody.category){
-            fetchService(`http://localhost:4000/api/category/${formBody.category}/subcategory`, setSubCategoriesRes);  
+            fetchService(`${BASE_URL}api/category/${formBody.category}/subcategory`, setSubCategoriesRes);  
         }
     },[formBody.category])
 

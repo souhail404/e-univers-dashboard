@@ -17,6 +17,7 @@ import { FiEdit3, FiEye, FiTrash2 } from 'react-icons/fi';
 import SelectCategory from '../../components/Product/SelectCategory';
 import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
 import formatDate from '../../services/formatDate';
+import BASE_URL from '../../APIurl';
  
 const Products = () => {
   const [productsData, setProductsData] = useState([]); // data
@@ -65,7 +66,7 @@ const Products = () => {
   const fetchProducts = async()=>{
     try{
         setIsFetching(true)
-        const res = await fetch(`http://localhost:4000/api/product?page=${page}&pageSize=${pageSize}&search=${search}&sort=${sortConf.sortField}:${sortConf.sortOrder}&category=${filterCategory}`)
+        const res = await fetch(`${BASE_URL}api/product?page=${page}&pageSize=${pageSize}&search=${search}&sort=${sortConf.sortField}:${sortConf.sortOrder}&category=${filterCategory}`)
         const response = await res.json();
         if(res.ok){
           const {products, totalPages, totalProducts} = response;

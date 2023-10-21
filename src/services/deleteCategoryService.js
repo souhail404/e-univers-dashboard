@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import BASE_URL from '../APIurl';
 
 const deleteCategoryService = async(category, user) =>{
     
@@ -11,7 +12,7 @@ const deleteCategoryService = async(category, user) =>{
 
     const toastId = toast.loading(`Deleting Category : (${category.title})`);
     try {
-        const res = await fetch(`http://localhost:4000/api/category/${categoryId}`, {
+        const res = await fetch(`${BASE_URL}api/category/${categoryId}`, {
             method:"DELETE",
             headers:myheaders,
         })

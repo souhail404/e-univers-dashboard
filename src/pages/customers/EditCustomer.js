@@ -9,6 +9,7 @@ import { MdOutlineSave } from 'react-icons/md'
 import editUserService from '../../services/editAdminService'
 import PageHeading from '../../components/common/PageHeading'
 import { AiOutlineArrowLeft } from 'react-icons/ai'
+import BASE_URL from '../../APIurl'
 
 const EditCustomer = () => {
   const {user} =useAuth()
@@ -28,7 +29,7 @@ const EditCustomer = () => {
   const fetchCustomer = async()=>{
     try{
         setIsFetching(true)
-        const res = await fetch(`http://localhost:4000/api/user/id/${customerId}`,{
+        const res = await fetch(`${BASE_URL}api/user/id/${customerId}`,{
             headers: {
                 Authorization: `Bearer ${user.token}`,
             },

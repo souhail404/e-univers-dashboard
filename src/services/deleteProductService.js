@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import BASE_URL from '../APIurl';
 
 const deleteProductService = async(product, user) =>{
     
@@ -11,7 +12,7 @@ const deleteProductService = async(product, user) =>{
 
     const toastId = toast.loading(`Deleting product : (${product.title})`);
     try {
-        const res = await fetch(`http://localhost:4000/api/product/${productId}`, {
+        const res = await fetch(`${BASE_URL}api/product/${productId}`, {
             method:"DELETE",
             headers:myheaders,
         })

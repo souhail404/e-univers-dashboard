@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import BASE_URL from '../APIurl';
 
 const createAdminService = async(data, user) =>{
     const myheaders = new Headers();
@@ -9,7 +10,7 @@ const createAdminService = async(data, user) =>{
     const jsonData = JSON.stringify(data)
     const toastId = toast.loading(`Creating ${data.role} : (${data.lastName} ${data.firstName})`);
     try {
-        const res = await fetch(`http://localhost:4000/api/user/register/`, {
+        const res = await fetch(`${BASE_URL}api/user/register/`, {
             method:"POST",
             headers:myheaders,
             body:jsonData

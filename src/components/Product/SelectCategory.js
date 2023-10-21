@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Select from 'react-select'
 import { toast } from 'react-toastify';
+import BASE_URL from '../../APIurl';
 
 const SelectCategory = ({setFilterCategory}) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -10,7 +11,7 @@ const SelectCategory = ({setFilterCategory}) => {
     const fetchCategories= async()=>{
         try{
             setIsLoading(true)
-            const res = await fetch(`http://localhost:4000/api/category/`)
+            const res = await fetch(`${BASE_URL}api/category/`)
             const response = await res.json();
   
             if(res.ok){

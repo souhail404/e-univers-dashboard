@@ -8,6 +8,7 @@ import { FiEye } from 'react-icons/fi';
 import TableSkeleton from '../ListingTable/TableSkeleton';
 import EmptyFetchRes from '../ListingTable/EmptyFetchRes';
 import Pagination from '../ListingTable/Pagination'
+import BASE_URL from '../../APIurl';
 
 
 const RecentOrdersList = () => {
@@ -26,7 +27,7 @@ const RecentOrdersList = () => {
     const fetchOrders = async()=>{
         try{ 
             setIsFetching(true)
-            const res = await fetch(`http://localhost:4000/api/order/all?page=${page}&pageSize=${pageSize}&sort=${sortConf.sortField}:${sortConf.sortOrder}&recentlyAdded=true`, {
+            const res = await fetch(`${BASE_URL}api/order/all?page=${page}&pageSize=${pageSize}&sort=${sortConf.sortField}:${sortConf.sortOrder}&recentlyAdded=true`, {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },

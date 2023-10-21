@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import BASE_URL from '../APIurl';
 
 const editUserService = async(data, user, adminId) =>{
     const myheaders = new Headers();
@@ -9,7 +10,7 @@ const editUserService = async(data, user, adminId) =>{
     const jsonData = JSON.stringify(data)
     const toastId = toast.loading(`Updating Profile Infos`);
     try {
-        const res = await fetch(`http://localhost:4000/api/user/update/${adminId}`, {
+        const res = await fetch(`${BASE_URL}api/user/update/${adminId}`, {
             method:"PUT",
             headers:myheaders,
             body:jsonData

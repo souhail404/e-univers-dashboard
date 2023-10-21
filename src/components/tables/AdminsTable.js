@@ -13,6 +13,7 @@ import { toast } from 'react-toastify'
 import { MdAdd } from 'react-icons/md'
 import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai'
 import { confirmAlert } from 'react-confirm-alert'
+import BASE_URL from '../../APIurl'
 
 const AdminsTable = () => {
     const [adminsData, setAdminsData] = useState([]); // data
@@ -38,7 +39,7 @@ const AdminsTable = () => {
     
         const toastId = toast.loading(`Deleting Admin : (${admin.lastName} ${admin.firstName})`);
         try {
-            const res = await fetch(`http://localhost:4000/api/user/${adminId}`, {
+            const res = await fetch(`${BASE_URL}api/user/${adminId}`, {
                 method:"DELETE",
                 headers:myheaders,
             })
@@ -83,7 +84,7 @@ const AdminsTable = () => {
     const fetchAdmins = async()=>{
         try{
             setIsFetching(true)
-            const res = await fetch(`http://localhost:4000/api/user/admins?page=${page}&pageSize=${pageSize}&search=${search}&sort=${sortConf.sortField}:${sortConf.sortOrder}`,{
+            const res = await fetch(`${BASE_URL}api/user/admins?page=${page}&pageSize=${pageSize}&search=${search}&sort=${sortConf.sortField}:${sortConf.sortOrder}`,{
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },

@@ -19,6 +19,7 @@ import {FiEdit3, FiTrash2} from 'react-icons/fi'
 // css
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
 import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
+import BASE_URL from '../../APIurl';
 
 
 const Categories = () => {
@@ -74,7 +75,7 @@ const Categories = () => {
   const fetchCategory= async()=>{
     try{
         setIsFetching(true)
-        const res = await fetch(`http://localhost:4000/api/category?page=${page}&pageSize=${pageSize}&search=${search}&sort=${sortConf.sortField}:${sortConf.sortOrder}`)
+        const res = await fetch(`${BASE_URL}api/category?page=${page}&pageSize=${pageSize}&search=${search}&sort=${sortConf.sortField}:${sortConf.sortOrder}`)
         const response = await res.json();
 
         if(res.ok){

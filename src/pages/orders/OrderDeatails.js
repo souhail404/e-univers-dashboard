@@ -6,6 +6,7 @@ import { useAuth } from '../../hooks/useAuth'
 import { toast } from 'react-toastify'
 import formatDate from '../../services/formatDate'
 import { AiOutlineArrowLeft } from 'react-icons/ai'
+import BASE_URL from '../../APIurl'
 
 const OrderDeatails = () => {
   const {orderId} = useParams();
@@ -18,7 +19,7 @@ const OrderDeatails = () => {
   const fetchOrder = async()=>{
     try{ 
         setIsFetching(true)
-        const res = await fetch(`http://localhost:4000/api/order/one/${orderId}`, {
+        const res = await fetch(`${BASE_URL}api/order/one/${orderId}`, {
             headers: {
                 Authorization: `Bearer ${user.token}`,
             },
@@ -44,7 +45,7 @@ const OrderDeatails = () => {
     try{ 
         const data= JSON.stringify({orderState:state});
         const toastId = toast.loading(`Updating State to (${state}`);
-        const res = await fetch(`http://localhost:4000/api/order/update/${orderId}`, {
+        const res = await fetch(`${BASE_URL}api/order/update/${orderId}`, {
             method: 'PUT',
             headers: {
               Authorization: `Bearer ${user.token}`,

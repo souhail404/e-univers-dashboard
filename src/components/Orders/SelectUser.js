@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Select from 'react-select'
 import { toast } from 'react-toastify';
 import {useAuth} from '../../hooks/useAuth'
+import BASE_URL from '../../APIurl';
 
 const SelectUser = ({setFilterUser, placeholder}) => {
     const {user}= useAuth()
@@ -12,7 +13,7 @@ const SelectUser = ({setFilterUser, placeholder}) => {
     const fetchUsers = async()=>{ 
         try{
             setIsLoading(true)
-            const res = await fetch(`http://localhost:4000/api/user` ,{
+            const res = await fetch(`${BASE_URL}api/user` ,{
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },

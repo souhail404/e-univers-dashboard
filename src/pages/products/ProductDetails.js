@@ -8,6 +8,7 @@ import ProductImagesSlider from '../../components/common/ProductImagesSlider';
 import { MdAddShoppingCart, MdFavoriteBorder, MdOutlineRemoveShoppingCart, MdOutlineShoppingCart } from 'react-icons/md';
 import PageHeading from '../../components/common/PageHeading';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
+import BASE_URL from '../../APIurl';
 
 const ProductDetails = () => {
     const {productId} = useParams();
@@ -19,7 +20,7 @@ const ProductDetails = () => {
 
     useEffect(()=>{
         setIsFetching(true)
-        fetchService(`http://localhost:4000/api/product/${productId}` , setProduct, setIsFetching)
+        fetchService(`${BASE_URL}api/product/${productId}` , setProduct, setIsFetching)
     },[])
     return (
         <main className="page product-details-page">

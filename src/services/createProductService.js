@@ -1,4 +1,6 @@
 import { toast } from 'react-toastify';
+import BASE_URL from '../APIurl';
+
 
 const createProductService = async(data, user) =>{
     const formData = new FormData();
@@ -20,7 +22,7 @@ const createProductService = async(data, user) =>{
 
     const toastId = toast.loading(`Creating Product : (${data.title})`);
     try {
-        const res = await fetch(`http://localhost:4000/api/product/add`, {
+        const res = await fetch(`${BASE_URL}api/product/add`, {
             method:"POST",
             headers: {
                 Authorization: `Bearer ${user.token}`,

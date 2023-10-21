@@ -1,4 +1,6 @@
 import { toast } from 'react-toastify';
+import BASE_URL from '../APIurl';
+
 
 const createBannerService = async(data, user) =>{
     const formData = new FormData();
@@ -12,7 +14,7 @@ const createBannerService = async(data, user) =>{
 
     const toastId = toast.loading(`Adding Banner `);
     try {
-        const res = await fetch(`http://localhost:4000/api/store/banner/create`, {
+        const res = await fetch(`${BASE_URL}api/store/banner/create`, {
             method:"POST",
             headers: {
                 Authorization: `Bearer ${user.token}`,

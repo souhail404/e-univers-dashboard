@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Select from 'react-select'
 import { toast } from 'react-toastify';
+import BASE_URL from '../../APIurl';
 
 
 const SelectProduct = ({setFilterProduct}) => {
@@ -11,7 +12,7 @@ const SelectProduct = ({setFilterProduct}) => {
     const fetchProducts = async()=>{
         try{
             setIsLoading(true)
-            const res = await fetch(`http://localhost:4000/api/product?pageSize=100`)
+            const res = await fetch(`${BASE_URL}api/product?pageSize=100`)
             const response = await res.json();
             if(res.ok){
               const {products} = response;

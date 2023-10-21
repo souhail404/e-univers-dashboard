@@ -12,6 +12,7 @@ import { useDebounce } from 'use-debounce';
 import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
 import deleteUserService from '../../services/deleteUserService';
 import { confirmAlert } from 'react-confirm-alert';
+import BASE_URL from '../../APIurl';
 
  
 const Customers = () => {
@@ -37,7 +38,7 @@ const Customers = () => {
     const fetchCustomers = async()=>{
       try{
           setIsFetching(true)
-          const res = await fetch(`http://localhost:4000/api/user/customers?page=${page}&pageSize=${pageSize}&search=${search}&sort=${sortConf.sortField}:${sortConf.sortOrder}`, {
+          const res = await fetch(`${BASE_URL}api/user/customers?page=${page}&pageSize=${pageSize}&search=${search}&sort=${sortConf.sortField}:${sortConf.sortOrder}`, {
               headers: {
                   Authorization: `Bearer ${user.token}`,
               },

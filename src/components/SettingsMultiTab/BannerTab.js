@@ -5,6 +5,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { Skeleton } from '@mui/material';
 import { MdDelete } from 'react-icons/md';
 import { confirmAlert } from 'react-confirm-alert';
+import BASE_URL from '../../APIurl';
 
 const BannerTab = () => {
   const {user} =useAuth()
@@ -14,7 +15,7 @@ const BannerTab = () => {
   const fetchBanners = async()=>{
     try {
       setIsFetching(true)
-      const res = await fetch(`http://localhost:4000/api/store/banner/get`)
+      const res = await fetch(`${BASE_URL}api/store/banner/get`)
       const response = await res.json();
       if(res.ok){
           const {banners} = response;
@@ -32,7 +33,7 @@ const BannerTab = () => {
   const handleDeleteBanner = async(id, index)=>{
     try {
       const toastId = toast.loading(`Deleting Banner `);
-      const res = await fetch(`http://localhost:4000/api/store/banner/delete/${id}`,{
+      const res = await fetch(`${BASE_URL}api/store/banner/delete/${id}`,{
         method:'DELETE',
         headers: {
           Authorization: `Bearer ${user.token}`,

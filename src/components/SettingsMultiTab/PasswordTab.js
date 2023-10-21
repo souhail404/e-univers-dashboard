@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useAuth } from '../../hooks/useAuth'
 import { toast } from 'react-toastify';
 import { MdLockReset } from 'react-icons/md';
+import BASE_URL from '../../APIurl';
 
 const PasswordTab = () => {
     const {user} =useAuth()
@@ -17,7 +18,7 @@ const PasswordTab = () => {
         const toastId = toast.loading('Reseting Password');
         const data = JSON.stringify(passwodForm);
         try{
-            const res = await fetch(`http://localhost:4000/api/user/reset-password/${user.id}`, {
+            const res = await fetch(`${BASE_URL}api/user/reset-password/${user.id}`, {
                 method:"PUT",
                 headers:myheaders,
                 body:data

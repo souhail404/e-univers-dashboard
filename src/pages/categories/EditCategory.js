@@ -12,6 +12,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Skeleton } from '@mui/material';
 import { MdOutlineSave } from 'react-icons/md';
 import PageHeading from '../../components/common/PageHeading';
+import BASE_URL from '../../APIurl';
 
 
 
@@ -35,7 +36,7 @@ const EditCategory = () => {
     const fetchCategory= async()=>{
         try{
             setIsCategoryFetching(true)
-            const res = await fetch(`http://localhost:4000/api/category/${categoryId}`)
+            const res = await fetch(`${BASE_URL}api/category/${categoryId}`)
             const response = await res.json();
             
             if(res.ok){
@@ -59,7 +60,7 @@ const EditCategory = () => {
     e.preventDefault();
     const data = JSON.stringify({title:category.title, description:category.description});
     try{
-      const res = await fetch(`http://localhost:4000/api/category/${categoryId}`, {
+      const res = await fetch(`${BASE_URL}api/category/${categoryId}`, {
         method:"PUT",
         headers:myheaders,
         body:data
@@ -172,7 +173,7 @@ const EditSubCategories= ({categoryId, subCategories, isAddingSub, setIsAddingSu
       const fetchSubCategory= async()=>{
         try{
             setIsSubCatFetching(true)
-            const res = await fetch(`http://localhost:4000/api/category/${categoryId}`)
+            const res = await fetch(`${BASE_URL}api/category/${categoryId}`)
             const response = await res.json();
             
             if(res.ok){
@@ -252,7 +253,7 @@ const SubCategoryBox = ({subElem , subIndex, categoryId , subCategories, setSubC
     const subId = subElem._id;
     const id = toast.loading(`Deleting Subcategory : (${subElem.title})`);
     try {
-      const res = await fetch(`http://localhost:4000/api/category/${categoryId}/subcategory/${subId}`, {
+      const res = await fetch(`${BASE_URL}api/category/${categoryId}/subcategory/${subId}`, {
         method:"DELETE",
         headers:myheaders,
       })
@@ -275,7 +276,7 @@ const SubCategoryBox = ({subElem , subIndex, categoryId , subCategories, setSubC
     const data = JSON.stringify({...subElem})
     const subId = subElem._id;
     try {
-      const res = await fetch(`http://localhost:4000/api/category/${categoryId}/subcategory/${subId}`, {
+      const res = await fetch(`${BASE_URL}api/category/${categoryId}/subcategory/${subId}`, {
         method:"PUT",
         headers:myheaders,
         body:data
@@ -360,7 +361,7 @@ const NewSubCategoryBox = ({categoryId, setIsAdded, setIsAddingSub})=>{
     const id = toast.loading(`Creating new Subcategory : (${newSubCat.title})`);
     const data = JSON.stringify(newSubCat)
     try {
-      const res = await fetch(`http://localhost:4000/api/category/${categoryId}/addonesubcategory`, {
+      const res = await fetch(`${BASE_URL}api/category/${categoryId}/addonesubcategory`, {
         method:"POST",
         headers:myheaders,
         body:data

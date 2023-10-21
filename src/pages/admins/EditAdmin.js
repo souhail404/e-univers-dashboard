@@ -8,6 +8,7 @@ import { adminProfileInfoSchema, resetAdminPsswordSchema } from '../../FormValid
 import editUserService from '../../services/editAdminService';
 import PageHeading from '../../components/common/PageHeading';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
+import BASE_URL from '../../APIurl';
 
 const CreateAdmin = () => {
   const {user} =useAuth()
@@ -39,7 +40,7 @@ const CreateAdmin = () => {
       const toastId = toast.loading('Reseting Password');
       const data = JSON.stringify(passwrdData);
       try{
-          const res = await fetch(`http://localhost:4000/api/user/reset-password/${adminId}`, {
+          const res = await fetch(`${BASE_URL}api/user/reset-password/${adminId}`, {
               method:"PUT",
               headers:myheaders,
               body:data
@@ -95,7 +96,7 @@ const CreateAdmin = () => {
   const fetchAdmin = async()=>{
     try{
         setIsFetching(true)
-        const res = await fetch(`http://localhost:4000/api/user/id/${adminId}`,{
+        const res = await fetch(`${BASE_URL}api/user/id/${adminId}`,{
             headers: {
                 Authorization: `Bearer ${user.token}`,
             },

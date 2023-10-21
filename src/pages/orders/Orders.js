@@ -13,6 +13,7 @@ import EmptyFetchRes from '../../components/ListingTable/EmptyFetchRes'
 import Pagination from '../../components/ListingTable/Pagination'
 import formatDate from '../../services/formatDate' 
 import { AiOutlinePlus } from 'react-icons/ai'
+import BASE_URL from '../../APIurl'
 
 const Orders = () => {
     const {user}= useAuth()
@@ -32,7 +33,7 @@ const Orders = () => {
     const fetchOrders = async()=>{
         try{ 
             setIsFetching(true)
-            const res = await fetch(`http://localhost:4000/api/order/all?page=${page}&pageSize=${pageSize}&orderState=${filterState}&user=${filterUser}&product=${filterProduct}&sort=${sortConf.sortField}:${sortConf.sortOrder}`, {
+            const res = await fetch(`${BASE_URL}api/order/all?page=${page}&pageSize=${pageSize}&orderState=${filterState}&user=${filterUser}&product=${filterProduct}&sort=${sortConf.sortField}:${sortConf.sortOrder}`, {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },

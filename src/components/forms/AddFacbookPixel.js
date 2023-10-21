@@ -3,6 +3,7 @@ import { MdAdd, MdDeleteOutline, MdSave } from 'react-icons/md'
 import { toast } from 'react-toastify';
 import { useAuth } from '../../hooks/useAuth';
 import { Skeleton } from '@mui/material';
+import BASE_URL from '../../APIurl';
 
 const AddFacbookPixel = (props) => {
     const className = props.className;
@@ -19,7 +20,7 @@ const AddFacbookPixel = (props) => {
     const fetchFacebookPixels = async()=>{
         try {
             setIsFetching(true)
-            const res = await fetch(`http://localhost:4000/api/pixel/facebook/get`, {
+            const res = await fetch(`${BASE_URL}api/pixel/facebook/get`, {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },
@@ -58,7 +59,7 @@ const AddFacbookPixel = (props) => {
         const toastId = toast.loading('Updating Facebook Pixels');
         const data = JSON.stringify({pixels});
         try{
-            const res = await fetch(`http://localhost:4000/api/pixel/facebook/edit`, {
+            const res = await fetch(`${BASE_URL}api/pixel/facebook/edit`, {
                 method:"POST",
                 headers:myheaders,
                 body:data
