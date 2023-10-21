@@ -54,7 +54,6 @@ const CreateProduct = () => {
  
   const handleSaveClick=async(e)=>{
     e.preventDefault()
-    console.log(formBody);
     validateForm()
   }
  

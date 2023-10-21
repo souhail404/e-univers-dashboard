@@ -5,7 +5,6 @@ import {ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip
 const OrdersComparisonChart = ({thisPeriod, isLoading}) => {
     const [data, setData]  = useState([])
     useEffect(()=>{
-        console.log(thisPeriod);
         if (thisPeriod.length > 0) {
             var array = []
             const d = thisPeriod.map((el, i)=>{

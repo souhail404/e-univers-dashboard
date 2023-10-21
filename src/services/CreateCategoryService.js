@@ -25,7 +25,6 @@ const createCategoryService = async(category, user) =>{
       else{
         toast.update(id, {render: `${response.message}`, type: "error", isLoading: false, autoClose:8000});
       }
-      console.log(res);
       return {res , newCategoryId}
     }catch(err){
       console.log(err);

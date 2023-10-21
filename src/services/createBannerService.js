@@ -8,9 +8,6 @@ const createBannerService = async(data, user) =>{
     formData.append('link', data.link); // Assuming your form has an input with name="title"
     formData.append('desktopBanner', data.desktopBanner); // Assuming data.desktopBanner is a file object
     formData.append('mobileBanner', data.mobileBanner); // Assuming data.mobileBanner is a file object
-    for (const entry of formData.entries()) {
-        console.log('Form Data Entry:', entry[0], entry[1]);
-    }
 
     const toastId = toast.loading(`Adding Banner `);
     try {
